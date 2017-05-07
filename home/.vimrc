@@ -9,19 +9,12 @@ call vundle#rc()
 " homeshick
 " Bundle 'gmarik/vundle'
 
-" 'real' plugins
 Bundle 'bling/vim-airline'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-Bundle 'TaskList.vim'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle 'tpope/vim-fugitive'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-easytags'
-Bundle 'majutsushi/tagbar'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'ntpeters/vim-better-whitespace'
 Bundle 'tpope/vim-surround'
@@ -29,14 +22,8 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'editorconfig/editorconfig-vim'
 
 " language plugins
-Bundle 'tpope/vim-rails'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'rodjek/vim-puppet'
 Bundle 'tikhomirov/vim-glsl'
-Bundle 'fatih/vim-go'
 Bundle 'c9s/perlomni.vim'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'kovisoft/slimv'
 
 Bundle 'altercation/vim-colors-solarized'
 

@@ -70,6 +70,7 @@ alias ll='ls -lh --color'
 alias la='ls -alh --color'
 alias grep='grep --color'
 alias make="make -j$(nproc)"
+alias iotop='iotop -d 1 -P -o'
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'

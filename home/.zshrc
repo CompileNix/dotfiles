@@ -70,6 +70,7 @@ alias ll='ls -lh --color'
 alias la='ls -alh --color'
 alias grep='grep --color'
 alias make="make -j$(nproc)"
+alias iotop='iotop -d 1 -P -o'
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
@@ -128,6 +129,8 @@ alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-
 function git-reset { currentDir="$PWD"; for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd "$currentDir"; done; };
 alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; vim +PluginInstall +qa; exec zsh'
 alias update-zshrc='echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles/ && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
+alias test-mail-sendmail='echo "Subject: test" | sendmail -v '
+alias test-mail-mutt='mutt -s "test" '
 function apache2-reload { apache2ctl -t && { service apache2 reload && { sleep .1; } || { service apache2 status; } } }
 function apache2-restart { apache2ctl -t && { service apache2 restart && { sleep .1; } || { service apache2 status; } } }
 

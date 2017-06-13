@@ -20,6 +20,7 @@ Bundle 'ntpeters/vim-better-whitespace'
 Bundle 'tpope/vim-surround'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'editorconfig/editorconfig-vim'
+Bundle 'chr4/sslsecure.vim'
 
 " language plugins
 Bundle 'tikhomirov/vim-glsl'

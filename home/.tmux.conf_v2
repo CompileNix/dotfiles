@@ -1,6 +1,4 @@
 set -g default-terminal "screen-256color"
-set -g utf8 on
-set -g status-utf8 on
 set -g history-limit 100000
 set -g status-bg '#4e4e4e'
 set -g status-fg '#ffffff'
@@ -10,7 +8,6 @@ set -g window-status-current-format "#[bg=green]#I:#W"
 set -g set-clipboard on
 set -g mouse on
 set -g base-index 1
-set -g status-utf8 on
 setw -g pane-base-index 1
 
 set -g status-interval 1

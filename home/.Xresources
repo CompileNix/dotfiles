@@ -1,2 +1,71 @@
-xterm*background:       black
-xterm*foreground:       white
+*font: xft:Source Code pro:size=11
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintfull
+Xft.dpi: 96
+
+URxvt.urgentOnBell: true
+URxvt.internalBorder: 0
+URxvt.externalBorder: 0
+URxvt.borderLess: false
+URxvt.jumpScroll: true
+URxvt.cursorBlink: true
+URxvt.loginShell: false
+URxvt*scrollBar: false
+
+! special
+xterm*foreground:   #ababab
+URxvt*foreground:   #ababab
+xterm*background:   #000000
+URxvt*background:   #000000
+xterm*cursorColor:  #ababab
+URxvt*cursorColor:  #ababab
+
+! black
+xtern*color0:       #000000
+URxvt*color0:       #000000
+xterm*color8:       #343434
+URxvt*color8:       #343434
+
+! red
+xterm*color1:       #e92f2f
+URxvt*color1:       #e92f2f
+xterm*color9:       #e92f2f
+URxvt*color9:       #e92f2f
+
+! green
+xterm*color2:       #0ed839
+URxvt*color2:       #0ed839
+xterm*color10:      #0ed839
+URxvt*color10:      #0ed839
+
+! yellow
+xterm*color3:       #dddd13
+URxvt*color3:       #dddd13
+xterm*color11:      #dddd13
+URxvt*color11:      #dddd13
+
+! blue
+xterm*color4:       #3b48e3
+URxvt*color4:       #3b48e3
+xterm*color12:      #3b48e3
+URxvt*color12:      #3b48e3
+
+! magenta
+xterm*color5:       #f996e2
+URxvt*color5:       #f996e2
+xterm*color13:      #f996e2
+URxvt*color13:      #f996e2
+
+! cyan
+xterm*color6:       #23edda
+URxvt*color6:       #23edda
+xterm*color14:      #23edda
+URxvt*color14:      #23edda
+
+! white
+xterm*color7:       #ababab
+URxvt*color7:       #ababab
+xterm*color15:      #f9f9f9
+URxvt*color15:      #f9f9f9

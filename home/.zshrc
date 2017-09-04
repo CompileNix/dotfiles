@@ -63,6 +63,7 @@ fi
 
 # aliases
 alias sudosu='sudo su -'
+alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
 alias ls='ls -h --color'
@@ -239,34 +240,26 @@ if which tmux &> /dev/null
 		# We have other arguments, just run them
 		if [[ -n "$@" ]]
 		then
-			\tmux -2 -u $@
+			\tmux $@
 		# Try to connect to an existing session.
 		elif [[ "$ZSH_TMUX_AUTOCONNECT" == "true" ]]
 		then
-			\tmux -2 -u `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` attach || \tmux -2 -u`[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG` new-session
+			\tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` attach || \tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG` new-session
 			[[ "$ZSH_TMUX_AUTOQUIT" == "true" ]] && exit
 		# Just run tmux, fixing the TERM variable if requested.
 		else
-			\tmux -2 -u `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG`
+			\tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG`
 			[[ "$ZSH_TMUX_AUTOQUIT" == "true" ]] && exit
 		fi
 	}
 
 	# Use the completions for tmux for our function
-	compdef _tmux _zsh_tmux_plugin_run
-
-	# Alias tmux to our wrapper function.
-	alias tmux=_zsh_tmux_plugin_run
+	compdef _tmux zsh_tmux_plugin_run
 
 	# Autostart if not already in tmux and enabled.
 	if [[ ! -n "$TMUX" && "$ZSH_TMUX_AUTOSTART" == "true" ]]
 	then
-		# Actually don't autostart if we already did and multiple autostarts are disabled.
-		if [[ "$ZSH_TMUX_AUTOSTART_ONCE" == "false" || "$ZSH_TMUX_AUTOSTARTED" != "true" ]]
-		then
-			export ZSH_TMUX_AUTOSTARTED=true
-			_zsh_tmux_plugin_run
-		fi
+		_zsh_tmux_plugin_run
 	fi
 fi
 

@@ -120,6 +120,7 @@ alias set-terminal-powersave-on='setterm -blank 60 -powersave on'
 alias set-megaraid-alarm-enabled='megacli -AdpSetProp AlarmEnbl'
 alias set-megaraid-alarm-disabled='megacli -AdpSetProp AlarmDsbl'
 alias set-megaraid-alarm-silent='megacli -AdpSetProp AlarmSilence'
+alias set-keyboard-mode-raw='sudo kbd_mode -s'
 function add-iptables-allow-out-http_s { iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
 function remove-iptables-allow-out-http_s { iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
 alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; emerge -avDuN world'
@@ -284,8 +285,6 @@ if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     mkdir -pv "$HOME/.gnupg"
     touch "$HOME/.gnupg/gpg-agent.env"
 fi
-
-antigen bundle tmux
 
 if [[ $EUID -eq 0 ]]; then
     renice -n $n $$ > /dev/null

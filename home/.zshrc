@@ -62,6 +62,7 @@ fi
 
 
 # aliases
+alias sudosu='sudo su -'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
@@ -144,6 +145,11 @@ export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt extendedglob
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
 unsetopt share_history
 
 if [ ! -f "$HOME/.tmux.conf_include" ]; then

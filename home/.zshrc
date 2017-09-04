@@ -168,7 +168,7 @@ if [ -f /usr/lib64/node_modules/npm/lib/utils/completion.sh ]; then
     source /usr/lib64/node_modules/npm/lib/utils/completion.sh
 fi
 
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 ZSH_TMUX_AUTOQUIT=false
 ZSH_TMUX_FIXTERM=false
 

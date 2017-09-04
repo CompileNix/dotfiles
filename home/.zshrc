@@ -167,19 +167,24 @@ if [ -f /usr/lib64/node_modules/npm/lib/utils/completion.sh ]; then
     source /usr/lib64/node_modules/npm/lib/utils/completion.sh
 fi
 
+ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOQUIT=false
+
 source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen theme dpoggi
 echo "breakpoint: hit Control+C if the system takes to long to initialize optional shell modules. (you can rerun this with: \"exec zsh\")"
 
-antigen bundle git
 antigen bundle mosh
-antigen bundle tmuxinator
 antigen bundle node
 antigen bundle npm
-antigen bundle rsync
+antigen bundle gulp
 antigen bundle systemd
+antigen bundle jira
+antigen bundle tmux
+antigen bundle colored-man-pages
+antigen bundle command-not-found
 
 if [[ ${condition_for_tmux_mem_cpu_load} -eq 0 ]]; then
     #antigen bundle thewtex/tmux-mem-cpu-load
@@ -191,6 +196,9 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle ascii-soup/zsh-url-highlighter
 antigen bundle psprint/zsnapshot
 antigen bundle akoenig/npm-run.plugin.zsh
+
+# Make zsh know about hosts already accessed by SSH
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 antigen apply
 

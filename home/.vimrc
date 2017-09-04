@@ -12,20 +12,15 @@ call vundle#rc()
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-easytags'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'ntpeters/vim-better-whitespace'
-Bundle 'tpope/vim-surround'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'chr4/sslsecure.vim'
 
 " language plugins
-Bundle 'tikhomirov/vim-glsl'
-Bundle 'c9s/perlomni.vim'
 
+" themes
 Bundle 'altercation/vim-colors-solarized'
 
 set t_Co=256

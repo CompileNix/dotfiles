@@ -138,7 +138,7 @@ alias test-mail-mutt='mutt -s "test" '
 function apache2-reload { apache2ctl -t && { service apache2 reload && { sleep .1; } || { service apache2 status; } } }
 function apache2-restart { apache2ctl -t && { service apache2 restart && { sleep .1; } || { service apache2 status; } } }
 
-export PATH="$PATH:$HOME/bin:$HOME/sh"
+export PATH="$PATH:$HOME/bin:$HOME/bin_dotfiles:$HOME/sh"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=100000

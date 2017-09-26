@@ -121,7 +121,7 @@ alias set-megaraid-alarm-enabled='megacli -AdpSetProp AlarmEnbl'
 alias set-megaraid-alarm-disabled='megacli -AdpSetProp AlarmDsbl'
 alias set-megaraid-alarm-silent='megacli -AdpSetProp AlarmSilence'
 alias set-keyboard-mode-raw='sudo kbd_mode -s'
-alias set-display-off='xset dpms force standby'
+alias set-display-off='sleep 1; xset dpms force standby'
 alias set-display-on='xset dpms force on'
 function add-iptables-allow-out-http_s { iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
 function remove-iptables-allow-out-http_s { iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }

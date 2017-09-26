@@ -16,7 +16,6 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'ntpeters/vim-better-whitespace'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'editorconfig/editorconfig-vim'
-Bundle 'chr4/sslsecure.vim'
 
 " language plugins
 
@@ -58,9 +57,39 @@ map <C-C> "+y
 map <C-V> "+p
 imap <C-V> <F10><C-r>+<F10>
 
-map <C-Space> <C-x><C-o>
 set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+
+inoremap <Tab> <c-r>=Smart_TabComplete()<CR>
+
+if has("unix")
+  inoremap <C-@> <c-r>=Smart_TabComplete()<CR>
+elseif has("win32")
+  inoremap <C-Space> <c-r>=Smart_TabComplete()<CR>
+endif
+
+set synmaxcol=300
+syntax sync minlines=1000
 
 " change enter key to insert completion:
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -69,9 +98,6 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " up/down arrow to select
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-" scroll with page up/down
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 let NERDTreeShowHidden=1
 

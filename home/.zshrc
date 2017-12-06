@@ -275,7 +275,7 @@ autoload -U compinit && compinit -u
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 if [ ! -z "$TMUX" ]; then
-    antigen bundle zsh-users/zsh-autosuggestions
+    #antigen bundle zsh-users/zsh-autosuggestions
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
 fi
 

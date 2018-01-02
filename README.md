@@ -26,7 +26,7 @@ assumes installed software:
  - htop (optional)
 
 ```sh
-curl https://github.com/compilenix/dotfiles/raw/master/install.sh | bash
+curl https://raw.githubusercontent.com/compilenix/dotfiles/master/install.sh | bash
 ```
 
 ```sh

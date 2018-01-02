@@ -14,7 +14,6 @@ configs for:
  - tmux
  - git (1.7.10+)
  - htop
- - ansiweather
  - Xresources (xterm)
  - irssi
 
@@ -25,6 +24,10 @@ assumes installed software:
  - vim
  - sudo (optional)
  - htop (optional)
+
+```sh
+curl https://github.com/compilenix/dotfiles/raw/master/install.sh | bash
+```
 
 ```sh
 mkdir -pv $HOME/bin

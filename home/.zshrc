@@ -72,12 +72,15 @@ alias la='ls -alh --color'
 alias grep='grep --color'
 alias make="make -j$(nproc)"
 alias iotop='iotop -d 1 -P -o'
+alias htop='htop -d 10'
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias clean-swap='swapoff -a; swapon -a'
+alias reset-swap='clean-swap'
 alias drop-fscache='sync; echo 3 > /proc/sys/vm/drop_caches'
+alias reset-fscache='drop-fscache'
 alias dns-retransfer-zones='rndc retransfer'
 alias dns-reload-zones='rndc reload'
 alias get-network-listening='netstat -tunpl'
@@ -89,10 +92,8 @@ alias get-iptables-v4-nat='iptables -t nat -L -v'
 alias get-iptables-v6='ip6tables -L -v'
 alias get-iptables-v6-nat='ip6tables -t nat -L -v'
 alias get-mem-dirty='cat /proc/meminfo | grep Dirty'
-alias get-mem-dirty-loop='while true; do get-mem-dirty; sleep 1; done'
-alias get-mem-dirty-loop-250='while true; do get-mem-dirty; sleep 1; done'
-alias get-mem-dirty-loop-500='while true; do get-mem-dirty; sleep 1; done'
-alias get-ceph-status-loop='while true; do ceph -s > /tmp/get-ceph-status-loop.txt; clear; tput cup 0 0; cat /tmp/get-ceph-status-loop.txt; sleep 2; done'
+alias watch-mem-dirty='watch -n 1 get-mem-dirty'
+alias watch-ceph-status='watch -n 1 ceph -s'
 alias get-date='date +%s'
 alias get-date-from-unixtime='read a; date -d @$a'
 alias get-date-hex='get-date | xargs printf "%x\n"'
@@ -111,7 +112,7 @@ alias get-mysql-inserts='ngrep -d eth0 -i "insert" port 3306'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
 function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' };
-function get-debian-package-updates { apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; };
+function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; };
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
@@ -129,7 +130,7 @@ alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerg
 alias update-archlinux-pacman='pacman -Syu'
 alias update-archlinux-yaourt='yaourt -Syu'
 alias update-archlinux-yaourt-aur='yaourt -Syu --aur'
-alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-get update; }; ask_yn_n_callback() { echo ""; }; ask_yn; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; apt-get upgrade; apt-get autoremove; apt-get autoclean'
+alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { apt update; }; ask_yn_n_callback() { echo ""; }; ask_yn; echo; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; apt upgrade; apt autoremove; apt autoclean'
 function git-reset { currentDir="$PWD"; for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd "$currentDir"; done; };
 alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; vim +PluginInstall +qa; exec zsh'
 alias update-zshrc='echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles/ && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
@@ -182,12 +183,7 @@ antigen use oh-my-zsh
 antigen theme dpoggi
 echo "breakpoint: hit Control+C if the system takes to long to initialize optional shell modules. (you can rerun this with: \"exec zsh\")"
 
-antigen bundle mosh
-antigen bundle node
-antigen bundle npm
-antigen bundle gulp
 antigen bundle systemd
-antigen bundle jira
 antigen bundle colored-man-pages
 antigen bundle command-not-found
 
@@ -199,8 +195,6 @@ fi
 antigen bundle RobSis/zsh-completion-generator
 antigen bundle zsh-users/zsh-completions
 antigen bundle ascii-soup/zsh-url-highlighter
-antigen bundle psprint/zsnapshot
-antigen bundle akoenig/npm-run.plugin.zsh
 
 # Make zsh know about hosts already accessed by SSH
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'

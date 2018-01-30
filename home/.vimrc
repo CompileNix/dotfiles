@@ -14,7 +14,6 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'ntpeters/vim-better-whitespace'
-Bundle 'tomtom/tcomment_vim'
 Bundle 'editorconfig/editorconfig-vim'
 
 " language plugins
@@ -80,7 +79,7 @@ function! Smart_TabComplete()
   endif
 endfunction
 
-inoremap <Tab> <c-r>=Smart_TabComplete()<CR>
+"inoremap <Tab> <c-r>=Smart_TabComplete()<CR>
 
 if has("unix")
   inoremap <C-@> <c-r>=Smart_TabComplete()<CR>
@@ -107,9 +106,6 @@ map <leader>s :w<CR>
 noremap <C-T> :tabedit<CR>
 noremap <C-Q> :tabclose<CR>
 
-"Faster shortcut for commenting. Requires T-Comment plugin
-map <leader>c <c-_><c-_>
-
 " C-p
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -120,23 +116,6 @@ let g:ctrlp_custom_ignore = {
             \ }
 " example link to exclude
 "  \ 'link': 'some_bad_symbolic_links',
-
-" ----- xolox/vim-easytags settings -----
-" Where to look for tags files
-set tags=./tags;,~/.vimtags
-" Sensible defaults
-let g:easytags_events = ['BufReadPost', 'BufWritePost']
-let g:easytags_async = 1
-" set to 2 to generate local tag files, not just use them
-let g:easytags_dynamic_files = 1
-let g:easytags_resolve_links = 1
-let g:easytags_suppress_ctags_warning = 1
-
-" ----- majutsushi/tagbar settings -----
-" Open/close tagbar with \b
-nmap <silent> <leader>r :TagbarToggle<CR>
-" Uncomment to open tagbar automatically whenever possible
-"autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 " ----- airblade/vim-gitgutter settings -----
 " Required after having changed the colorscheme

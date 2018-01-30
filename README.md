@@ -15,7 +15,6 @@ configs for:
  - git (1.7.10+)
  - htop
  - Xresources (xterm)
- - irssi
 
 assumes installed software:
  - python 3.3+
@@ -23,7 +22,6 @@ assumes installed software:
  - zsh
  - vim
  - sudo (optional)
- - htop (optional)
 
 ```sh
 curl https://raw.githubusercontent.com/compilenix/dotfiles/master/install.sh | bash

@@ -278,7 +278,7 @@ fi
 if [ -f "$HOME/.zshrc_include" ]; then
     source "$HOME/.zshrc_include"
 else
-    echo -e "#export SSH_AUTH_SOCK=\$XDG_RUNTIME_DIR/keeagent.socket" >"$HOME/.zshrc_include"
+    echo -e "#export SSH_AUTH_SOCK=\$XDG_RUNTIME_DIR/keeagent.sock" >"$HOME/.zshrc_include"
 fi
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then

@@ -136,10 +136,12 @@ alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/lo
 alias update-zshrc='echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles/ && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias test-mail-sendmail='echo "Subject: test" | sendmail -v '
 alias test-mail-mutt='mutt -s "test" '
-function apache2-reload { sudo apache2ctl -t && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
-function apache2-restart { sudo apache2ctl -t && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }
-function nginx-reload { sudo nginx -t && { sudo systemctl reload nginx || sudo systemctl status nginx } }
-function nginx-restart { sudo nginx -t && { sudo systemctl restart nginx || sudo systemctl status nginx } }
+function apache-configtest { sudo apache2ctl -t }
+function apache-reload { apache-configtest && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
+function apache-restart { apache-configtest && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }
+function nginx-configtest { sudo nginx -t }
+function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
+function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
 
 export PATH="$PATH:$HOME/bin:$HOME/bin_dotfiles:$HOME/sh"
 export EDITOR=vim

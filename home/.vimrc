@@ -80,10 +80,10 @@ function! Smart_TabComplete()
   endif
 endfunction
 
-inoremap <Tab> <c-r>=Smart_TabComplete()<CR>
+"inoremap <Tab> <c-r>=Smart_TabComplete()<CR>
 
 if has("unix")
-  inoremap <C-@> <c-r>=Smart_TabComplete()<CR>
+   "inoremap <C-@> <c-r>=Smart_TabComplete()<CR>
 elseif has("win32")
   inoremap <C-Space> <c-r>=Smart_TabComplete()<CR>
 endif

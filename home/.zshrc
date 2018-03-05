@@ -77,22 +77,22 @@ alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-l
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
-alias clean-swap='swapoff -a; swapon -a'
+alias clean-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-swap='clean-swap'
-alias drop-fscache='sync; echo 3 > /proc/sys/vm/drop_caches'
+alias drop-fscache='ssync; sudo echo 3 > /proc/sys/vm/drop_caches'
 alias reset-fscache='drop-fscache'
 alias dns-retransfer-zones='rndc retransfer'
 alias dns-reload-zones='rndc reload'
-alias get-network-listening='netstat -tunpl'
-alias get-network-active-connections='netstat -tun'
-alias get-network-active-connections-by-type="netstat -tun | awk '{print \$6}' | sort | uniq -c | sort -n | tail -n +2"
-alias get-network-active-connections-by-type-program="netstat -tunp | awk '{print \$6,\$7}' | sort | uniq -c | sort -n | tail -n +2"
-alias get-iptables-v4='iptables -L -v'
-alias get-iptables-v4-nat='iptables -t nat -L -v'
-alias get-iptables-v6='ip6tables -L -v'
-alias get-iptables-v6-nat='ip6tables -t nat -L -v'
+alias get-network-listening='sudo netstat -tunpl'
+alias get-network-active-connections='sudo netstat -tun'
+alias get-network-active-connections-by-type="sudo netstat -tun | awk '{print \$6}' | sort | uniq -c | sort -n | tail -n +2"
+alias get-network-active-connections-by-type-program="sudo netstat -tunp | awk '{print \$6,\$7}' | sort | uniq -c | sort -n | tail -n +2"
+alias get-iptables-v4='sudo iptables -L -v'
+alias get-iptables-v4-nat='sudo iptables -t nat -L -v'
+alias get-iptables-v6='sudo ip6tables -L -v'
+alias get-iptables-v6-nat='sudo ip6tables -t nat -L -v'
 alias get-mem-dirty='cat /proc/meminfo | grep Dirty'
-alias watch-mem-dirty='watch -n 1 get-mem-dirty'
+alias watch-mem-dirty='watch -n 1 "cat /proc/meminfo | grep Dirty"'
 alias watch-ceph-status='watch -n 1 ceph -s'
 alias get-date='date +%s'
 alias get-date-from-unixtime='read a; date -d @$a'
@@ -118,28 +118,30 @@ alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
 alias set-terminal-powersave-off='setterm -blank 0 -powersave off'
 alias set-terminal-powersave-on='setterm -blank 60 -powersave on'
-alias set-megaraid-alarm-enabled='megacli -AdpSetProp AlarmEnbl'
-alias set-megaraid-alarm-disabled='megacli -AdpSetProp AlarmDsbl'
-alias set-megaraid-alarm-silent='megacli -AdpSetProp AlarmSilence'
+alias set-megaraid-alarm-enabled='sudo megacli -AdpSetProp AlarmEnbl'
+alias set-megaraid-alarm-disabled='sudo megacli -AdpSetProp AlarmDsbl'
+alias set-megaraid-alarm-silent='sudo megacli -AdpSetProp AlarmSilence'
 alias set-keyboard-mode-raw='sudo kbd_mode -s'
 alias set-display-off='sleep 1; xset dpms force standby'
 alias set-display-on='xset dpms force on'
-function add-iptables-allow-out-http_s { iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
-function remove-iptables-allow-out-http_s { iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
-alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; emerge -avDuN world'
-alias update-archlinux-pacman='pacman -Syu'
-alias update-archlinux-yaourt='yaourt -Syu'
-alias update-archlinux-yaourt-aur='yaourt -Syu --aur'
-alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { apt update; }; ask_yn_n_callback() { echo ""; }; ask_yn; echo; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; apt upgrade; apt autoremove; apt autoclean'
+function add-iptables-allow-out-http_s { sudo iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
+function remove-iptables-allow-out-http_s { sudo iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
+alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { sudo emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; sudo emerge -avDuN world'
+alias update-archlinux-pacman='sudo pacman -Syu'
+alias update-archlinux-yaourt='sudo yaourt -Syu'
+alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
+alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { sudo apt update; }; ask_yn_n_callback() { echo ""; }; ask_yn; echo; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
 function git-reset { currentDir="$PWD"; for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd "$currentDir"; done; };
 alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; vim +PluginInstall +qa; exec zsh'
 alias update-zshrc='echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles/ && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias test-mail-sendmail='echo "Subject: test" | sendmail -v '
 alias test-mail-mutt='mutt -s "test" '
-function apache2-reload { sudo apache2ctl -t && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
-function apache2-restart { sudo apache2ctl -t && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }
-function nginx-reload { sudo nginx -t && { sudo systemctl reload nginx || sudo systemctl status nginx } }
-function nginx-restart { sudo nginx -t && { sudo systemctl restart nginx || sudo systemctl status nginx } }
+function apache-configtest { sudo apache2ctl -t }
+function apache-reload { apache-configtest && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
+function apache-restart { apache-configtest && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }
+function nginx-configtest { sudo nginx -t }
+function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
+function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
 
 export PATH="$PATH:$HOME/bin:$HOME/bin_dotfiles:$HOME/sh"
 export EDITOR=vim
@@ -276,7 +278,7 @@ fi
 if [ -f "$HOME/.zshrc_include" ]; then
     source "$HOME/.zshrc_include"
 else
-    echo -e "#export SSH_AUTH_SOCK=\$XDG_RUNTIME_DIR/keeagent.socket" >"$HOME/.zshrc_include"
+    echo -e "#export SSH_AUTH_SOCK=\$XDG_RUNTIME_DIR/keeagent.sock" >"$HOME/.zshrc_include"
 fi
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then

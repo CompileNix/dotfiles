@@ -62,6 +62,7 @@ fi
 
 
 # aliases
+alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
 alias sudosu='sudo su -'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'

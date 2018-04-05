@@ -1,8 +1,20 @@
-n=$(nice)
-# increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
-if [[ $EUID -eq 0 ]]; then
-    renice -n -20 $$ >/dev/null
-    ionice -c 2 -n 0 -p $$ >/dev/null
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     operatingSystem=Linux;;
+    Darwin*)    operatingSystem=Mac;;
+    CYGWIN*)    operatingSystem=Cygwin;;
+    MINGW*)     operatingSystem=MinGw;;
+    *)          operatingSystem="UNKNOWN:${unameOut}"
+esac
+unset unameOut
+
+if [[ $operatingSystem -ne "Mac" ]]; then
+    n=$(nice)
+    # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
+    if [[ $EUID -eq 0 ]]; then
+        renice -n -20 $$ >/dev/null
+        ionice -c 2 -n 0 -p $$ >/dev/null
+    fi
 fi
 
 stty -ixon -ixoff 2>/dev/null
@@ -62,17 +74,23 @@ fi
 
 
 # aliases
+if [[ $operatingSystem -eq "Mac" ]]; then
+    alias ls='ls -h -G'
+    alias make="make -j$(sysctl -n hw.ncpu)"
+else
+    alias ls='ls -h --color'
+    alias make="make -j$(nproc)"
+    alias iotop='iotop -d 1 -P -o'
+fi
+
 alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
 alias sudosu='sudo su -'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
-alias ls='ls -h --color'
-alias ll='ls -lh --color'
-alias la='ls -alh --color'
+alias ll='ls -l'
+alias la='ls -al'
 alias grep='grep --color'
-alias make="make -j$(nproc)"
-alias iotop='iotop -d 1 -P -o'
 alias htop='htop -d 10'
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
@@ -80,7 +98,7 @@ alias brexit='echo "disable all network interfaces, delete 50% of all files and 
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias clean-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-swap='clean-swap'
-alias drop-fscache='ssync; sudo echo 3 > /proc/sys/vm/drop_caches'
+alias drop-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
 alias reset-fscache='drop-fscache'
 alias dns-retransfer-zones='rndc retransfer'
 alias dns-reload-zones='rndc reload'
@@ -203,66 +221,66 @@ antigen bundle ascii-soup/zsh-url-highlighter
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 if which tmux &> /dev/null
-	then
-	# Configuration variables
-	#
-	# Automatically start tmux
-	[[ -n "$ZSH_TMUX_AUTOSTART" ]] || ZSH_TMUX_AUTOSTART=false
-	# Only autostart once. If set to false, tmux will attempt to
-	# autostart every time your zsh configs are reloaded.
-	[[ -n "$ZSH_TMUX_AUTOSTART_ONCE" ]] || ZSH_TMUX_AUTOSTART_ONCE=true
-	# Automatically connect to a previous session if it exists
-	[[ -n "$ZSH_TMUX_AUTOCONNECT" ]] || ZSH_TMUX_AUTOCONNECT=true
-	# Automatically close the terminal when tmux exits
-	[[ -n "$ZSH_TMUX_AUTOQUIT" ]] || ZSH_TMUX_AUTOQUIT=$ZSH_TMUX_AUTOSTART
-	# Set term to screen or screen-256color based on current terminal support
-	[[ -n "$ZSH_TMUX_FIXTERM" ]] || ZSH_TMUX_FIXTERM=true
-	# Set '-CC' option for iTerm2 tmux integration
-	[[ -n "$ZSH_TMUX_ITERM2" ]] || ZSH_TMUX_ITERM2=false
-	# The TERM to use for non-256 color terminals.
-	# Tmux states this should be screen, but you may need to change it on
-	# systems without the proper terminfo
-	[[ -n "$ZSH_TMUX_FIXTERM_WITHOUT_256COLOR" ]] || ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
-	# The TERM to use for 256 color terminals.
-	# Tmux states this should be screen-256color, but you may need to change it on
-	# systems without the proper terminfo
-	[[ -n "$ZSH_TMUX_FIXTERM_WITH_256COLOR" ]] || ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
+    then
+    # Configuration variables
+    #
+    # Automatically start tmux
+    [[ -n "$ZSH_TMUX_AUTOSTART" ]] || ZSH_TMUX_AUTOSTART=false
+    # Only autostart once. If set to false, tmux will attempt to
+    # autostart every time your zsh configs are reloaded.
+    [[ -n "$ZSH_TMUX_AUTOSTART_ONCE" ]] || ZSH_TMUX_AUTOSTART_ONCE=true
+    # Automatically connect to a previous session if it exists
+    [[ -n "$ZSH_TMUX_AUTOCONNECT" ]] || ZSH_TMUX_AUTOCONNECT=true
+    # Automatically close the terminal when tmux exits
+    [[ -n "$ZSH_TMUX_AUTOQUIT" ]] || ZSH_TMUX_AUTOQUIT=$ZSH_TMUX_AUTOSTART
+    # Set term to screen or screen-256color based on current terminal support
+    [[ -n "$ZSH_TMUX_FIXTERM" ]] || ZSH_TMUX_FIXTERM=true
+    # Set '-CC' option for iTerm2 tmux integration
+    [[ -n "$ZSH_TMUX_ITERM2" ]] || ZSH_TMUX_ITERM2=false
+    # The TERM to use for non-256 color terminals.
+    # Tmux states this should be screen, but you may need to change it on
+    # systems without the proper terminfo
+    [[ -n "$ZSH_TMUX_FIXTERM_WITHOUT_256COLOR" ]] || ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
+    # The TERM to use for 256 color terminals.
+    # Tmux states this should be screen-256color, but you may need to change it on
+    # systems without the proper terminfo
+    [[ -n "$ZSH_TMUX_FIXTERM_WITH_256COLOR" ]] || ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
 
-	# Determine if the terminal supports 256 colors
-	if [[ `tput colors` == "256" ]]
-	then
-		export ZSH_TMUX_TERM=$ZSH_TMUX_FIXTERM_WITH_256COLOR
-	else
-		export ZSH_TMUX_TERM=$ZSH_TMUX_FIXTERM_WITHOUT_256COLOR
-	fi
+    # Determine if the terminal supports 256 colors
+    if [[ `tput colors` == "256" ]]
+    then
+        export ZSH_TMUX_TERM=$ZSH_TMUX_FIXTERM_WITH_256COLOR
+    else
+        export ZSH_TMUX_TERM=$ZSH_TMUX_FIXTERM_WITHOUT_256COLOR
+    fi
 
-	# Wrapper function for tmux.
-	function _zsh_tmux_plugin_run()
-	{
-		# We have other arguments, just run them
-		if [[ -n "$@" ]]
-		then
-			tmux $@
-		# Try to connect to an existing session.
-		elif [[ "$ZSH_TMUX_AUTOCONNECT" == "true" ]]
-		then
-			tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` attach || tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG` new-session
-			[[ "$ZSH_TMUX_AUTOQUIT" == "true" ]] && exit
-		# Just run tmux, fixing the TERM variable if requested.
-		else
-			tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG`
-			[[ "$ZSH_TMUX_AUTOQUIT" == "true" ]] && exit
-		fi
-	}
+    # Wrapper function for tmux.
+    function _zsh_tmux_plugin_run()
+    {
+        # We have other arguments, just run them
+        if [[ -n "$@" ]]
+        then
+            tmux $@
+        # Try to connect to an existing session.
+        elif [[ "$ZSH_TMUX_AUTOCONNECT" == "true" ]]
+        then
+            tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` attach || tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG` new-session
+            [[ "$ZSH_TMUX_AUTOQUIT" == "true" ]] && exit
+        # Just run tmux, fixing the TERM variable if requested.
+        else
+            tmux `[[ "$ZSH_TMUX_ITERM2" == "true" ]] && echo '-CC '` `[[ "$ZSH_TMUX_FIXTERM" == "true" ]] && echo '-f '$_ZSH_TMUX_FIXED_CONFIG`
+            [[ "$ZSH_TMUX_AUTOQUIT" == "true" ]] && exit
+        fi
+    }
 
-	# Use the completions for tmux for our function
-	compdef _tmux zsh_tmux_plugin_run
+    # Use the completions for tmux for our function
+    compdef _tmux zsh_tmux_plugin_run
 
-	# Autostart if not already in tmux and enabled.
-	if [[ ! -n "$TMUX" && "$ZSH_TMUX_AUTOSTART" == "true" ]]
-	then
-		_zsh_tmux_plugin_run
-	fi
+    # Autostart if not already in tmux and enabled.
+    if [[ ! -n "$TMUX" && "$ZSH_TMUX_AUTOSTART" == "true" ]]
+    then
+        _zsh_tmux_plugin_run
+    fi
 fi
 
 antigen apply
@@ -287,8 +305,10 @@ if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     touch "$HOME/.gnupg/gpg-agent.env"
 fi
 
-if [[ $EUID -eq 0 ]]; then
-    renice -n $n $$ > /dev/null
+if [[ $operatingSystem -ne "Mac" ]]; then
+    if [[ $EUID -eq 0 ]]; then
+        renice -n $n $$ > /dev/null
+    fi
 fi
 
 unset n

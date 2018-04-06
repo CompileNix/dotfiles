@@ -8,7 +8,7 @@ case "${unameOut}" in
 esac
 unset unameOut
 
-if [[ $operatingSystem -ne "Mac" ]]; then
+if [[ $operatingSystem == "Mac" ]]; then
     n=$(nice)
     # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
     if [[ $EUID -eq 0 ]]; then
@@ -74,12 +74,12 @@ fi
 
 
 # aliases
-if [[ $operatingSystem -eq "Mac" ]]; then
+if [[ $operatingSystem == "Mac" ]]; then
     alias ls='ls -h -G'
-    alias make="make -j$(sysctl -n hw.ncpu)"
+    alias make="make -j\$(sysctl -n hw.ncpu)"
 else
     alias ls='ls -h --color'
-    alias make="make -j$(nproc)"
+    alias make="make -j\$(nproc)"
     alias iotop='iotop -d 1 -P -o'
 fi
 
@@ -305,7 +305,7 @@ if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     touch "$HOME/.gnupg/gpg-agent.env"
 fi
 
-if [[ $operatingSystem -ne "Mac" ]]; then
+if [[ $operatingSystem == "Mac" ]]; then
     if [[ $EUID -eq 0 ]]; then
         renice -n $n $$ > /dev/null
     fi

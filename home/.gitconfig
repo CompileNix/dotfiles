@@ -4,6 +4,7 @@
 [alias]
     s = status
     c = config
+    ch = checkout
     cl = config -l
     ce = config -e
     f = fetch

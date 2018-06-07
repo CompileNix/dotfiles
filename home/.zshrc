@@ -129,6 +129,23 @@ function get-cert {
     portNumber=$2
     get-cert-raw $hostName $portNumber | openssl x509 -noout -text
 }
+export dnsStats='+stats'
+function set-dns-stats-enable {
+    export dnsStats='+stats'
+}
+function set-dns-stats-disable {
+    export dnsStats=''
+}
+export dnsTrace=''
+function set-dns-trace-enable {
+    export dnsTrace='+trace'
+}
+function set-dns-trace-disable {
+    export dnsTrace=''
+}
+alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer ANY"
+alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec ANY"
+alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec +sigchase ANY"
 alias get-picture-metadata-curl='read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
 alias get-weather='curl wttr.in'

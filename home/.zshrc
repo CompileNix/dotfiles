@@ -212,7 +212,7 @@ if [ ! -f "$HOME/.tmux.conf_include" ]; then
 fi
 
 if [ ! -f "$HOME/.gitconfig_include" ]; then
-    echo -e "#[user]\n#\tname = Compilenix\n#\temail = Compilenix@compilenix.org\n#[core]\n#\tfileMode = false\n\n# vim: sw=4 et" > "$HOME/.gitconfig_include"
+    echo -e "#[user]\n#\tname = Compilenix\n#\temail = Compilenix@gmail.org\n\tsigningkey = 3C713073CAC92AE0\n[credential]\n\thelper = store\n#[core]\n#\tfileMode = false\n\n# vim: sw=4 et" > "$HOME/.gitconfig_include"
 fi
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"

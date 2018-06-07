@@ -225,6 +225,7 @@ fi
 ZSH_TMUX_AUTOSTART=false
 ZSH_TMUX_AUTOQUIT=false
 ZSH_TMUX_FIXTERM=false
+COMPLETION_WAITING_DOTS="true"
 
 source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh

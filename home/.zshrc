@@ -320,7 +320,7 @@ set-zsh-highlighting-full
 export ZSH_HIGHLIGHT_MAXLENGTH=80
 
 if [ ! -z "$TMUX" ]; then
-    #antigen bundle zsh-users/zsh-autosuggestions
+    antigen bundle zsh-users/zsh-autosuggestions
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
 fi
 

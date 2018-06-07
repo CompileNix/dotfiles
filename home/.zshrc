@@ -158,7 +158,7 @@ alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(for
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
 function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' };
 function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; };
-alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)'
+alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root line)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
 alias set-terminal-powersave-off='setterm -blank 0 -powersave off'
@@ -317,6 +317,8 @@ antigen apply
 autoload -U compinit && compinit -u
 
 antigen bundle zsh-users/zsh-syntax-highlighting
+set-zsh-highlighting-full
+export ZSH_HIGHLIGHT_MAXLENGTH=80
 
 if [ ! -z "$TMUX" ]; then
     #antigen bundle zsh-users/zsh-autosuggestions

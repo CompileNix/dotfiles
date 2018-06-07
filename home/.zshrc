@@ -241,7 +241,7 @@ if [[ ${condition_for_tmux_mem_cpu_load} -eq 0 ]]; then
     antigen bundle compilenix/tmux-mem-cpu-load
 fi
 
-antigen bundle RobSis/zsh-completion-generator
+# antigen bundle RobSis/zsh-completion-generator
 antigen bundle zsh-users/zsh-completions
 antigen bundle ascii-soup/zsh-url-highlighter
 

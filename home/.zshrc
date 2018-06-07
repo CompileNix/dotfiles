@@ -119,7 +119,16 @@ alias get-date-hex='get-date | xargs printf "%x\n"'
 alias get-date-from-hex-unixtime='read a; echo $a | echo $((16#$_))'
 alias get-date-from-hex='get-date-from-hex-unixtime | date -d @$_'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
-alias get-dig-short-answer='dig +noall +answer'
+function get-cert-raw {
+    hostName=$1
+    portNumber=$2
+    echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509
+}
+function get-cert {
+    hostName=$1
+    portNumber=$2
+    get-cert-raw $hostName $portNumber | openssl x509 -noout -text
+}
 alias get-picture-metadata-curl='read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
 alias get-weather='curl wttr.in'

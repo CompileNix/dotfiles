@@ -197,6 +197,8 @@ export HISTSIZE=10000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 export GPG_TTY=$(tty)
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
 
 setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate.
 setopt EXTENDEDGLOB

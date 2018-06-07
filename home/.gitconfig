@@ -7,6 +7,7 @@
     ch = checkout
     cl = config -l
     ce = config -e
+    cr = clone --recursive
     f = fetch
     p = pull
     a = add
@@ -16,8 +17,23 @@
     dr = diff origin/master
     l = log --oneline --graph --decorate --all
     la = log --graph --decorate --all
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+    contributors = shortlog --summary --numbered
+[color]
+    ui = auto
+[commit]
+    # https://help.github.com/articles/signing-commits-using-gpg/
+    gpgsign = true
+[diff]
+    renames = copies
+[help]
+    # Automatically correct and execute mistyped commands
+    autocorrect = 30
 [push]
     default = matching
+    followTags = true
 #[core]
 #    fileMode = false
 [oh-my-zsh]

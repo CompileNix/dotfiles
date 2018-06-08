@@ -95,6 +95,7 @@ alias htop='htop -d 10'
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias clean-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-swap='clean-swap'

@@ -51,12 +51,12 @@ set indexcirclecolor #00ff00
 set circlecolors {white blue gray blue blue}
 set linkfgcolor blue
 set circleoutlinecolor black
-set geometry(main) 1680x974+1680+22
+set geometry(main) 1048x707+1902+82
 set geometry(state) normal
-set geometry(topwidth) 1680
+set geometry(topwidth) 1048
 set geometry(topheight) 225
-set geometry(pwsash0) "480 1"
-set geometry(pwsash1) "720 1"
-set geometry(botwidth) 754
-set geometry(botheight) 744
+set geometry(pwsash0) "228 1"
+set geometry(pwsash1) "375 1"
+set geometry(botwidth) 400
+set geometry(botheight) 477
 set permviews {}

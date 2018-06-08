@@ -299,8 +299,17 @@ COMPLETION_WAITING_DOTS="true"
 
 source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
+antigen theme denysdovhan/spaceship-prompt
 
-antigen theme dpoggi
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_PROMPT_SEPARATE_LINE=false
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_USER_SHOW=true
+SPACESHIP_HOST_SHOW=false
+SPACESHIP_HOST_SHOW_FULL=false
+SPACESHIP_BATTERY_THRESHOLD=30
+SPACESHIP_EXIT_CODE_SHOW=true
+
 echo "checkpoint"
 
 antigen bundle systemd

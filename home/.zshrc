@@ -312,7 +312,7 @@ SPACESHIP_EXIT_CODE_SHOW=true
 
 echo "checkpoint"
 
-antigen bundle systemd
+#antigen bundle systemd
 antigen bundle colored-man-pages
 antigen bundle command-not-found
 

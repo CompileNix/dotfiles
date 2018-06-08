@@ -1,6 +1,11 @@
 #[user]
-#	name = Compilenix
-#	email = Compilenix@compilenix.org
+#    name = Compilenix
+#    email = compilenix@gmail.com
+#    signingkey = C94DD853DD6493CCC47C8C853C713073CAC92AE0
+[core]
+    fscache = true
+    preloadindex = true
+#    fileMode = false
 [alias]
     s = status
     c = config
@@ -31,19 +36,18 @@
 [help]
     # Automatically correct and execute mistyped commands
     autocorrect = 30
+[gui]
+    fontdiff = -family \"Source Code Pro\" -size 11 -weight normal -slant roman -underline 0 -overstrike 0
+    warndetachedcommit = true
+    spellingdictionary = none
+    tabsize = 4
 [push]
     default = matching
     followTags = true
-#[core]
-#    fileMode = false
 [oh-my-zsh]
     hide-status = 1
 [include]
     path = ~/.gitconfig_include
 
+
 # vim: sw=4 et
-[gui]
-	fontdiff = -family \"Source Code Pro\" -size 11 -weight normal -slant roman -underline 0 -overstrike 0
-	warndetachedcommit = true
-	spellingdictionary = none
-	tabsize = 4

@@ -154,6 +154,7 @@ alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | 
 alias get-weather='curl wttr.in'
 alias get-weather-in='echo -n "enter location (name or 3-letters airport code): "; read a; curl wttr.in/$a'
 alias get-moon-phase='curl wttr.in/Moon'
+alias get-random-alias='alias | sort --random-sort | head -n 1'
 alias get-mysql-selects='ngrep -d eth0 -i "select" port 3306'
 alias get-mysql-updates='ngrep -d eth0 -i "update" port 3306'
 alias get-mysql-inserts='ngrep -d eth0 -i "insert" port 3306'
@@ -304,7 +305,7 @@ source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen theme dpoggi
-echo "breakpoint: hit Control+C if the system takes to long to initialize optional shell modules. (you can rerun this with: \"exec zsh\")"
+echo "checkpoint"
 
 antigen bundle systemd
 antigen bundle colored-man-pages
@@ -414,6 +415,8 @@ if [[ $operatingSystem == "Mac" ]]; then
         renice -n $n $$ > /dev/null
     fi
 fi
+
+echo "here is a random shell alias you might not known about: $(get-random-alias)"
 
 unset n
 

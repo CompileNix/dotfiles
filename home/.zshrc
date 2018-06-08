@@ -256,7 +256,7 @@ function nginx-configtest { sudo nginx -t }
 function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
 function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
 
-export PATH="$PATH:$HOME/bin:$HOME/bin_dotfiles:$HOME/sh"
+export PATH="$HOME/bin:$HOME/bin_dotfiles:$HOME/sh:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=10000

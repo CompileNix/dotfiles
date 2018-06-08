@@ -263,7 +263,7 @@ export HISTSIZE=10000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 # Don’t clear the screen after quitting a manual page.
-export MANPAGER='less -X';
+#export MANPAGER='less -X';
 
 # if it's an ssh session export GPG_TTY
 if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then

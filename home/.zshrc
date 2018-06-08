@@ -292,10 +292,6 @@ fi
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
-if [ -f /usr/lib64/node_modules/npm/lib/utils/completion.sh ]; then
-    source /usr/lib64/node_modules/npm/lib/utils/completion.sh
-fi
-
 ZSH_TMUX_AUTOSTART=false
 ZSH_TMUX_AUTOQUIT=false
 ZSH_TMUX_FIXTERM=false
@@ -319,9 +315,6 @@ fi
 # antigen bundle RobSis/zsh-completion-generator
 antigen bundle zsh-users/zsh-completions
 antigen bundle ascii-soup/zsh-url-highlighter
-
-# Make zsh know about hosts already accessed by SSH
-zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 if which tmux &> /dev/null
     then

@@ -379,7 +379,7 @@ if which tmux &> /dev/null
     }
 
     # Use the completions for tmux for our function
-    compdef _tmux zsh_tmux_plugin_run
+    # compdef _tmux zsh_tmux_plugin_run
 
     # Autostart if not already in tmux and enabled.
     if [[ ! -n "$TMUX" && "$ZSH_TMUX_AUTOSTART" == "true" ]]
@@ -408,17 +408,12 @@ function enable-nvm {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
-antigen apply
-
-autoload -U compinit && compinit -u
-
 antigen bundle zsh-users/zsh-syntax-highlighting
 set-zsh-highlighting-full
 export ZSH_HIGHLIGHT_MAXLENGTH=80
 
 # if [ ! -z "$TMUX" ]; then
     antigen bundle zsh-users/zsh-autosuggestions
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
 # fi
 
 if [ -f "$HOME/.zshrc_include" ]; then
@@ -426,6 +421,10 @@ if [ -f "$HOME/.zshrc_include" ]; then
 else
     echo -e "#export SSH_AUTH_SOCK=\$XDG_RUNTIME_DIR/keeagent.sock\n#export EDITOR=nano" >"$HOME/.zshrc_include"
 fi
+
+antigen apply
+autoload -U compinit && compinit -u
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     mkdir -pv "$HOME/.gnupg"

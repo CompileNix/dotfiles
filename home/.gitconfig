@@ -12,7 +12,7 @@
     ch = checkout
     cl = config -l
     ce = config -e
-    cr = clone --recursive
+    clone = clone --recursive
     f = fetch
     p = pull
     a = add

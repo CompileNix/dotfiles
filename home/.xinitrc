@@ -6,3 +6,5 @@
 #fi
 
 exec i3
+
+# vim: sw=4 et

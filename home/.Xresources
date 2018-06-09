@@ -71,3 +71,5 @@ xterm*color7:       #ababab
 URxvt*color7:       #ababab
 xterm*color15:      #f9f9f9
 URxvt*color15:      #f9f9f9
+
+! vim: sw=4 et

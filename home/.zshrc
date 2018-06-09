@@ -437,6 +437,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Relea
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     mkdir -pv "$HOME/.gnupg"
+    chmod 0700 "$HOME/.gnupg"
     touch "$HOME/.gnupg/gpg-agent.env"
 fi
 

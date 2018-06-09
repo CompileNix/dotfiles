@@ -8,32 +8,14 @@ feel free to steal whatever you like
 homesick / homeshick
 --------------------
 
-configs for:
- - zsh
- - vim
- - tmux
- - git (1.7.10+)
- - htop
- - Xresources (xterm)
-
-assumes installed software:
+requirements:
  - python 3.3+
  - git
  - zsh
  - vim
- - sudo (optional)
+ - sudo
+ - powerline-fonts
 
 ```sh
 curl https://raw.githubusercontent.com/compilenix/dotfiles/master/install.sh | bash
 ```
-
-```sh
-mkdir -pv $HOME/bin
-git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-echo "y" | $HOME/.homesick/repos/homeshick/bin/homeshick clone compilenix/dotfiles
-
-chsh -s /bin/zsh
-vim +PluginInstall +qa
-exec zsh
-```
-

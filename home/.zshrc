@@ -433,7 +433,7 @@ fi
 
 antigen apply
 autoload -U compinit && compinit -u
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     mkdir -pv "$HOME/.gnupg"

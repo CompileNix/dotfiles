@@ -408,6 +408,15 @@ function enable-nvm {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
+function my-chpwd {
+    if [ -f .nvmrc ]
+    then
+        enable-nvm
+        nvm use
+    fi
+}
+chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
+
 antigen bundle zsh-users/zsh-syntax-highlighting
 set-zsh-highlighting-full
 export ZSH_HIGHLIGHT_MAXLENGTH=80

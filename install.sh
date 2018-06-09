@@ -11,13 +11,13 @@ if [[ \
 fi
 
 if [[ ${condition_for_install} -eq 0 ]]; then
-    pwd $HOME
+    cd $HOME
     mkdir -pv $HOME/bin
     git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
     echo "y" | $HOME/.homesick/repos/homeshick/bin/homeshick clone compilenix/dotfiles
-    mkdir -pv .antigen .vim/bundle
+    mkdir -pv .vim/bundle
     ln -sv .homesick/repos/dotfiles/antigen .antigen
-    pwd .vim/bundle
+    cd .vim/bundle
     ln -sv ../../.homesick/repos/dotfiles/vim/vundle vundle
     popd
     chsh -s /bin/zsh

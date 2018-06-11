@@ -162,8 +162,8 @@ alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(for
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
 alias get-ssh-pubkey="more ~/.ssh/id_ed25519.pub | xclip -selection clipboard | echo '=> Public key copied to pasteboard.'"
 alias get-ssh-prikey="more ~/.ssh/id_ed25519 | xclip -selection clipboard | echo '=> Private key copied to pasteboard.'"
-function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' };
-function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; };
+function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' }
+function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
 # Create a data URL from a file
 function get-dataurl {
 	local mimeType
@@ -245,9 +245,42 @@ alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
 alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { sudo apt update; }; ask_yn_n_callback() { echo ""; }; ask_yn; echo; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
 alias update-yum='sudo yum update'
 alias update-fedora='sudo dnf update'
-function git-reset { currentDir="$PWD"; for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd "$currentDir"; done; };
-alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; vim +PluginInstall +qa; exec zsh'
-alias update-zshrc='echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles/ && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
+function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard; popd >/dev/null; done; }
+function fix-antigen_and_homesick_vim {
+    sudo rm /usr/local/bin/tmux-mem-cpu-load
+    # Migrate from 1.x antigen to 2.x antigen
+    if [[ -d ~/.homesick/repos/dotfiles/home/.antigen ]]
+    then
+        cd ~/.homesick/repos
+        rm -rf dotfiles
+        git clone --recursive https://github.com/compilenix/dotfiles.git
+        popd >/dev/null
+        cd ~
+        unlink .antigen
+        unlink .vim/bundle/vundle
+        ln -lv .homesick/repos/dotfiles/antigen .antigen
+        popd >/dev/null
+        cd ~/.vim/bundle
+        ln -lv .homesick/repos/dotfiles/vim/vundle vundle
+        popd >/dev/null
+    fi
+    antigen-cleanup
+    git-reset ~/.homesick/repos/*
+    git-reset ~/.vim/bundle/*
+    homeshick pull
+    homeshick link
+    antigen update
+    for i in ~/.vim/bundle/*
+    do
+        cd "$i"
+        git pull
+        popd >/dev/null
+    done
+    vim +PluginInstall +qa
+    vim +PluginUpdate +qa
+    exec zsh
+}
+alias update-zshrc='cd ~/.homesick/repos/dotfiles; git status; popd >/dev/null; echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias test-mail-sendmail='echo "Subject: test" | sendmail -v '
 alias test-mail-mutt='mutt -s "test" '
 function apache-configtest { sudo apache2ctl -t }

@@ -225,7 +225,7 @@ function git-repo-browser {
 
 	xdg-open "$url" &> /dev/null || (echo "Using $(type xdg-open) to xdg-open URL failed." && exit 1);
 }
-alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root line)'
+alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern line)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
 alias set-terminal-powersave-off='setterm -blank 0 -powersave off'

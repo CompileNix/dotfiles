@@ -310,8 +310,6 @@ SPACESHIP_HOST_SHOW_FULL=false
 SPACESHIP_BATTERY_THRESHOLD=30
 SPACESHIP_EXIT_CODE_SHOW=true
 
-echo "checkpoint"
-
 #antigen bundle systemd
 antigen bundle colored-man-pages
 antigen bundle command-not-found

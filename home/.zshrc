@@ -440,12 +440,21 @@ function enable-nvm {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
+function use-nvm {
+    enable-nvm
+    nvm i
+    nvm use
+}
+
+if [[ -f .nvmrc ]]
+then
+    use-nvm
+fi
+
 function my-chpwd {
     if [[ -f .nvmrc ]]
     then
-        enable-nvm
-        nvm i
-        nvm use
+        use-nvm
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")

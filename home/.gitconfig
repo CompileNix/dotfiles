@@ -12,8 +12,7 @@
     ch = checkout
     cl = config -l
     ce = config -e
-    cloneRecursive = clone --recursive
-    cr = cloneRecursive
+    cr = clone --recursive
     f = fetch
     p = pull
     a = add
@@ -49,6 +48,5 @@
     hide-status = 1
 [include]
     path = ~/.gitconfig_include
-
 
 # vim: sw=4 et

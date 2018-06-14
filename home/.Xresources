@@ -1,4 +1,4 @@
-*font: xft:Source Code pro:size=11
+*font: "xft:Source Code pro:size=11"
 *TkTheme: tileqt
 rofi*font: Source Code pro 11
 Xft.autohint: 0

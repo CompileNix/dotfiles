@@ -441,7 +441,7 @@ function enable-nvm {
 }
 
 function my-chpwd {
-    if [[ -f .nvmrc || -d node_modules ]]
+    if [[ -f .nvmrc ]]
     then
         enable-nvm
         nvm i

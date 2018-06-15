@@ -290,6 +290,10 @@ function apache-restart { apache-configtest && { sudo systemctl restart apache2 
 function nginx-configtest { sudo nginx -t }
 function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
 function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
+function read-logfile {
+    file="$1"
+    sudo cat "${file}" | ccze -A | less -R
+}
 
 export PATH="$HOME/bin:$HOME/bin_dotfiles:$HOME/sh:$PATH"
 export EDITOR=vim

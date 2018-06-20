@@ -18,8 +18,8 @@
     a = add
     aa = add -A
     b = branch
-    d = diff
-    dr = diff origin/master
+    d = diff --word-diff=color
+    dr = diff --word-diff=color origin/master
     l = log --oneline --graph --decorate --all
     la = log --graph --decorate --all
     tags = tag -l

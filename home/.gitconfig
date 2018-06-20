@@ -21,7 +21,7 @@
     d = diff --word-diff=color
     dr = diff --word-diff=color origin/master
     l = log --oneline --graph --decorate --all
-    la = log --graph --decorate --all
+    la = log --graph --decorate --all --show-signature
     tags = tag -l
     branches = branch -a
     remotes = remote -v

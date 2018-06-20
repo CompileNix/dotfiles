@@ -298,8 +298,14 @@ for_window [title="Steam - News"] floating enable
 for_window [title="Steam Library Folders"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
 for_window [title="FreeRDP.*"] floating disable
-for_window [title=" - VLC media player"] floating enable
-for_window [title="SpeedCrunch"] floating enable
+for_window [class="SpeedCrunch"] floating enable
+for_window [title="Create or select new Steam library folder"] floating enable
+for_window [title="Outlook"] floating enable
+for_window [title="Edit Security Group - Mozilla Firefox"] floating enable
+for_window [title="Edit User Mailbox - Mozilla Firefox"] floating enable
+for_window [title="Select Full Access - Mozilla Firefox"] floating enable
+for_window [title="Edit Distribution Group - Mozilla Firefox"] floating enable
+for_window [title="Select Members - Mozilla Firefox"] floating enable
 
 #exec --no-startup-id xrandr --output DVI-I-1 --primary --auto --right-of HDMI-0
 #exec --no-startup-id compton --backend glx --refresh-rate 60 --config ~/.config/compton.conf

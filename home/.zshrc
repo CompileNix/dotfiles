@@ -502,5 +502,6 @@ fi
 echo "here is a random shell alias you might not known about: $(get-random-alias)"
 
 unset n
+unset condition_for_tmux_mem_cpu_load
 
 # vim: sw=4 et

@@ -300,7 +300,6 @@ for_window [title="Create or select new Steam library folder"] floating enable
 for_window [title="FreeRDP.*"] floating disable
 for_window [class="SpeedCrunch"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
-for_window [title="Outlook"] floating enable
 for_window [title="Edit Security Group - Mozilla Firefox"] floating enable
 for_window [title="Edit User Mailbox - Mozilla Firefox"] floating enable
 for_window [title="Select Full Access - Mozilla Firefox"] floating enable

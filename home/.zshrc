@@ -31,6 +31,7 @@ then
     unfunction precmd
     unfunction preexec
     PS1='$ '
+    return
 fi
 
 bindkey '^[[1~' beginning-of-line

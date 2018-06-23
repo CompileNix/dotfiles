@@ -278,7 +278,6 @@ function fix-antigen_and_homesick_vim {
         popd >/dev/null
     done
     vim +PluginInstall +qa
-    vim +PluginUpdate +qa
     exec zsh
 }
 alias update-zshrc='cd ~/.homesick/repos/dotfiles; git status; popd >/dev/null; echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'

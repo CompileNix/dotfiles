@@ -8,7 +8,7 @@ case "${unameOut}" in
 esac
 unset unameOut
 
-if [[ $operatingSystem == "Mac" ]]; then
+if [[ $operatingSystem == "Linux" ]]; then
     n=$(nice)
     # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
     if [[ $EUID -eq 0 ]]; then
@@ -488,7 +488,7 @@ if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     touch "$HOME/.gnupg/gpg-agent.env"
 fi
 
-if [[ $operatingSystem == "Mac" ]]; then
+if [[ $operatingSystem == "Linux" ]]; then
     if [[ $EUID -eq 0 ]]; then
         renice -n $n $$ > /dev/null
     fi

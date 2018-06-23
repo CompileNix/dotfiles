@@ -441,13 +441,17 @@ zstyle ':completion:*:hosts' hosts $hosts
 function enable-nvm {
     echo "loading Node Version Manager..."
     export NVM_DIR="$(realpath $HOME/.nvm)"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || {
+        echo "you need nvm (https://github.com/creationix/nvm)"
+        unset NVM_DIR
+        return 1
+    }
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 }
 
 function use-nvm {
-    enable-nvm
-    nvm i
+    enable-nvm || return 1
+    nvm i || return 1
     nvm use
 }
 

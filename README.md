@@ -17,7 +17,7 @@ __Keep always an old terminal open, in case of failures!__
 curl https://raw.githubusercontent.com/compilenix/dotfiles/master/install.sh | bash
 ```
 
-# Update
+## Update
 Copy and paste into terminal.
 
 __Keep always an old terminal open, in case of failures!__

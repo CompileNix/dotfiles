@@ -308,6 +308,8 @@ for_window [title="Select Members - Mozilla Firefox"] floating enable
 for_window [title="Select Send As - Mozilla Firefox"] floating enable
 for_window [title="Select Send On Behalf - Mozilla Firefox"] floating enable
 for_window [title="Edit Room Mailbox - Mozilla Firefox"] floating enable
+for_window [title="Select User - Entire Forest - Mozilla Firefox"] floating enable
+for_window [title="User Mailbox - Mozilla Firefox"] floating enable
 
 #exec --no-startup-id xrandr --output DVI-I-1 --primary --auto --right-of HDMI-0
 #exec --no-startup-id compton --backend glx --refresh-rate 60 --config ~/.config/compton.conf

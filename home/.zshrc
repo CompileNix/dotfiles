@@ -167,64 +167,64 @@ function get-debian-package-description { read input; dpkg -l ${input} | grep --
 function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
 # Create a data URL from a file
 function get-dataurl {
-	local mimeType
-	mimeType=$(file -b --mime-type "$1")
-	if [[ $mimeType == text/* ]]; then
-		mimeType="${mimeType};charset=utf-8"
-	fi
-	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+    local mimeType
+    mimeType=$(file -b --mime-type "$1")
+    if [[ $mimeType == text/* ]]; then
+        mimeType="${mimeType};charset=utf-8"
+    fi
+    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 function git-repo-browser {
-	# Figure out github repo base URL
-	local base_url
-	base_url=$(git config --get remote.origin.url)
-	base_url=${base_url%\.git} # remove .git from end of string
+    # Figure out github repo base URL
+    local base_url
+    base_url=$(git config --get remote.origin.url)
+    base_url=${base_url%\.git} # remove .git from end of string
 
-	# Fix git@github.com: URLs
-	base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
+    # Fix git@github.com: URLs
+    base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
 
-	# Fix git://github.com URLS
-	base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
+    # Fix git://github.com URLS
+    base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
 
-	# Fix git@bitbucket.org: URLs
-	base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
+    # Fix git@bitbucket.org: URLs
+    base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
 
-	# Fix git@gitlab.com: URLs
-	base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
+    # Fix git@gitlab.com: URLs
+    base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
 
-	# Fix git@gitlab.com: URLs
-	base_url=${base_url//git@git\.compilenix\.org:/https:\/\/git\.compilenix\.org\/}
+    # Fix git@gitlab.com: URLs
+    base_url=${base_url//git@git\.compilenix\.org:/https:\/\/git\.compilenix\.org\/}
 
-	# Validate that this folder is a git folder
-	if ! git branch 2>/dev/null 1>&2 ; then
-		echo "Not a git repo!"
-		exit $?
-	fi
+    # Validate that this folder is a git folder
+    if ! git branch 2>/dev/null 1>&2 ; then
+        echo "Not a git repo!"
+        exit $?
+    fi
 
-	# Find current directory relative to .git parent
-	full_path=$(pwd)
-	git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
+    # Find current directory relative to .git parent
+    full_path=$(pwd)
+    git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
+    relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
 
-	# If filename argument is present, append it
-	if [ "$1" ]; then
-		relative_path="$relative_path/$1"
-	fi
+    # If filename argument is present, append it
+    if [ "$1" ]; then
+        relative_path="$relative_path/$1"
+    fi
 
-	# Figure out current git branch
-	# git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-	git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+    # Figure out current git branch
+    # git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+    git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
 
-	# Remove cruft from branchname
-	branch=${git_where#refs\/heads\/}
+    # Remove cruft from branchname
+    branch=${git_where#refs\/heads\/}
 
-	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
-	url="$base_url/$tree/$branch$relative_path"
+    [[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
+    url="$base_url/$tree/$branch$relative_path"
 
 
-	echo "Calling $(type xdg-open) for $url"
+    echo "Calling $(type xdg-open) for $url"
 
-	xdg-open "$url" &> /dev/null || (echo "Using $(type xdg-open) to xdg-open URL failed." && exit 1);
+    xdg-open "$url" &> /dev/null || (echo "Using $(type xdg-open) to xdg-open URL failed." && exit 1);
 }
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern line)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
@@ -306,8 +306,8 @@ export SAVEHIST=$HISTSIZE
 
 # if it's an ssh session export GPG_TTY
 if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
-	GPG_TTY=$(tty)
-	export GPG_TTY
+    GPG_TTY=$(tty)
+    export GPG_TTY
 fi
 
 setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate.

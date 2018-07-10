@@ -295,7 +295,7 @@ function read-logfile {
     sudo cat "${file}" | ccze -A | less -R
 }
 
-export PATH="$HOME/bin:$HOME/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:$PATH"
+export PATH="$HOME/bin:$HOME/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=10000

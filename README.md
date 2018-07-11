@@ -33,12 +33,12 @@ function fix-antigen_and_homesick_vim {
         git clone --recursive https://github.com/compilenix/dotfiles.git
         popd >/dev/null
         cd ~
-        unlink .antigen
-        unlink .vim/bundle/vundle
-        ln -lv .homesick/repos/dotfiles/antigen .antigen
+        rm -rf .antigen
+        rm -rf .vim/bundle/vundle
+        ln -sv .homesick/repos/dotfiles/antigen .antigen
         popd >/dev/null
         cd ~/.vim/bundle
-        ln -lv .homesick/repos/dotfiles/vim/vundle vundle
+        ln -sv .homesick/repos/dotfiles/vim/vundle vundle
         popd >/dev/null
     fi
     antigen-cleanup

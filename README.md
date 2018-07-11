@@ -8,7 +8,7 @@ my personal configuration files. feel free to steal whatever you like.
 - zsh
 - vim
 - sudo
-- powerline-fonts
+- [powerline-fonts](https://github.com/powerline/fonts/releases)
 
 ## install
 __Keep always an old terminal open, in case of failures!__

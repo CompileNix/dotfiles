@@ -259,10 +259,10 @@ function fix-antigen_and_homesick_vim {
         cd ~
         rm -rf .antigen
         rm -rf .vim/bundle/vundle
-        ln -sv .homesick/repos/dotfiles/antigen .antigen
+        ln -sfv .homesick/repos/dotfiles/antigen .antigen
         popd >/dev/null
         cd ~/.vim/bundle
-        ln -sv .homesick/repos/dotfiles/vim/vundle vundle
+        ln -sfv ../../.homesick/repos/dotfiles/vim/vundle vundle
         popd >/dev/null
     fi
     antigen-cleanup

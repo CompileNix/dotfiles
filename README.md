@@ -25,22 +25,18 @@ __Keep always an old terminal open, in case of failures!__
 ```sh
 function fix-antigen_and_homesick_vim {
     sudo rm /usr/local/bin/tmux-mem-cpu-load
-    # Migrate from 1.x antigen to 2.x antigen
-    if [[ -d ~/.homesick/repos/dotfiles/home/.antigen ]]
-    then
-        cd ~/.homesick/repos
-        rm -rf dotfiles
-        git clone --recursive https://github.com/compilenix/dotfiles.git
-        popd >/dev/null
-        cd ~
-        rm -rf .antigen
-        rm -rf .vim/bundle/vundle
-        ln -sv .homesick/repos/dotfiles/antigen .antigen
-        popd >/dev/null
-        cd ~/.vim/bundle
-        ln -sv .homesick/repos/dotfiles/vim/vundle vundle
-        popd >/dev/null
-    fi
+    cd ~/.homesick/repos
+    rm -rf dotfiles
+    git clone --recursive https://github.com/compilenix/dotfiles.git
+    popd >/dev/null
+    cd ~
+    rm -rf .antigen
+    rm -rf .vim/bundle/vundle
+    ln -sfv .homesick/repos/dotfiles/antigen .antigen
+    popd >/dev/null
+    cd ~/.vim/bundle
+    ln -sfv ../../.homesick/repos/dotfiles/vim/vundle vundle
+    popd >/dev/null
     antigen-cleanup
     git-reset ~/.homesick/repos/*
     git-reset ~/.vim/bundle/*

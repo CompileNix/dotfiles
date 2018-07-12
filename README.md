@@ -23,7 +23,11 @@ Copy and paste into terminal.
 __Keep always an old terminal open, in case of failures!__
 
 ```sh
-function fix-antigen_and_homesick_vim {
+cd ~/.homesick/repos/dotfiles
+git status
+popd >/dev/null
+echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"
+function ask_yn_y_callback {
     sudo rm /usr/local/bin/tmux-mem-cpu-load
     cd ~/.homesick/repos
     rm -rf dotfiles
@@ -50,8 +54,11 @@ function fix-antigen_and_homesick_vim {
         popd >/dev/null
     done
     vim +PluginInstall +qa
+
     exec zsh
 }
-
-update-zshrc
+function ask_yn_n_callback {
+    echo -n ""
+}
+ask_yn
 ```

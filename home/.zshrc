@@ -438,7 +438,9 @@ hosts=(
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
+export nvmEnabled=0
 function enable-nvm {
+    [[ nvmEnabled -eq 1 ]] && return 0
     echo "loading Node Version Manager..."
     export NVM_DIR="$(realpath $HOME/.nvm)"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || {
@@ -447,23 +449,28 @@ function enable-nvm {
         return 1
     }
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+    export nvmEnabled=1
+}
+
+function disable-nvm {
+    unset NVM_DIR
+    export nvmEnabled=0
 }
 
 function use-nvm {
     enable-nvm || return 1
     nvm i || return 1
-    nvm use
 }
 
 if [[ -f .nvmrc ]]
 then
-    use-nvm
+    [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
 fi
 
 function my-chpwd {
     if [[ -f .nvmrc ]]
     then
-        use-nvm
+        [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")

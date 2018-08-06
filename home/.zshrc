@@ -193,7 +193,7 @@ function git-repo-browser {
     # Fix git@gitlab.com: URLs
     base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
 
-    # Fix git@gitlab.com: URLs
+    # Fix git@compilenix.com: URLs
     base_url=${base_url//git@git\.compilenix\.org:/https:\/\/git\.compilenix\.org\/}
 
     # Validate that this folder is a git folder

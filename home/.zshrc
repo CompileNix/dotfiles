@@ -252,16 +252,16 @@ function fix-antigen_and_homesick_vim {
     # Migrate from 1.x antigen to 2.x antigen
     if [[ -d ~/.homesick/repos/dotfiles/home/.antigen ]]
     then
-        cd ~/.homesick/repos
+        pushd ~/.homesick/repos
         rm -rf dotfiles
         git clone --recursive https://github.com/compilenix/dotfiles.git
         popd >/dev/null
-        cd ~
+        pushd ~
         rm -rf .antigen
         rm -rf .vim/bundle/vundle
         ln -sfv .homesick/repos/dotfiles/antigen .antigen
         popd >/dev/null
-        cd ~/.vim/bundle
+        pushd ~/.vim/bundle
         ln -sfv ../../.homesick/repos/dotfiles/vim/vundle vundle
         popd >/dev/null
     fi
@@ -273,14 +273,16 @@ function fix-antigen_and_homesick_vim {
     antigen update
     for i in ~/.vim/bundle/*
     do
-        cd "$i"
+        pushd "$i"
         git pull
         popd >/dev/null
     done
     vim +PluginInstall +qa
+    rm ~/.tmux.conf_configured
+
     exec zsh
 }
-alias update-zshrc='cd ~/.homesick/repos/dotfiles; git status; popd >/dev/null; echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"; function ask_yn_y_callback { fix-antigen_and_homesick_vim; }; function ask_yn_n_callback { echo -n ""; }; ask_yn'
+alias update-zshrc='pushd ~/.homesick/repos/dotfiles; git status; popd >/dev/null; echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"; function ask_yn_y_callback { fix-antigen_and_homesick_vim; }; function ask_yn_n_callback { echo -n ""; }; ask_yn'
 alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=760866" -O /tmp/code-insiders.rpm && sudo yum install -y /tmp/code-insiders.rpm && rm /tmp/code-insiders.rpm'
 alias test-mail-sendmail='echo "Subject: test" | sendmail -v '
 alias test-mail-mutt='mutt -s "test" '

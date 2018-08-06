@@ -148,9 +148,9 @@ function set-dns-trace-enable {
 function set-dns-trace-disable {
     export dnsTrace=''
 }
-alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer ANY"
-alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec ANY"
-alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec +sigchase ANY"
+alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer"
+alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec"
+alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec +sigchase"
 alias get-picture-metadata-curl='read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
 alias get-weather='curl wttr.in'

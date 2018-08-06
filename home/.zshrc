@@ -246,8 +246,9 @@ alias update-archlinux-yaourt='sudo yaourt -Syu'
 alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
 alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { sudo apt update; }; ask_yn_n_callback() { echo ""; }; ask_yn; echo; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
 alias update-yum='sudo yum update'
-alias update-fedora='sudo dnf update'
-function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard; popd >/dev/null; done; }
+alias update-redhat='sudo dnf update'
+alias update-fedora='update-redhat'
+function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; pushd "$i"; git reset --hard; popd >/dev/null; done; }
 function fix-antigen_and_homesick_vim {
     sudo rm /usr/local/bin/tmux-mem-cpu-load
     # Migrate from 1.x antigen to 2.x antigen

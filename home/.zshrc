@@ -73,6 +73,30 @@ if [[ \
     condition_for_tmux_mem_cpu_load=0
 fi
 
+distro=''
+if [[ $operatingSystem == "Linux" ]]; then
+    is_done=false
+    distro_result=$(lsb_release -i)
+
+    if [ $? -eq 0 ]; then
+        if [[ $distro_result =~ "Ubuntu" ]]; then
+            distro="Ubuntu"
+        fi
+        if [[ $distro_result =~ "Fedora" ]]; then
+            distro="Fedora"
+        fi
+        if [[ $distro_result =~ "Debian" ]]; then
+            distro="Debian"
+        fi
+        if [[ $distro_result =~ "Gentoo" ]]; then
+            distro="Gentoo"
+        fi
+        is_done=true
+    fi
+
+    unset is_done
+    unset distro_result
+fi
 
 # aliases
 if [[ $operatingSystem == "Mac" ]]; then
@@ -298,6 +322,37 @@ function read-logfile {
     file="$1"
     sudo cat "${file}" | ccze -A | less -R
 }
+alias root='sudo su -l root'
+alias processes='ps -aux'
+alias memory='free -h -m'
+alias disk-space='df -h'
+alias disks='lsblk'
+alias systemctl-status='systemctl status'
+
+if [[ $distro == "Ubuntu" ]]; then
+    alias install='sudo apt install '
+    alias find-package='apt search '
+    alias update='update-debian'
+    alias upgrade='update-debian && do-release-upgrade'
+fi
+if [[ $distro == "Debian" ]]; then
+    alias install='sudo apt install '
+    alias find-package='apt search '
+    alias update='update-debian'
+    alias upgrade='update-debian && do-release-upgrade'
+fi
+if [[ $distro == "Fedora" ]]; then
+    alias install='sudo dnf install '
+    alias find-package='dnf search '
+    alias update='update-fedora'
+    alias upgrade='update-fedora'
+fi
+if [[ $distro == "Gentoo" ]]; then
+    alias install='sudo emerge -av '
+    alias find-package='eix '
+    alias update='update-gentoo'
+    alias upgrade='update-gentoo'
+fi
 
 export PATH="$HOME/bin:$HOME/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim

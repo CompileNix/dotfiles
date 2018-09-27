@@ -425,6 +425,7 @@ SPACESHIP_DOCKER_SHOW=false
 SPACESHIP_PYENV_SHOW=false
 SPACESHIP_DOTNET_SHOW=false
 SPACESHIP_EMBER_SHOW=false
+SPACESHIP_PACKAGE_SHOW=false
 
 #antigen bundle systemd
 antigen bundle colored-man-pages

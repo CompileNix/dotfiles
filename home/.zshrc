@@ -517,6 +517,7 @@ hosts=(
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
+export nvmAutoEnable=0
 export nvmEnabled=0
 function enable-nvm {
     [[ nvmEnabled -eq 1 ]] && return 0
@@ -543,12 +544,16 @@ function use-nvm {
 
 if [[ -f .nvmrc ]]
 then
-    [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
+    if [[ $nvmAutoEnable == 1 ]]
+    then
+        [[ $nvmEnabled && "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
+    fi
 fi
 
 function my-chpwd {
     if [[ -f .nvmrc ]]
     then
+        [[ $nvmAutoEnable != 1 ]] && return
         [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
     fi
 }

@@ -5,7 +5,7 @@ Xft.autohint: 0
 Xft.antialias: 1
 Xft.hinting: true
 Xft.hintstyle: hintfull
-Xft.dpi: 96
+Xft.dpi: 108
 
 URxvt.urgentOnBell: true
 URxvt.internalBorder: 0

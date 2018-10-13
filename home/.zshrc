@@ -91,6 +91,9 @@ if [[ $operatingSystem == "Linux" ]]; then
         if [[ $distro_result =~ "Gentoo" ]]; then
             distro="Gentoo"
         fi
+        if [[ $distro_result =~ "Arch" ]]; then
+            distro="Arch"
+        fi
         is_done=true
     fi
 
@@ -355,6 +358,13 @@ if [[ $distro == "Gentoo" ]]; then
     alias update='update-gentoo'
     alias upgrade='update-gentoo'
 fi
+if [[ $distro == "Arch" ]]; then
+    alias install='sudo pacman -S '
+    alias find-package='pacman -Ss '
+    alias update='update-archlinux-pacman'
+    alias upgrade='update-archlinux-pacman'
+fi
+
 
 export PATH="$HOME/bin:$HOME/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim

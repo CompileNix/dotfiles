@@ -1,3 +1,4 @@
+#!/bin/zsh
 xrdb .Xresources
 
 for i in {1..100}
@@ -7,6 +8,11 @@ do
     xinput --set-prop $i "Device Accel Profile" 2 2>/dev/null
     xinput --set-prop $i "Device Accel Velocity Scaling" .01 2>/dev/null
 done
+
+# xinput --list
+# xinput --list-props 17
+# xinput --set-prop 17 "libinput Tapping Enabled" 1
+# xinput --set-prop 17 "libinput Accel Speed" -0.3
 
 xset r rate 125 37
 setxkbmap -layout us,de

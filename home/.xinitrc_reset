@@ -11,8 +11,10 @@ done
 
 # xinput --list
 # xinput --list-props 17
+# xinput --set-prop 17 "Device Enabled" 0
 # xinput --set-prop 17 "libinput Tapping Enabled" 1
 # xinput --set-prop 17 "libinput Accel Speed" -0.3
+# xinput --set-prop 17 "libinput Disable While Typing Enabled" 1
 
 xset r rate 125 37
 setxkbmap -layout us,de

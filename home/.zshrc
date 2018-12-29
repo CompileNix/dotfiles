@@ -334,6 +334,7 @@ alias memory='free -h -m'
 alias disk-space='df -h'
 alias disks='lsblk'
 alias systemctl-status='systemctl status'
+alias stopwatch='echo "press Ctrl+D to stop"; time cat'
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install '

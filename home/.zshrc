@@ -602,6 +602,11 @@ if [[ $operatingSystem == "Linux" ]]; then
     fi
 fi
 
+# Rust
+if [ -f $HOME/.cargo/env ]; then
+    source $HOME/.cargo/env
+fi
+
 echo "here is a random shell alias you might not known about: $(get-random-alias)"
 
 unset n

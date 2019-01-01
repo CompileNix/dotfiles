@@ -184,7 +184,7 @@ bindsym $mod+Shift+less move container to output left
 
 bindsym $mod+Shift+N exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
-#bindsym Ctrl+Mod1+a exec KeePass-Autotype.sh
+bindsym Ctrl+Mod1+a exec keepass-autotype.sh
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

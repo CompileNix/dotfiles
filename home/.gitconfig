@@ -33,6 +33,8 @@
 #[commit]
     # https://help.github.com/articles/signing-commits-using-gpg/
     #gpgsign = true
+[gpg]
+    program = gpg2
 [diff]
     renames = copies
 [help]

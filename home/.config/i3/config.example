@@ -57,6 +57,7 @@ bar {
         inactive_workspace $inactive-border-color $inactive-bg-color $inactive-text-color
         urgent_workspace   $urgent-border-color   $urgent-bg-color   $urgent-text-color
     }
+    tray_output primary
 }
 
 hide_edge_borders both
@@ -83,13 +84,14 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run -l 10
-bindsym $mod+d exec "rofi -modi window,run -show run -scroll-method 1"
-bindsym $mod+shift+d exec "rofi -combi-modi window,run -show combi -modi combi -scroll-method 1"
+bindsym $mod+d exec "rofi -i -modi window,run -show run -scroll-method 1"
+# bindsym $mod+shift+d exec "rofi -combi-modi window,run -show combi -modi combi -scroll-method 1"
+bindsym $mod+shift+d exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -modi window,run -show run -scroll-method 1'"
 
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+set $i3t_alt_tab i3t.py n
+set $i3t_alt_shift_tab i3t.py p
+bindsym Mod1+Tab exec exec $i3t_alt_tab
+bindsym Mod1+Shift+Tab exec $i3t_alt_shift_tab
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -176,6 +178,10 @@ bindsym $mod+Control+Shift+0 move container to workspace number 20
 bindsym $mod+Ctrl+Left move workspace to output left
 bindsym $mod+Ctrl+Right move workspace to output right
 
+# move focused window between monitors
+bindsym $mod+Shift+greater move container to output right
+bindsym $mod+Shift+less move container to output left
+
 bindsym $mod+Shift+N exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
 #bindsym Ctrl+Mod1+a exec KeePass-Autotype.sh
@@ -191,7 +197,7 @@ bindsym $mod+Shift+e exec "i3-msg exit"
 #bindsym $mod+l exec "lock.sh ~/.xlock/icon.png"
 bindsym $mod+l exec "lock.sh"
 # turn display off
-bindsym $mod+k exec "sleep 1; xset dpms force standby"
+bindsym $mod+k exec "lock.sh; xset dpms force standby"
 
 set $mode_launcher Launch: [F]irefox | File [E]xplorer | [C]hrome | [V]S Code | File[Z]illa
 bindsym $mod+o mode "$mode_launcher"
@@ -298,7 +304,7 @@ for_window [title="Steam - News"] floating enable
 for_window [title="Steam Library Folders"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
 for_window [title="FreeRDP.*"] floating disable
-for_window [class="SpeedCrunch"] floating enable
+for_window [title="SpeedCrunch"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
 for_window [title="noVNC"] floating enable
 for_window [title="Edit Security Group - Mozilla Firefox"] floating enable
@@ -311,23 +317,19 @@ for_window [title="Select Send On Behalf - Mozilla Firefox"] floating enable
 for_window [title="Edit Room Mailbox - Mozilla Firefox"] floating enable
 for_window [title="Select User - Entire Forest - Mozilla Firefox"] floating enable
 for_window [title="User Mailbox - Mozilla Firefox"] floating enable
+for_window [title="JetBrains Toolbox"] floating enable
 
-#exec --no-startup-id xrandr --output DVI-I-1 --primary --auto --right-of HDMI-0
-#exec --no-startup-id compton --backend glx --refresh-rate 60 --config ~/.config/compton.conf
+# exec --no-startup-id xrandr --output HDMI-3 --primary --auto --right-of DP-1 --auto
+# exec --no-startup-id xrandr --output DP-1 --rotate left
+# exec --no-startup-id xrandr --dpi 108
+# exec --no-startup-id xrandr --output DisplayPort-0 --mode 2560x1440 --rate 75 --dpi 109 --pos 1440x560 --rotate normal --primary --set "TearFree" "on" --output HDMI-A-2 --mode 2560x1440 --rate 59.95 --pos 0x0 --rotate left --dpi 117 --set "TearFree" "on"
+# exec --no-startup-id xrandr --output DP-1 --mode 2560x1440 --rate 75.00 --dpi 108 --pos 1440x560 --rotate normal --primary --output HDMI-3 --mode 2560x1440 --rate 59.95 --pos 0x0 --rotate left --dpi 117
+# exec --no-startup-id compton --backend glx --config ~/.config/compton.conf
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -n -a -t -f explorer
 exec --no-startup-id clipit
 exec --no-startup-id seafile-applet
-#exec --no-startup-id redshift-gtk -l 53.641662:10.083673
-#exec --no-startup-id owncloud
-#exec --no-startup-id google-chrome
-#exec --no-startup-id pydio-ui
-exec --no-startup-id Telegram
-exec --no-startup-id keepass.sh
-exec --no-startup-id slack
-exec --no-startup-id spotify
-exec --no-startup-id signal-desktop
-exec --no-startup-id mattermost-desktop
-exec --no-startup-id volumeicon
+exec --no-startup-id jetbrains-toolbox --minimize
+exec --no-startup-id /usr/bin/volumeicon
 exec sudo kbd_mode -s

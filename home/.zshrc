@@ -337,13 +337,13 @@ alias systemctl-status='systemctl status'
 alias stopwatch='echo "press Ctrl+D to stop"; time cat'
 
 if [[ $distro == "Ubuntu" ]]; then
-    alias install='sudo apt install '
+    alias install='sudo apt install --no-install-recommends '
     alias find-package='apt search '
     alias update='update-debian'
     alias upgrade='update-debian && do-release-upgrade'
 fi
 if [[ $distro == "Debian" ]]; then
-    alias install='sudo apt install '
+    alias install='sudo apt install --no-install-recommends '
     alias find-package='apt search '
     alias update='update-debian'
     alias upgrade='update-debian && do-release-upgrade'

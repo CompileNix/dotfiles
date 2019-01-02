@@ -580,6 +580,8 @@ export ZSH_HIGHLIGHT_MAXLENGTH=80
     antigen bundle zsh-users/zsh-autosuggestions
 # fi
 
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 if [ -f "$HOME/.zshrc_include" ]; then
     source "$HOME/.zshrc_include"
 else

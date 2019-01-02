@@ -6,6 +6,7 @@
 #fi
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export FT2_SUBPIXEL_HINTING=1
 
 exec i3
 

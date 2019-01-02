@@ -581,6 +581,7 @@ export ZSH_HIGHLIGHT_MAXLENGTH=80
 # fi
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export FT2_SUBPIXEL_HINTING=1
 
 if [ -f "$HOME/.zshrc_include" ]; then
     source "$HOME/.zshrc_include"

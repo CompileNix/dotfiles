@@ -368,7 +368,7 @@ if [[ $distro == "Arch" ]]; then
 fi
 
 
-export PATH="./node_modules/.bin:$HOME/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH=".cargo/bin:$HOME/.cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=10000

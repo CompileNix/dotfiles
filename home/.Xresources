@@ -1,11 +1,13 @@
 *font: "xft:Helvetica Neue:size=11"
 *TkTheme: tileqt
 rofi*font: "Helvetica Neue" 11
-Xft.autohint: 0
+Xft.dpi: 109
+Xft.rgba: rgb
+Xft.antialias: true
 Xft.hinting: true
-Xft.antialias: 1
+Xft.autohint: false
 Xft.hintstyle: hintfull
-Xft.dpi: 108
+Xft.lcdfilter: lcddefault
 
 URxvt.urgentOnBell: true
 URxvt.internalBorder: 0

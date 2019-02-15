@@ -1,4 +1,5 @@
 . ~/.xinitrc_reset
+. ~/.xinitrc_xrandr # xrandr --output DP-1 --primary --mode 2560x1440 -r 59.95 --right-of HDMI-0 --output HDMI-0 --mode 2560x1440 -r 59.95
 
 #if [ -z "$SSH_AUTH_SOCK" ] ; then
 	#eval `ssh-agent -s`

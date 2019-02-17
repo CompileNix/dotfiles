@@ -1,7 +1,20 @@
 #!/bin/bash
 set -e
 
-sudo yum install \
+sudo dnf install \
+    ninja-build \
+    cups-devel \
+    dbus-glib-devel \
+    dbus-devel \
+    systemd-devel \
+    libuuid-devel \
+    pulseaudio-libs-devel \
+    gcc-c++ \
+    libXrandr-devel \
+    faac \
+    faac-devel \
+    faad2-devel \
+    gsm-devel \
     gcc \
     cmake \
     openssl-devel \
@@ -30,8 +43,14 @@ cmake \
     -DBUILTIN_CHANNELS=ON \
     -DWITH_CUPS=OFF \
     -DWITH_WAYLAND=OFF \
-    -DCHANNEL_URBDRC=ON \
-    -DCHANNEL_URBDRC_CLIENT=ON \
+    -DCHANNEL_URBDRC=OFF \
+    -DCHANNEL_URBDRC_CLIENT=OFF \
+    -DWITH_GSTREAMER=OFF \
+    -DWITH_JPEG=ON \
+    -DWITH_LIBSYSTEMD=OFF \
+    -DWITH_XINERAMA=OFF \
+    -DWITH_XEXT=OFF \
+    -DWITH_XCURSOR=OFF \
     .
 
 sed -i 's/-Wall /-Wall -O3 /g' buildflags.h

@@ -335,6 +335,9 @@ alias disk-space='df -h'
 alias disks='lsblk'
 alias systemctl-status='systemctl status'
 alias stopwatch='echo "press Ctrl+D to stop"; time cat'
+alias install-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
+alias install-node-fnm='install-fnm'
+alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash'
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install --no-install-recommends '
@@ -368,7 +371,7 @@ if [[ $distro == "Arch" ]]; then
 fi
 
 
-export PATH=".cargo/bin:$HOME/.cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=10000
@@ -563,9 +566,31 @@ then
     fi
 fi
 
+# fast node manager (https://github.com/Schniz/fnm)
+function enable-fnm {
+    if [[ -f "$HOME/.fnm/fnm" ]]
+    then
+        export PATH="$HOME/.fnm:$PATH"
+        eval `fnm env`
+    fi
+}
+
+function use-fnm {
+    (fnm use 2>/dev/null | grep -v 'is not installed') || { fnm install && fnm use }
+}
+
+enable-fnm
+use-fnm
+
 function my-chpwd {
     if [[ -f .nvmrc ]]
     then
+        if [[ -f "$HOME/.fnm/fnm" ]]
+        then
+            use-fnm
+            return
+        fi
+
         [[ $nvmAutoEnable != 1 ]] && return
         [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
     fi

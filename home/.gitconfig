@@ -23,6 +23,7 @@
     d = diff --word-diff=color
     dr = diff --word-diff=color origin/master
     l = log --oneline --graph --decorate --all
+    # l = log --oneline --graph --decorate --all --date=human
     la = log --graph --decorate --all --show-signature
     tags = tag -l
     branches = branch -a

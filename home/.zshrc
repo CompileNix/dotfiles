@@ -571,16 +571,15 @@ function enable-fnm {
     if [[ -f "$HOME/.fnm/fnm" ]]
     then
         export PATH="$HOME/.fnm:$PATH"
-        eval `fnm env`
+        eval `fnm env --multi`
     fi
 }
 
 function use-fnm {
-    (fnm use 2>/dev/null | grep -v 'is not installed') || { fnm install && fnm use }
+    fnm use 2>/dev/null || { fnm install && fnm use }
 }
 
 enable-fnm
-use-fnm
 
 function my-chpwd {
     if [[ -f .nvmrc ]]

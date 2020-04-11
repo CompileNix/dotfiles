@@ -10,6 +10,19 @@ my personal configuration files. feel free to steal whatever you like.
 - sudo
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
+## X11 .xinitrc requirements
+- xrdb
+- xinput
+- xset
+- setxkbmap
+- xsetroot
+- numlockx
+- autocutsel
+    - https://github.com/sigmike/autocutsel
+    - `sudo yum install libX11-devel libXaw-devel`
+- dbus-launch
+- i3
+
 ## install
 __Keep always an old terminal open, in case of failures!__
 

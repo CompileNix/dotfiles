@@ -11,12 +11,12 @@ call vundle#rc()
 
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'airblade/vim-gitgutter'
 Bundle 'ntpeters/vim-better-whitespace'
-Bundle 'editorconfig/editorconfig-vim'
 
 " language plugins
+syntax on
+filetype on
+filetype plugin on
 
 " themes
 Bundle 'altercation/vim-colors-solarized'
@@ -25,9 +25,6 @@ set t_Co=256
 colorscheme mustang
 "set background=dark
 let mapleader = "\<SPACE>"
-
-syntax on
-filetype plugin indent on
 
 " search
 set ignorecase
@@ -58,34 +55,6 @@ imap <C-V> <F10><C-r>+<F10>
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
-function! Smart_TabComplete()
-    let line = getline('.')                         " current line
-
-    let substr = strpart(line, -1, col('.')+1)      " from the start of the current
-                                                    " line to one character right
-                                                    " of the cursor
-    let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-    if (strlen(substr)==0)                          " nothing to match on empty string
-        return "\<tab>"
-    endif
-    let has_period = match(substr, '\.') != -1      " position of period, if any
-    let has_slash = match(substr, '\/') != -1       " position of slash, if any
-    if (!has_period && !has_slash)
-        return "\<C-X>\<C-P>"                       " existing text matching
-    elseif ( has_slash )
-        return "\<C-X>\<C-F>"                       " file matching
-    else
-        return "\<C-X>\<C-O>"                       " plugin matching
-    endif
-endfunction
-
-"inoremap <Tab> <c-r>=Smart_TabComplete()<CR>
-
-if has("unix")
-   "inoremap <C-@> <c-r>=Smart_TabComplete()<CR>
-elseif has("win32")
-  inoremap <C-Space> <c-r>=Smart_TabComplete()<CR>
-endif
 
 set synmaxcol=300
 syntax sync minlines=1000
@@ -124,7 +93,8 @@ hi clear SignColumn
 let g:airline#extensions#hunks#non_zero_only = 1
 
 set number
-set tabstop=4
+set tabstop=2
+set expandtab
 set showcmd
 set nowrap
 set modeline

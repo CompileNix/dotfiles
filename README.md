@@ -10,6 +10,25 @@ my personal configuration files. feel free to steal whatever you like.
 - sudo
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
+### Debain
+```bash
+sudo apt install python3 git zsh vim tmux curl wget python3-pip
+```
+
+#### More packages
+```bash
+sudo apt install htop iftop iotop mutt bind9utils build-essential cmake rsync postfix
+```
+
+### Fedora
+```bash
+sudo dnf install python3 git zsh vim tmux curl wget python3-pip
+```
+#### More packages
+```bash
+sudo apt install htop iftop iotop mutt bind9utils make gcc-c++ gcc cmake rsync postfix
+```
+
 ## X11 .xinitrc requirements
 - xrdb
 - xinput
@@ -19,14 +38,14 @@ my personal configuration files. feel free to steal whatever you like.
 - numlockx
 - autocutsel
     - https://github.com/sigmike/autocutsel
-    - `sudo yum install libX11-devel libXaw-devel`
+    - `sudo dnf install libX11-devel libXaw-devel`
 - dbus-launch
 - i3
 
 ## install
 __Keep always an old terminal open, in case of failures!__
 
-```sh
+```bash
 curl https://raw.githubusercontent.com/compilenix/dotfiles/master/install.sh | bash
 ```
 
@@ -35,7 +54,7 @@ Copy and paste into terminal.
 
 __Keep always an old terminal open, in case of failures!__
 
-```sh
+```bash
 cd ~/.homesick/repos/dotfiles
 git status
 popd >/dev/null

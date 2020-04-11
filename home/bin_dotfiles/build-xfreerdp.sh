@@ -29,7 +29,8 @@ sudo dnf install \
     alsa-lib-devel \
     cups-devel \
     ffmpeg-devel \
-    glib2-devel
+    glib2-devel \
+    libjpeg-devel
 
 mkdir -pv /tmp/freerdp-build
 pushd /tmp/freerdp-build
@@ -49,7 +50,7 @@ cmake \
     -DWITH_JPEG=ON \
     -DWITH_LIBSYSTEMD=OFF \
     -DWITH_XINERAMA=OFF \
-    -DWITH_XEXT=OFF \
+    -DWITH_XEXT=ON \
     -DWITH_XCURSOR=OFF \
     .
 

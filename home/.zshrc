@@ -152,15 +152,18 @@ alias get-date-hex='get-date | xargs printf "%x\n"'
 alias get-date-from-hex-unixtime='read a; echo $a | echo $((16#$_))'
 alias get-date-from-hex='get-date-from-hex-unixtime | date -d @$_'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
-function get-cert-raw {
+function get-cert-remote-raw {
     hostName=$1
     portNumber=$2
     echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509
 }
-function get-cert {
+function get-cert-remote {
     hostName=$1
     portNumber=$2
     get-cert-raw $hostName $portNumber | openssl x509 -noout -text
+}
+function get-cert-file {
+    openssl x509 -noout -text -in $1
 }
 export dnsStats='+stats'
 function set-dns-stats-enable {
@@ -205,58 +208,6 @@ function get-dataurl {
     fi
     echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
-function git-repo-browser {
-    # Figure out github repo base URL
-    local base_url
-    base_url=$(git config --get remote.origin.url)
-    base_url=${base_url%\.git} # remove .git from end of string
-
-    # Fix git@github.com: URLs
-    base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
-
-    # Fix git://github.com URLS
-    base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
-
-    # Fix git@bitbucket.org: URLs
-    base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
-
-    # Fix git@gitlab.com: URLs
-    base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
-
-    # Fix git@compilenix.com: URLs
-    base_url=${base_url//git@git\.compilenix\.org:/https:\/\/git\.compilenix\.org\/}
-
-    # Validate that this folder is a git folder
-    if ! git branch 2>/dev/null 1>&2 ; then
-        echo "Not a git repo!"
-        exit $?
-    fi
-
-    # Find current directory relative to .git parent
-    full_path=$(pwd)
-    git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-    relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
-
-    # If filename argument is present, append it
-    if [ "$1" ]; then
-        relative_path="$relative_path/$1"
-    fi
-
-    # Figure out current git branch
-    # git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-    git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-
-    # Remove cruft from branchname
-    branch=${git_where#refs\/heads\/}
-
-    [[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
-    url="$base_url/$tree/$branch$relative_path"
-
-
-    echo "Calling $(type xdg-open) for $url"
-
-    xdg-open "$url" &> /dev/null || (echo "Using $(type xdg-open) to xdg-open URL failed." && exit 1);
-}
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern line)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
@@ -268,8 +219,6 @@ alias set-megaraid-alarm-silent='sudo megacli -AdpSetProp AlarmSilence'
 alias set-keyboard-mode-raw='sudo kbd_mode -s'
 alias set-display-off='sleep 1; xset dpms force standby'
 alias set-display-on='xset dpms force on'
-function add-iptables-allow-out-http_s { sudo iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
-function remove-iptables-allow-out-http_s { sudo iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
 alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { sudo emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; sudo emerge -avDuN world'
 alias update-archlinux-pacman='sudo pacman -Syu'
 alias update-archlinux-yaourt='sudo yaourt -Syu'
@@ -329,15 +278,15 @@ function read-logfile {
     sudo cat "${file}" | ccze -A | less -R
 }
 alias root='sudo su -l root'
-alias processes='ps -aux'
-alias memory='free -h -m'
-alias disk-space='df -h'
-alias disks='lsblk'
+alias get-processes='ps -aux'
+alias get-memory='free -h -m'
+alias get-disk-space='df -h'
+alias get-disks='lsblk'
 alias systemctl-status='systemctl status'
-alias stopwatch='echo "press Ctrl+D to stop"; time cat'
+alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'
 alias install-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
 alias install-node-fnm='install-fnm'
-alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash'
+alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash'
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install --no-install-recommends '
@@ -370,8 +319,7 @@ if [[ $distro == "Arch" ]]; then
     alias upgrade='update-archlinux-pacman'
 fi
 
-
-export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:$HOME/sh:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=10000
@@ -400,7 +348,7 @@ if [ ! -f "$HOME/.tmux.conf_include" ]; then
 fi
 
 if [ ! -f "$HOME/.gitconfig_include" ]; then
-    echo -e "# vim: sw=4 et\n\n[user]\n\tname = $(whoami)\n#\temail = Compilenix@gmail.org\n#\tsigningkey = 3C713073CAC92AE0\n#[commit]\n\t# https://help.github.com/articles/signing-commits-using-gpg/\n#\tgpgsign = true\n#[credential]\n#\thelper = store\n#[core]\n#\tfileMode = false\n" > "$HOME/.gitconfig_include"
+    echo -e "# vim: sw=4 et\n\n[user]\n\tname = CompileNix\n#\temail = compilenix@gmail.org\n#\tsigningkey = 3C713073CAC92AE0\n#[commit]\n\t# https://help.github.com/articles/signing-commits-using-gpg/\n#\tgpgsign = true\n#[credential]\n#\thelper = store\n" > "$HOME/.gitconfig_include"
 fi
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
@@ -421,7 +369,7 @@ SPACESHIP_TIME_SHOW=true
 SPACESHIP_USER_SHOW=true
 SPACESHIP_HOST_SHOW=true
 SPACESHIP_HOST_SHOW_FULL=false
-SPACESHIP_BATTERY_THRESHOLD=30
+SPACESHIP_BATTERY_THRESHOLD=25
 SPACESHIP_EXIT_CODE_SHOW=true
 SPACESHIP_EXIT_CODE_SUFFIX=" (╯°□°）╯︵ ┻━┻ "
 
@@ -443,18 +391,25 @@ SPACESHIP_DOTNET_SHOW=false
 SPACESHIP_EMBER_SHOW=false
 SPACESHIP_PACKAGE_SHOW=false
 
-#antigen bundle systemd
+antigen bundle systemd
 antigen bundle colored-man-pages
 antigen bundle command-not-found
+antigen bundle zsh-users/zsh-completions
+antigen bundle ascii-soup/zsh-url-highlighter
+# antigen bundle RobSis/zsh-completion-generator
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+set-zsh-highlighting-full
+export ZSH_HIGHLIGHT_MAXLENGTH=80
+
+antigen bundle zsh-users/zsh-autosuggestions
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 if [[ ${condition_for_tmux_mem_cpu_load} -eq 0 ]]; then
     #antigen bundle thewtex/tmux-mem-cpu-load
     antigen bundle compilenix/tmux-mem-cpu-load
 fi
-
-# antigen bundle RobSis/zsh-completion-generator
-antigen bundle zsh-users/zsh-completions
-antigen bundle ascii-soup/zsh-url-highlighter
 
 if which tmux &> /dev/null
     then
@@ -519,10 +474,10 @@ if which tmux &> /dev/null
     fi
 fi
 
-[ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _global_ssh_hosts=()
-[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 [ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
-[ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
+[ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _global_ssh_hosts=()
+#[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+#[ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 hosts=(
   "$_ssh_config[@]"
   "$_global_ssh_hosts[@]"
@@ -595,14 +550,6 @@ function my-chpwd {
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
-
-antigen bundle zsh-users/zsh-syntax-highlighting
-set-zsh-highlighting-full
-export ZSH_HIGHLIGHT_MAXLENGTH=80
-
-# if [ ! -z "$TMUX" ]; then
-    antigen bundle zsh-users/zsh-autosuggestions
-# fi
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export FT2_SUBPIXEL_HINTING=1

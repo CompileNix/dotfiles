@@ -26,7 +26,7 @@ sudo dnf install python3 git zsh vim tmux curl wget python3-pip
 ```
 #### More packages
 ```bash
-sudo apt install htop iftop iotop mutt bind9utils make gcc-c++ gcc cmake rsync postfix
+sudo dnf install htop iftop iotop mutt bind-utils make gcc-c++ gcc cmake rsync postfix
 ```
 
 ## X11 .xinitrc requirements

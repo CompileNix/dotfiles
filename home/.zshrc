@@ -119,6 +119,7 @@ alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
 alias ll='ls -l'
 alias la='ls -al'
+alias l='la'
 alias grep='grep --color'
 alias htop='htop -d 10'
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
@@ -517,7 +518,7 @@ if [[ -f .nvmrc ]]
 then
     if [[ $nvmAutoEnable == 1 ]]
     then
-        [[ $nvmEnabled && "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
+        $(type nvm 2>/dev/null) && $nvmEnabled && [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
     fi
 fi
 

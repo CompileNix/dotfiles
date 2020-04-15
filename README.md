@@ -22,11 +22,34 @@ sudo apt install htop iftop iotop mutt bind9utils build-essential cmake rsync po
 
 ### Fedora
 ```bash
-sudo dnf install python3 git zsh vim tmux curl wget python3-pip
+sudo dnf install python3 git zsh vim tmux curl wget redhat-lsb-core python3-pip
 ```
 #### More packages
 ```bash
 sudo dnf install htop iftop iotop mutt bind-utils make gcc-c++ gcc cmake rsync postfix
+```
+
+### CentOS 7
+```bash
+sudo yum install python3 git zsh vim tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip
+cd /opt
+wget https://sourceforge.net/projects/zsh/files/zsh/5.4.2/zsh-5.4.2.tar.xz/download
+tar -xJf zsh-*
+rm zsh-*.tar.xz
+cd zsh-*
+./configure
+make && sudo make install
+cd ..
+rm -rf zsh-*
+cd ~
+echo "/usr/local/bin/zsh" >>/etc/shells
+chsh -s /usr/local/bin/zsh
+exec zsh
+```
+
+#### More packages
+```bash
+sudo yum install htop iftop iotop mutt bind-utils cmake rsync postfix
 ```
 
 ## X11 .xinitrc requirements

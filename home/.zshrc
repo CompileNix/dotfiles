@@ -160,7 +160,7 @@ function get-cert-remote-raw {
 function get-cert-remote {
     hostName=$1
     portNumber=$2
-    get-cert-raw $hostName $portNumber | openssl x509 -noout -text
+    get-cert-remote-raw $hostName $portNumber | openssl x509 -noout -text
 }
 function get-cert-file {
     openssl x509 -noout -text -in $1

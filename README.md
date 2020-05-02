@@ -8,11 +8,12 @@ my personal configuration files. feel free to steal whatever you like.
 - zsh
 - vim
 - sudo
+- tee
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
 ### Debain
 ```bash
-sudo apt install python3 git zsh vim tmux curl wget python3-pip
+sudo apt install python3 python git zsh vim vim-airline tmux curl wget python3-pip
 ```
 
 #### More packages
@@ -22,7 +23,7 @@ sudo apt install htop iftop iotop mutt bind9utils build-essential cmake rsync po
 
 ### Fedora
 ```bash
-sudo dnf install python3 git zsh vim tmux curl wget redhat-lsb-core python3-pip
+sudo dnf install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core python3-pip
 ```
 #### More packages
 ```bash
@@ -31,7 +32,7 @@ sudo dnf install htop iftop iotop mutt bind-utils make gcc-c++ gcc cmake rsync p
 
 ### CentOS 7
 ```bash
-sudo yum install python3 git zsh vim tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip
+sudo yum install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip
 cd /opt
 wget https://sourceforge.net/projects/zsh/files/zsh/5.4.2/zsh-5.4.2.tar.xz/download
 tar -xJf zsh-*

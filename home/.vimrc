@@ -1,114 +1,121 @@
-set nocompatible
+" Get the defaults that most users want.
+if filereadable(glob("$VIMRUNTIME/defaults.vim"))
+    source $VIMRUNTIME/defaults.vim
+endif
 
-" required by vundle
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file (restore to previous version)
+  if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+  endif
+endif
 
-" let vundle manage vundle DISABLED: should be handled as submodule by
-" homeshick
-" Bundle 'gmarik/vundle'
+if &t_Co > 2 || has("gui_running")
+  " Switch on highlighting the last used search pattern.
+  set hlsearch
+endif
 
-Bundle 'bling/vim-airline'
-Bundle 'scrooloose/nerdtree'
-Bundle 'ntpeters/vim-better-whitespace'
+" Put these in an autocmd group, so that we can delete them easily.
+augroup vimrcEx
+  au!
 
-" language plugins
-syntax on
-filetype on
-filetype plugin on
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+augroup END
 
-" themes
-Bundle 'altercation/vim-colors-solarized'
+" Add optional packages.
+"
+" The matchit plugin makes the % command work better, but it is not backwards
+" compatible.
+" The ! means the package won't be loaded right away but when plugins are
+" loaded during initialization.
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
 
 set t_Co=256
-colorscheme mustang
-"set background=dark
-let mapleader = "\<SPACE>"
-
-" search
+set number
+set tw=792034
+set cc=80
+set nobackup
+set noswapfile
+set noundofile
+set background=dark
+set clipboard=unnamedplus
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set mouse=a
 set ignorecase
 set smartcase
 set incsearch
 set hlsearch
 set showmatch
 set wildmenu
-set wildmode=list:longest,full
-
-set mouse=a
-
-" appand here
-map <F4> a vim: sw=4 et
-map <F6> :NERDTreeToggle<CR>
-" reformat file
-map <F7> mzgg=G`z
-" disable search result highlight
-map <F8> :noh<CR>
-set pastetoggle=<F10>
-map <F12> :set invnumber<CR>:GitGutterSignsToggle<CR>
-
-inoremap <S-TAB> <C-D>
-
-map <C-C> "+y
-map <C-V> "+p
-imap <C-V> <F10><C-r>+<F10>
-
-set omnifunc=syntaxcomplete#Complete
-set completeopt=longest,menuone
-
-set synmaxcol=300
-syntax sync minlines=1000
-
-" change enter key to insert completion:
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" escape to exit completion
-"inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-" up/down arrow to select
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-
-let NERDTreeShowHidden=1
-
-map <leader>rc :w<CR>:source $MYVIMRC<CR>:noh<CR>
-nnoremap <Leader>w :w<CR>
-map <leader>s :w<CR>
-noremap <C-T> :tabedit<CR>
-noremap <C-Q> :tabclose<CR>
-
-" C-p
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-            \ 'file': '\v\.(exe|so|dll)$',
-            \ }
-" example link to exclude
-"  \ 'link': 'some_bad_symbolic_links',
-
-" ----- airblade/vim-gitgutter settings -----
-" Required after having changed the colorscheme
-hi clear SignColumn
-" In vim-airline, only display "hunks" if the diff is non-zero
-let g:airline#extensions#hunks#non_zero_only = 1
-
-set number
-set tabstop=2
-set expandtab
+set wildmode=full
 set showcmd
-set nowrap
 set modeline
-set modelines=5
+
+colorscheme mustang
 noh
+syntax on
+filetype on
 
-" airline all the time
-set laststatus=2
-set noshowmode
+" Copy
+map <C-C> "+y
+" Paste
+map <C-V> "+p
 
-autocmd vimenter * if !argc() | NERDTree | endif
+function StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    normal Hmy
+    %s/\s\+$//e
+    normal 'yz<CR>
+    normal `z
+  endif
+endfunction
+command -bar -nargs=0 StripTrailingWhitespace call StripTrailingWhitespace()
+
+function FixIndentation()
+  if !&binary && &filetype != 'diff'
+    normal gg=G<C-o><C-o>ii
+  endif
+endfunction
+command -bar -nargs=0 FixIndentation call FixIndentation()
+
+function Save()
+  w
+endfunction
+command -bar -nargs=0 Save call Save()
+
+function SaveForce()
+  w!
+endfunction
+command -bar -nargs=0 SaveForce call SaveForce()
+
+function Exit()
+  q
+endfunction
+command -bar -nargs=0 Exit call Exit()
+
+function ExitForce()
+  q!
+endfunction
+command -bar -nargs=0 ExitForce call ExitForce()
+
+function SaveAsRoot()
+  w !sudo tee > /dev/null %
+endfunction
+command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
+
+set pastetoggle=<F11>
+
+" Show / Hide linenumbers
+map <F12> :set invnumber<CR>
 
 if filereadable(glob("~/.vimrc_include"))
     source ~/.vimrc_include
 endif
-
-" vim: sw=4 et

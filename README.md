@@ -85,13 +85,14 @@ popd >/dev/null
 echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"
 function ask_yn_y_callback {
     sudo rm /usr/local/bin/tmux-mem-cpu-load
+    pushd ~
+    rm -rf .vim/bundle
     pushd ~/.homesick/repos
     rm -rf dotfiles
     git clone --recursive https://github.com/compilenix/dotfiles.git
     popd >/dev/null
     pushd ~
     rm -rf .antigen
-    rm -rf .vim/bundle
     ln -sfv .homesick/repos/dotfiles/antigen .antigen
     popd >/dev/null
     antigen-cleanup

@@ -91,25 +91,14 @@ function ask_yn_y_callback {
     popd >/dev/null
     pushd ~
     rm -rf .antigen
-    rm -rf .vim/bundle/vundle
+    rm -rf .vim/bundle
     ln -sfv .homesick/repos/dotfiles/antigen .antigen
-    popd >/dev/null
-    pushd ~/.vim/bundle
-    ln -sfv ../../.homesick/repos/dotfiles/vim/vundle vundle
     popd >/dev/null
     antigen-cleanup
     git-reset ~/.homesick/repos/*
-    git-reset ~/.vim/bundle/*
     homeshick pull
     homeshick link
     antigen update
-    for i in ~/.vim/bundle/*
-    do
-        pushd "$i"
-        git pull
-        popd >/dev/null
-    done
-    vim +PluginInstall +qa
     rm ~/.tmux.conf_configured
 
     exec zsh

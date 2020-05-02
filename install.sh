@@ -15,13 +15,14 @@ if [[ ${condition_for_install} -eq 0 ]]; then
     mkdir -pv $HOME/bin
     git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
     echo "y" | $HOME/.homesick/repos/homeshick/bin/homeshick clone compilenix/dotfiles
-    mkdir -pv .vim/bundle
     ln -sv .homesick/repos/dotfiles/antigen .antigen
-    cd .vim/bundle
-    ln -sv ../../.homesick/repos/dotfiles/vim/vundle vundle
-    popd
-    chsh -s /bin/zsh
-    vim +PluginInstall +qa
+    if [[ $EUID -eq 0 ]]; then
+        chsh -s /bin/zsh
+    else
+        echo "you are not root, so you are not allowed to change your own shell to zsh"
+        echo "retrying with sudo..."
+        sudo chsh -s /bin/zsh "$USERNAME"
+    fi
     popd
     exec zsh
 else

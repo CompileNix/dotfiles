@@ -249,17 +249,13 @@ function fix-antigen_and_homesick_vim {
     fi
     antigen-cleanup
     git-reset ~/.homesick/repos/*
-    git-reset ~/.vim/bundle/*
+    if [[ -d ~/.vim/bundle ]]
+    then
+        rm -rf ~/.vim/bundle
+    fi
     homeshick pull
     homeshick link
     antigen update
-    for i in ~/.vim/bundle/*
-    do
-        pushd "$i"
-        git pull
-        popd >/dev/null
-    done
-    vim +PluginInstall +qa
     rm ~/.tmux.conf_configured
 
     exec zsh

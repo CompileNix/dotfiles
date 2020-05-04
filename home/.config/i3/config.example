@@ -145,7 +145,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym Shift+Ctrl+space floating toggle
+bindsym Shift+Control+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle

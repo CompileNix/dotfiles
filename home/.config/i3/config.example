@@ -27,23 +27,50 @@ font pango:Helvetica Neue 9
 # client.urgent           #2F343A #900000 #FFFFFF #700000   #900000
 # client.placeholder      #000000 #0C0C0C #FFFFFF #700000   #0C0C0C
 
-set $bg-color 	           #2F343F
-set $inactive-bg-color     #2F343F
-set $border-color          #167ABF
-set $inactive-border-color #167ABF
-set $urgent-border-color   #E53935
-set $text-color            #00FF00
-set $urgent-text-color     #FFFFFF
-set $inactive-text-color   #BBBBBB
-set $unfocused-text-color  #00BB00
-set $urgent-bg-color       #E53935
+# default theme
+# --------------------------------------
+# set $bg-color 	                 #2F343F
+# set $inactive-bg-color           #2F343F
+# set $border-color                #167ABF
+# set $inactive-border-color       #167ABF
+# set $urgent-border-color         #E53935
+# set $text-color                  #00FF00
+# set $urgent-text-color           #FFFFFF
+# set $inactive-text-color         #BBBBBB
+# set $unfocused-text-color        #00BB00
+# set $urgent-bg-color             #E53935
+# set $indicator                   #00FF00
+# set $indicator-unfocused         #00FF00
+# set $indicator-focused-inactive  #00FF00
+# set $indicator-urgent            #00FF00
+# --------------------------------------
+
+# cyberpunk theme
+# --------------------------------------
+set $bg-color 	                 #556064
+set $inactive-bg-color           #2F3D44
+set $border-color                #556064
+set $inactive-border-color       #2F3D44
+set $urgent-border-color         #CB4B16
+set $text-color                  #80FFF9
+set $urgent-text-color           #1ABC9C
+set $inactive-text-color         #1ABC9C
+set $unfocused-text-color        #1ABC9C
+set $urgent-bg-color             #FDF6E3
+set $indicator                   #FDF6E3
+set $indicator-unfocused         #454948
+set $indicator-focused-inactive  #454948
+set $indicator-urgent            #268BD2
+client.placeholder      #000000 #0c0c0c #ffffff #000000
+client.background       #2B2C2B
+# --------------------------------------
 
 # window colors
 #                       border                 background         text                  indicator
-client.focused          $border-color          $bg-color          $text-color           #00FF00
-client.unfocused        $inactive-border-color $inactive-bg-color $inactive-text-color  #00FF00
-client.focused_inactive $inactive-border-color $inactive-bg-color $unfocused-text-color #00FF00
-client.urgent           $urgent-border-color   $urgent-bg-color   $urgent-text-color    #00FF00
+client.focused          $border-color          $bg-color          $text-color           $indicator
+client.unfocused        $inactive-border-color $inactive-bg-color $inactive-text-color  $indicator-unfocused
+client.focused_inactive $inactive-border-color $inactive-bg-color $unfocused-text-color $indicator-focused-inactive
+client.urgent           $urgent-border-color   $urgent-bg-color   $urgent-text-color    $indicator-urgent
 
 bar {
     #status_command i3blocks -c /home/booker/.i3/i3blocks.conf

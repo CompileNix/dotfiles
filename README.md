@@ -27,7 +27,7 @@ sudo dnf install python3 python git zsh vim vim-airline tmux curl wget redhat-ls
 ```
 #### More packages
 ```bash
-sudo dnf install htop iftop iotop mutt bind-utils make gcc-c++ gcc cmake rsync lsb-release postfix
+sudo dnf install htop iftop iotop mutt bind-utils make gcc-c++ gcc cmake rsync postfix
 ```
 
 ### CentOS 7
@@ -50,7 +50,7 @@ exec zsh
 
 #### More packages
 ```bash
-sudo yum install htop iftop iotop mutt bind-utils cmake rsync lsb-release postfix
+sudo yum install htop iftop iotop mutt bind-utils cmake rsync postfix
 ```
 
 ## X11 .xinitrc requirements

@@ -78,6 +78,7 @@ function StripTrailingWhitespace()
   endif
 endfunction
 command -bar -nargs=0 StripTrailingWhitespace call StripTrailingWhitespace()
+command -bar -nargs=0 TrimTrailingWhitespace call StripTrailingWhitespace()
 
 function FixIndentation()
   if !&binary && &filetype != 'diff'

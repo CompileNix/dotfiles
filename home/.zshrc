@@ -284,6 +284,8 @@ alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'
 alias install-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
 alias install-node-fnm='install-fnm'
 alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash'
+alias add-user='useradd'
+alias remove-user='deluser'
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install --no-install-recommends '

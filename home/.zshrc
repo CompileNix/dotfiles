@@ -318,7 +318,7 @@ if [[ $distro == "Arch" ]]; then
     alias upgrade='update-archlinux-pacman'
 fi
 
-export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
 export HISTSIZE=10000

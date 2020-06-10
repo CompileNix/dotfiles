@@ -109,3 +109,27 @@ function ask_yn_n_callback {
 }
 ask_yn
 ```
+
+## i3 Desktop Notifications
+Install:
+- [deadd-notification-center](https://github.com/phuhl/linux_notification_center)
+- [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
+
+### Update i3 config
+```
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume.sh inc
+bindsym XF86AudioLowerVolume exec --no-startup-id volume.sh dec
+bindsym XF86AudioMute exec --no-startup-id volume.sh mute
+
+exec --no-startup-id deadd-notification-center
+```
+
+or
+
+```
+bindsym $mod+greater exec --no-startup-id volume.sh inc
+bindsym $mod+less exec --no-startup-id volume.sh dec
+bindsym $mod+F6 exec --no-startup-id volume.sh mute
+
+exec --no-startup-id deadd-notification-center
+```

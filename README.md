@@ -114,6 +114,7 @@ ask_yn
 Install:
 - [deadd-notification-center](https://github.com/phuhl/linux_notification_center)
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
+- amixer
 
 ### Update i3 config
 ```

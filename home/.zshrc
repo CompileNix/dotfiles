@@ -122,7 +122,7 @@ alias la='ls -al'
 alias l='la'
 alias grep='grep --color'
 alias htop='htop -d 10'
-alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
+alias rsync="rsync --progress --numeric-ids --human-readable --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read()));"'
@@ -136,6 +136,7 @@ alias dns-retransfer-zones='rndc retransfer'
 alias dns-reload-zones='rndc reload'
 alias get-ip-local='ip a'
 alias get-ip-internet='curl https://ip.compilenix.org'
+alias get-ip-routes='ip route | column -t'
 alias get-network-listening='sudo netstat -tunpl'
 alias get-network-active-connections='sudo netstat -tun'
 alias get-network-active-connections-by-type="sudo netstat -tun | awk '{print \$6}' | sort | uniq -c | sort -n | tail -n +2"
@@ -183,16 +184,15 @@ function set-dns-trace-disable {
 alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer"
 alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec"
 alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec +sigchase"
-alias get-picture-metadata-curl='read a; curl -sr 0-1024 $a | strings'
-alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
+alias get-picture-metadata-curl='echo -n "URL: "; read a; curl -sr 0-1024 $a | strings'
+alias get-picture-metadata-file='echo -n "file path: "; read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
 alias get-weather='curl wttr.in'
 alias get-weather-in='echo -n "enter location (name or 3-letters airport code): "; read a; curl wttr.in/$a'
 alias get-moon-phase='curl wttr.in/Moon'
 alias get-random-alias='alias | sort --random-sort | head -n 1'
-alias get-random-password='base64 </dev/urandom | tr -dc a-zA-Z0-9 | head -c'
-alias get-mysql-selects='ngrep -d eth0 -i "select" port 3306'
-alias get-mysql-updates='ngrep -d eth0 -i "update" port 3306'
-alias get-mysql-inserts='ngrep -d eth0 -i "insert" port 3306'
+alias get-random-password-strong='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:print:]" | head -c $len | awk "{ print $1 }"'  # awk adds a newline
+alias get-random-password-alnum='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:alnum:]" | head -c $len | awk "{ print $1 }"'
+alias get-random-password-alnum-lower='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:digit:][:lower:]" | head -c $len | awk "{ print $1 }"'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
 alias set-clipboard="xclip -i -sel c -f"
@@ -267,6 +267,7 @@ alias test-mail-mutt='mutt -s "test" '
 function apache-configtest { sudo apache2ctl -t }
 function apache-reload { apache-configtest && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
 function apache-restart { apache-configtest && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }
+function nginx-status { sudo systemctl status nginx }
 function nginx-configtest { sudo nginx -t }
 function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
 function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
@@ -279,6 +280,7 @@ alias get-processes='ps -aux'
 alias get-memory='free -h -m'
 alias get-disk-space='df -h'
 alias get-disks='lsblk'
+alias get-mounts='mount | column -t'
 alias systemctl-status='systemctl status'
 alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'
 alias install-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'

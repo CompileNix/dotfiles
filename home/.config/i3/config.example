@@ -106,6 +106,16 @@ workspace_layout tabbed
 # start a terminal
 bindsym $mod+Return exec lxterminal
 
+set $ws_center 1
+set $ws_left_keepass 11
+set $ws_left 12
+
+workspace "$ws_center" output DisplayPort-1
+workspace "$ws_left_keepass" output DisplayPort-3
+workspace "$ws_left" output DisplayPort-3
+
+# exec --no-startup-id compton --backend glx --config ~/.config/compton.conf
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -131,10 +141,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+h split v
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -211,7 +221,7 @@ bindsym $mod+Shift+less move container to output left
 
 bindsym $mod+Shift+N exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
-bindsym Ctrl+Mod1+a exec keepass-autotype.sh
+# bindsym Ctrl+Mod1+a exec keepass-autotype.sh
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -248,16 +258,16 @@ mode "resize" {
     # Pressing right will grow the window’s width.
     # Pressing up will shrink the window’s height.
     # Pressing down will grow the window’s height.
-    bindsym j resize shrink width 10 px or 10 ppt
-    bindsym k resize grow height 10 px or 10 ppt
-    bindsym l resize shrink height 10 px or 10 ppt
-    bindsym semicolon resize grow width 10 px or 10 ppt
+    bindsym j resize shrink width 1 px or 1 ppt
+    bindsym k resize grow height 1 px or 1 ppt
+    bindsym l resize shrink height 1 px or 1 ppt
+    bindsym semicolon resize grow width 1 px or 1 ppt
 
     # same bindings, but for the arrow keys
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 1 px or 1 ppt
+    bindsym Down resize grow height 1 px or 1 ppt
+    bindsym Up resize shrink height 1 px or 1 ppt
+    bindsym Right resize grow width 1 px or 1 ppt
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -330,34 +340,42 @@ for_window [title="About Mozilla Firefox"] floating enable
 for_window [title="Steam - News"] floating enable
 for_window [title="Steam Library Folders"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
-for_window [title="FreeRDP.*"] floating disable
 for_window [title="SpeedCrunch"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
 for_window [title="noVNC"] floating enable
-for_window [title="Edit Security Group - Mozilla Firefox"] floating enable
-for_window [title="Edit User Mailbox - Mozilla Firefox"] floating enable
-for_window [title="Select Full Access - Mozilla Firefox"] floating enable
-for_window [title="Edit Distribution Group - Mozilla Firefox"] floating enable
-for_window [title="Select Members - Mozilla Firefox"] floating enable
-for_window [title="Select Send As - Mozilla Firefox"] floating enable
-for_window [title="Select Send On Behalf - Mozilla Firefox"] floating enable
-for_window [title="Edit Room Mailbox - Mozilla Firefox"] floating enable
-for_window [title="Select User - Entire Forest - Mozilla Firefox"] floating enable
-for_window [title="User Mailbox - Mozilla Firefox"] floating enable
+for_window [title="RDP: *"] floating disable
+for_window [title="Edit Security Group - *"] floating enable
+for_window [title="Edit User Mailbox - *"] floating enable
+for_window [title="Select Full Access - *"] floating enable
+for_window [title="Edit Distribution Group - *"] floating enable
+for_window [title="Select Members - *"] floating enable
+for_window [title="Select Send As - *"] floating enable
+for_window [title="Select Send On Behalf - *"] floating enable
+for_window [title="Edit Room Mailbox - *"] floating enable
+for_window [title="Select User - Entire Forest - *"] floating enable
+for_window [title="User Mailbox - *"] floating enable
 for_window [title="JetBrains Toolbox"] floating enable
 for_window [title="Attach To Entry"] floating enable
+for_window [class="Nautilus" instance="file_progress"] floating enable
 
-# exec --no-startup-id xrandr --output HDMI-3 --primary --auto --right-of DP-1 --auto
-# exec --no-startup-id xrandr --output DP-1 --rotate left
-# exec --no-startup-id xrandr --dpi 108
-# exec --no-startup-id xrandr --output DisplayPort-0 --mode 2560x1440 --rate 75 --dpi 109 --pos 1440x560 --rotate normal --primary --set "TearFree" "on" --output HDMI-A-2 --mode 2560x1440 --rate 59.95 --pos 0x0 --rotate left --dpi 117 --set "TearFree" "on"
-# exec --no-startup-id xrandr --output DP-1 --mode 2560x1440 --rate 75.00 --dpi 108 --pos 1440x560 --rotate normal --primary --output HDMI-3 --mode 2560x1440 --rate 59.95 --pos 0x0 --rotate left --dpi 117
-# exec --no-startup-id compton --backend glx --config ~/.config/compton.conf
+# exec --no-startup-id xrandr --output DisplayPort-0 --mode 2560x1440  --dpi 109 --pos 1440x560 --rotate normal --primary --set "TearFree" "off" --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate left --dpi 109 --set "TearFree" "off"
+
+exec --no-startup-id "i3-msg 'workspace $ws_center; append_layout ~/.config/i3/session-1-center.json'"
+
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -n -a -t -f explorer
 exec --no-startup-id clipit
-exec --no-startup-id seafile-applet
 exec --no-startup-id jetbrains-toolbox --minimize
-exec --no-startup-id /usr/bin/volumeicon
+exec --no-startup-id seafile-applet
+# exec --no-startup-id redshift-gtk -l 53.641662:10.083673 -t 6500:5250
+exec --no-startup-id volumeicon
 exec sudo kbd_mode -s
+
+exec --no-startup-id "i3-msg 'workspace $ws_left_keepass; append_layout ~/.config/i3/session-1-left-keepass.json'"
+
+exec --no-startup-id "i3-msg 'workspace $ws_left; append_layout ~/.config/i3/session-1-left.json'"
+exec --no-startup-id "i3-msg 'workspace $ws_center;"
+
+exec lxterminal
+exec vlc

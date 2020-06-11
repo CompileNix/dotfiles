@@ -13,26 +13,26 @@ my personal configuration files. feel free to steal whatever you like.
 
 ### Debain
 ```bash
-sudo apt install python3 python git zsh vim vim-airline tmux curl wget python3-pip
+sudo apt install python3 python3-pip python git zsh vim vim-airline tmux curl wget net-tools htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils
 ```
 
 #### More packages
 ```bash
-sudo apt install htop iftop iotop mutt bind9utils build-essential cmake rsync lsb-release postfix
+sudo apt install build-essential cmake postfix
 ```
 
 ### Fedora
 ```bash
-sudo dnf install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core python3-pip
+sudo dnf install python3 python git zsh vim vim-airline tmux curl wget ncdu redhat-lsb-core python3-pip htop iftop iotop mutt bind-utils rsync
 ```
 #### More packages
 ```bash
-sudo dnf install htop iftop iotop mutt bind-utils make gcc-c++ gcc cmake rsync postfix
+sudo dnf install make gcc-c++ gcc cmake postfix
 ```
 
 ### CentOS 7
 ```bash
-sudo yum install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip
+sudo yum install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip ncdu htop iftop iotop mutt bind-utils rsync
 cd /opt
 wget https://sourceforge.net/projects/zsh/files/zsh/5.4.2/zsh-5.4.2.tar.xz/download
 tar -xJf zsh-*
@@ -50,7 +50,7 @@ exec zsh
 
 #### More packages
 ```bash
-sudo yum install htop iftop iotop mutt bind-utils cmake rsync postfix
+sudo yum install cmake postfix
 ```
 
 ## X11 .xinitrc requirements

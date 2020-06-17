@@ -19,5 +19,11 @@ done
 xset r rate 125 37
 setxkbmap -layout us,de
 setxkbmap -option 'grp:alt_shift_toggle'
+autocutsel -selection PRIMARY -fork
+xsetroot -cursor_name left_ptr
+numlockx
+pushd /usr/share/icons/Adwaita/cursors/
+sudo ln -sf left_ptr xterm
+popd
 
 # vim: sw=4 et

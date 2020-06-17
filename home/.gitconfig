@@ -1,7 +1,7 @@
 # vim: sw=4 et
 
 #[user]
-#    name = Compilenix
+#    name = CompileNix
 #    email = compilenix@gmail.com
 #    signingkey = C94DD853DD6493CCC47C8C853C713073CAC92AE0
 [core]

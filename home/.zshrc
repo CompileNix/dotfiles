@@ -320,6 +320,16 @@ if [[ $distro == "Arch" ]]; then
     alias upgrade='update-archlinux-pacman'
 fi
 
+function install-podman-fedora {
+    sudo dnf install podman
+    sudo dnf update container-selinux
+    mkdir -pv ~/.zsh/completion
+    wget https://raw.githubusercontent.com/containers/libpod/master/completions/zsh/_podman -O ~/.zsh/completion/_podman 2>/dev/null
+    echo "You may want to add the following alias to $HOME/.zshrc_include"
+    echo "alias docker='podman'"
+    exec zsh
+}
+
 export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
 export EDITOR=vim
 export LANG="en_US.UTF-8"

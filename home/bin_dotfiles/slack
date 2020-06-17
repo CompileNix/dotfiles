@@ -1,4 +1,0 @@
-#!/bin/sh
-
-SLACK_DEVELOPER_MENU=1 flatpak run com.slack.Slack $*
-

@@ -134,7 +134,7 @@ function ask_yn_n_callback {
 ask_yn
 ```
 
-## i3 Desktop Notifications (Sway)
+## Sway Desktop Notifications (Wayland)
 Install:
 - mako
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`

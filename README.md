@@ -1,9 +1,11 @@
 # dotfiles
 
-my personal configuration files. feel free to steal whatever you like.
+My personal configuration files. feel free to steal whatever you like.
+
+See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfiles) repo.
 
 ## requirements
-- python 3.3+
+- python 3.7+
 - git
 - zsh
 - vim
@@ -12,34 +14,36 @@ my personal configuration files. feel free to steal whatever you like.
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
 ### Debain
-```bash
+```sh
 sudo apt install python3 python3-pip python git zsh vim vim-airline tmux curl wget net-tools htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils
 ```
 
 #### More packages
-```bash
+```sh
 sudo apt install build-essential cmake postfix
 ```
 
 ### Fedora
-```bash
+```sh
 sudo dnf install python3 python git zsh vim vim-airline tmux curl wget ncdu redhat-lsb-core python3-pip htop iftop iotop mutt bind-utils rsync
 ```
 #### More packages
-```bash
+```sh
 sudo dnf install make gcc-c++ gcc cmake postfix
 ```
 
 ### CentOS 7
-```bash
+```sh
 sudo yum install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip ncdu htop iftop iotop mutt bind-utils rsync
+# because centos ships an ancient version of ZSH we have to build a recent version by our self
+# see https://sourceforge.net/projects/zsh/files/zsh/
 cd /opt
-wget https://sourceforge.net/projects/zsh/files/zsh/5.4.2/zsh-5.4.2.tar.xz/download
-tar -xJf zsh-*
-rm zsh-*.tar.xz
+wget https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download
+tar -xJf download
+rm -f download
 cd zsh-*
 ./configure
-make && sudo make install
+make -j$(nproc) && sudo make install
 cd ..
 rm -rf zsh-*
 cd ~
@@ -49,11 +53,27 @@ exec zsh
 ```
 
 #### More packages
-```bash
+```sh
 sudo yum install cmake postfix
 ```
 
+## Sway requirements
+- sway
+- waybar
+- wl-clipboard
+- slurp (for screenshots)
+- wf-recorder (cli screen recorder, obs doesn't work)
+- mako (notifications)
+- swaylock
+- ImageMagick (for screen lock image processing)
+- swayidle (turn off & on displays)
+- dmenu
+- rofi
+- lxterminal
+- gimp
+
 ## X11 .xinitrc requirements
+- i3
 - xrdb
 - xinput
 - xset
@@ -64,13 +84,17 @@ sudo yum install cmake postfix
     - https://github.com/sigmike/autocutsel
     - `sudo dnf install libX11-devel libXaw-devel`
 - dbus-launch
-- i3
+- ImageMagick (for screen lock image processing)
+- dmenu
+- rofi
+- lxterminal
+- gimp
 
 ## install
 __Keep always an old terminal open, in case of failures!__
 
-```bash
-curl https://raw.githubusercontent.com/compilenix/dotfiles/master/install.sh | bash
+```sh
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
 ```
 
 ## Update
@@ -78,7 +102,7 @@ Copy and paste into terminal.
 
 __Keep always an old terminal open, in case of failures!__
 
-```bash
+```sh
 cd ~/.homesick/repos/dotfiles
 git status
 popd >/dev/null
@@ -89,7 +113,7 @@ function ask_yn_y_callback {
     rm -rf .vim/bundle
     pushd ~/.homesick/repos
     rm -rf dotfiles
-    git clone --recursive https://github.com/compilenix/dotfiles.git
+    git clone --recursive https://git.compilenix.org/CompileNix/dotfiles.git
     popd >/dev/null
     pushd ~
     rm -rf .antigen
@@ -110,27 +134,14 @@ function ask_yn_n_callback {
 ask_yn
 ```
 
-## i3 Desktop Notifications
+## i3 Desktop Notifications (Sway)
+Install:
+- mako
+- [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
+- amixer
+
+## i3 Desktop Notifications (X11)
 Install:
 - [deadd-notification-center](https://github.com/phuhl/linux_notification_center)
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
-
-### Update i3 config
-```
-bindsym XF86AudioRaiseVolume exec --no-startup-id volume.sh inc
-bindsym XF86AudioLowerVolume exec --no-startup-id volume.sh dec
-bindsym XF86AudioMute exec --no-startup-id volume.sh mute
-
-exec --no-startup-id deadd-notification-center
-```
-
-or
-
-```
-bindsym $mod+greater exec --no-startup-id volume.sh inc
-bindsym $mod+less exec --no-startup-id volume.sh dec
-bindsym $mod+F6 exec --no-startup-id volume.sh mute
-
-exec --no-startup-id deadd-notification-center
-```

@@ -368,7 +368,7 @@ exec --no-startup-id udiskie -n -a -t -f explorer
 exec --no-startup-id clipit
 exec --no-startup-id jetbrains-toolbox --minimize
 exec --no-startup-id seafile-applet
-# exec --no-startup-id redshift-gtk -l 53.641662:10.083673 -t 6500:5250
+# exec --no-startup-id redshift-gtk -l 53.550741:9.993028 -t 6500:5250
 exec --no-startup-id volumeicon
 exec sudo kbd_mode -s
 

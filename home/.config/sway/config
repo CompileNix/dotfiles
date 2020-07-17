@@ -1,0 +1,294 @@
+# Read `man 5 sway` for a complete reference.
+
+font pango:Helvetica Neue 9
+
+# header border
+# header background
+# header text
+# split indicator
+# window border
+# client.focused          #4C7899 #285577 #FFFFFF #700000   #285577
+# client.focused_inactive #333333 #5F676A #FFFFFF #700000   #5F676A
+# client.unfocused        #AAAAAA #222222 #DDDDDD #700000   #222222
+# client.urgent           #2F343A #900000 #FFFFFF #700000   #900000
+# client.placeholder      #000000 #0C0C0C #FFFFFF #700000   #0C0C0C
+
+# default theme
+# --------------------------------------
+# set $bg-color                    #2F343F
+# set $inactive-bg-color           #2F343F
+# set $border-color                #167ABF
+# set $inactive-border-color       #167ABF
+# set $urgent-border-color         #E53935
+# set $text-color                  #00FF00
+# set $urgent-text-color           #FFFFFF
+# set $inactive-text-color         #BBBBBB
+# set $unfocused-text-color        #00BB00
+# set $urgent-bg-color             #E53935
+# set $indicator                   #00FF00
+# set $indicator-unfocused         #00FF00
+# set $indicator-focused-inactive  #00FF00
+# set $indicator-urgent            #00FF00
+# --------------------------------------
+
+# cyberpunk theme
+# --------------------------------------
+set $bg-color 	                 #556064
+set $inactive-bg-color           #2F3D44
+set $border-color                #556064
+set $inactive-border-color       #2F3D44
+set $urgent-border-color         #CB4B16
+set $text-color                  #80FFF9
+set $urgent-text-color           #1ABC9C
+set $inactive-text-color         #1ABC9C
+set $unfocused-text-color        #1ABC9C
+set $urgent-bg-color             #E53935
+set $indicator                   #E53935
+set $indicator-unfocused         #454948
+set $indicator-focused-inactive  #454948
+set $indicator-urgent            #268BD2
+client.placeholder       #000000 #0c0c0c #ffffff #000000
+client.background        #2B2C2B
+# --------------------------------------
+
+# window colors
+#                       border                 background         text                  indicator
+client.focused          $border-color          $bg-color          $text-color           $indicator
+client.unfocused        $inactive-border-color $inactive-bg-color $inactive-text-color  $indicator-unfocused
+client.focused_inactive $inactive-border-color $inactive-bg-color $unfocused-text-color $indicator-focused-inactive
+client.urgent           $urgent-border-color   $urgent-bg-color   $urgent-text-color    $indicator-urgent
+
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position bottom
+    swaybar_command waybar
+}
+
+set $mod Mod4
+set $term lxterminal
+
+hide_edge_borders both
+workspace_layout tabbed
+focus_follows_mouse yes
+
+output * bg /usr/share/backgrounds/default.png fill
+
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' \
+#               resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+input "1133:49977:Logitech_Pro_Gaming_Keyboard" {
+    xkb_layout us,de
+    xkb_variant ,nodeadkeys
+    xkb_options grp:alt_shift_toggle
+    repeat_delay 125
+    repeat_rate 37
+}
+
+input "1133:16477:Logitech_G403" {
+    accel_profile flat
+    pointer_accel 0 # set mouse sensitivity (between -1 and 1)
+}
+
+bindsym $mod+Return exec $term
+
+bindsym $mod+Shift+q kill
+bindsym alt+f4 kill
+bindsym --release button2 kill
+bindsym --whole-window $mod+button2 kill
+
+bindsym $mod+Shift+space floating toggle
+# The right button toggles floating
+bindsym button3 floating toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# Start your launcher
+bindsym $mod+d exec "rofi -i -modi window,run -show run -scroll-method 1"
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+bracketleft exec --no-startup-id volume.sh dec
+bindsym $mod+bracketright exec --no-startup-id volume.sh inc
+bindsym $mod+F6 exec --no-startup-id volume.sh mute
+bindsym XF86AudioLowerVolume exec --no-startup-id volume.sh dec
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume.sh inc
+bindsym XF86AudioMute exec --no-startup-id volume.sh mute
+
+bindsym --release Print exec --no-startup-id grimshot save screen /tmp/screenshot.png && gimp /tmp/screenshot.png
+bindsym --release Shift+Print exec --no-startup-id grimshot save area /tmp/screenshot.png && gimp /tmp/screenshot.png
+
+# turn off screen
+bindsym $mod+j exec swayidle timeout 1 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
+# screen lock
+bindsym $mod+l exec sway-lock.sh
+# screen lock and trun off displays after 10 seconds
+bindsym $mod+k exec swayidle timeout 5 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"; pkill -nx swayidle' & sway-lock.sh
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+bindsym $mod+Control+1 workspace number 11
+bindsym $mod+Control+2 workspace number 12
+bindsym $mod+Control+3 workspace number 13
+bindsym $mod+Control+4 workspace number 14
+bindsym $mod+Control+5 workspace number 15
+bindsym $mod+Control+6 workspace number 16
+bindsym $mod+Control+7 workspace number 17
+bindsym $mod+Control+8 workspace number 18
+bindsym $mod+Control+9 workspace number 19
+bindsym $mod+Control+0 workspace number 20
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+bindsym $mod+Control+Shift+1 move container to workspace number 11
+bindsym $mod+Control+Shift+2 move container to workspace number 12
+bindsym $mod+Control+Shift+3 move container to workspace number 13
+bindsym $mod+Control+Shift+4 move container to workspace number 14
+bindsym $mod+Control+Shift+5 move container to workspace number 15
+bindsym $mod+Control+Shift+6 move container to workspace number 16
+bindsym $mod+Control+Shift+7 move container to workspace number 17
+bindsym $mod+Control+Shift+8 move container to workspace number 18
+bindsym $mod+Control+Shift+9 move container to workspace number 19
+bindsym $mod+Control+Shift+0 move container to workspace number 20
+
+bindsym $mod+Ctrl+bracketleft move container to output left
+bindsym $mod+Ctrl+bracketright move container to output right
+
+bindsym $mod+Shift+bracketleft move to output left
+bindsym $mod+Shift+bracketright move to output right
+
+bindsym $mod+v splith
+bindsym $mod+h splitv
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+a focus parent
+
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# swaymsg -t get_tree
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [class="Volumeicon" instance="volumeicon"] floating enable
+for_window [class="Seafile Client"] floating enable
+for_window [class="gimp"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="utility"] floating enable
+for_window [window_type="splash"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_type="dropdown_menu"] floating enable
+for_window [window_type="popup_menu"] floating enable
+for_window [window_type="tooltip"] floating enable
+for_window [window_type="notification"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [class="Firefox" window_role="page-info"] floating enable
+for_window [title="chromeIPass"] floating enable
+for_window [title="About Mozilla Firefox"] floating enable
+for_window [title="Steam - News"] floating enable
+for_window [title="Steam Library Folders"] floating enable
+for_window [title="Create or select new Steam library folder"] floating enable
+for_window [title="SpeedCrunch"] floating enable
+for_window [title="Create or select new Steam library folder"] floating enable
+for_window [title="noVNC"] floating enable
+for_window [title="RDP: *"] floating disable
+for_window [title="Edit Security Group - *"] floating enable
+for_window [title="Edit User Mailbox - *"] floating enable
+for_window [title="Select Full Access - *"] floating enable
+for_window [title="Edit Distribution Group - *"] floating enable
+for_window [title="Select Members - *"] floating enable
+for_window [title="Select Send As - *"] floating enable
+for_window [title="Select Send On Behalf - *"] floating enable
+for_window [title="Edit Room Mailbox - *"] floating enable
+for_window [title="Select User - Entire Forest - *"] floating enable
+for_window [title="User Mailbox - *"] floating enable
+for_window [title="JetBrains Toolbox"] floating enable
+for_window [title="Attach To Entry"] floating enable
+for_window [class="Nautilus" instance="file_progress"] floating enable
+for_window [title="Sign in - Google Accounts - Mozilla"] floating enable
+for_window [app_id="com.seafile.seafile-applet"] floating enable
+for_window [title="win0" class="jetbrains-*"] floating enable
+
+mouse_warping none
+
+include $HOME/.config/sway/config.d/*

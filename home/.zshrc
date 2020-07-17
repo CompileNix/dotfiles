@@ -195,9 +195,11 @@ alias get-random-password-alnum='echo -n "length: "; read len; cat /dev/urandom 
 alias get-random-password-alnum-lower='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:digit:][:lower:]" | head -c $len | awk "{ print $1 }"'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
-alias set-clipboard="xclip -i -sel c -f"
-alias get-ssh-pubkey="more ~/.ssh/id_ed25519.pub | set-clipboard | echo '=> Public key copied to pasteboard.'"
-alias get-ssh-prikey="more ~/.ssh/id_ed25519 | set-clipboard | echo '=> Private key copied to pasteboard.'"
+alias set-clipboard-x11="xclip -i -sel c -f"
+alias set-clipboard-wayland="wl-copy"
+alias get-clipboard-wayland="wl-paste"
+alias get-ssh-pubkey='if [ -f ~/.ssh/id_ed25519.pub ]; then cat ~/.ssh/id_ed25519.pub; elif [ -f ~/.ssh/id_ed25519_pub ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
+alias get-ssh-prikey='if [ -f ~/.ssh/id_ed25519 ]; then cat ~/.ssh/id_ed25519; elif [ -f ~/.ssh/id_ed25519 ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
 function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' }
 function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
 # Create a data URL from a file
@@ -218,8 +220,10 @@ alias set-megaraid-alarm-enabled='sudo megacli -AdpSetProp AlarmEnbl'
 alias set-megaraid-alarm-disabled='sudo megacli -AdpSetProp AlarmDsbl'
 alias set-megaraid-alarm-silent='sudo megacli -AdpSetProp AlarmSilence'
 alias set-keyboard-mode-raw='sudo kbd_mode -s'
-alias set-display-off='sleep 1; xset dpms force standby'
-alias set-display-on='xset dpms force on'
+alias set-display-off-x11='sleep 1; xset dpms force standby'
+alias set-display-on-x11='xset dpms force on'
+alias set-display-off-wayland="swayidle timeout 1 'swaymsg \"output * dpms off\"' resume 'swaymsg \"output * dpms on\"; pkill -nx swayidle'"
+alias set-display-on-wayland='swaymsg "output * dpms on"'
 alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { sudo emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; sudo emerge -avDuN world'
 alias update-archlinux-pacman='sudo pacman -Syu'
 alias update-archlinux-yaourt='sudo yaourt -Syu'
@@ -236,7 +240,7 @@ function fix-antigen_and_homesick_vim {
     then
         pushd ~/.homesick/repos
         rm -rf dotfiles
-        git clone --recursive https://github.com/compilenix/dotfiles.git
+        git clone --recursive https://git.compilenix.org/CompileNix/dotfiles.git
         popd >/dev/null
         pushd ~
         rm -rf .antigen
@@ -322,6 +326,7 @@ if [[ $distro == "Arch" ]]; then
 fi
 
 function install-podman-fedora {
+    sudo dnf remove docker
     sudo dnf install podman
     sudo dnf update container-selinux
     mkdir -pv ~/.zsh/completion
@@ -569,7 +574,7 @@ export FT2_SUBPIXEL_HINTING=1
 if [ -f "$HOME/.zshrc_include" ]; then
     source "$HOME/.zshrc_include"
 else
-    echo -e "#export SSH_AUTH_SOCK=\$XDG_RUNTIME_DIR/keeagent.sock\n#export EDITOR=nano" >"$HOME/.zshrc_include"
+    echo -e "#export EDITOR=nano" >"$HOME/.zshrc_include"
 fi
 
 antigen apply

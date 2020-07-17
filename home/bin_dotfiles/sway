@@ -1,0 +1,23 @@
+#!/bin/bash
+# Wayland is used by default if XDG_SESSION_TYPE=wayland is set (ie. if you use a display manager)
+export XDG_SESSION_TYPE=wayland
+# To use your monitor's DPI instead of the default of 96 DPI
+export QT_WAYLAND_FORCE_DPI=physical
+
+# Elementary/EFL
+export ECORE_EVAS_ENGINE=wayland_egl
+export ELM_ENGINE=wayland_egl
+
+# Java
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# Firefox & Thunderbird
+export MOZ_ENABLE_WAYLAND=1
+
+# LibreOffice should select Wayland by default. (If not, try SAL_USE_VCLPLUGIN=gtk3).
+
+export QT_QPA_PLATFORM=wayland
+export SDL_VIDEODRIVER=wayland
+
+/usr/bin/sway
+

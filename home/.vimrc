@@ -36,7 +36,7 @@ if has('syntax') && has('eval')
 endif
 
 set t_Co=256
-set number
+set relativenumber
 set tw=792034
 set cc=80
 set nobackup

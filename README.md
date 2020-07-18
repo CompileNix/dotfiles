@@ -108,7 +108,9 @@ git status
 popd >/dev/null
 echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"
 function ask_yn_y_callback {
-    sudo rm /usr/local/bin/tmux-mem-cpu-load
+    if [[ $EUID -eq 0 ]]; then
+        rm /usr/local/bin/tmux-mem-cpu-load
+    fi
     pushd ~
     rm -rf .vim/bundle
     pushd ~/.homesick/repos

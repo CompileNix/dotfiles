@@ -27,6 +27,7 @@ augroup END
 
 set t_Co=256
 set relativenumber
+set invnumber
 set tw=792034
 set cc=80
 set nobackup
@@ -103,9 +104,7 @@ endfunction
 command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 
 set pastetoggle=<F11>
-
-" Show / Hide linenumbers
-map <F12> :set invnumber<CR>
+map <F12> :noh<CR>
 
 if filereadable(glob("~/.vimrc_include"))
     source ~/.vimrc_include

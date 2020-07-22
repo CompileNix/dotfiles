@@ -105,6 +105,7 @@ command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 
 set pastetoggle=<F11>
 map <F12> :noh<CR>
+map <F8> :!$SHELL<CR>
 
 if filereadable(glob("~/.vimrc_include"))
     source ~/.vimrc_include

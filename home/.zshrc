@@ -154,6 +154,7 @@ alias get-date-hex='get-date | xargs printf "%x\n"'
 alias get-date-from-hex-unixtime='read a; echo $a | echo $((16#$_))'
 alias get-date-from-hex='get-date-from-hex-unixtime | date -d @$_'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
+alias get-cert-info-stdin='echo "paste pem cert and hit Control+D: ";cert=$(cat); echo $cert | openssl x509 -text -noout'
 function get-cert-remote-raw {
     hostName=$1
     portNumber=$2

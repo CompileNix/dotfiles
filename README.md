@@ -1,10 +1,10 @@
-# dotfiles
+# Description
 
 My personal configuration files. feel free to steal whatever you like.
 
 See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfiles) repo.
 
-## requirements
+## Requirements
 - python 3.7+
 - git
 - zsh
@@ -13,12 +13,12 @@ See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfi
 - tee
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
-### Debain
+### Debian / Ubuntu
 ```sh
 sudo apt install python3 python3-pip python git zsh vim vim-airline tmux curl wget net-tools htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils
 ```
 
-#### More packages
+#### More Packages
 ```sh
 sudo apt install build-essential cmake postfix
 ```
@@ -27,7 +27,7 @@ sudo apt install build-essential cmake postfix
 ```sh
 sudo dnf install python3 python git zsh vim vim-airline tmux curl wget ncdu redhat-lsb-core python3-pip htop iftop iotop mutt bind-utils rsync iptables
 ```
-#### More packages
+#### More Packages
 ```sh
 sudo dnf install make gcc-c++ gcc cmake sqlite postfix
 ```
@@ -52,12 +52,12 @@ chsh -s /usr/local/bin/zsh
 exec zsh
 ```
 
-#### More packages
+#### More Packages
 ```sh
 sudo yum install cmake postfix
 ```
 
-## Sway requirements
+## Sway Requirements
 - sway
 - waybar
 - wl-clipboard
@@ -72,7 +72,7 @@ sudo yum install cmake postfix
 - lxterminal
 - gimp
 
-## X11 .xinitrc requirements
+## X11 .xinitrc Requirements
 - i3
 - xrdb
 - xinput
@@ -90,7 +90,7 @@ sudo yum install cmake postfix
 - lxterminal
 - gimp
 
-## install
+## Install
 __Keep always an old terminal open, in case of failures!__
 
 ```sh

@@ -4,7 +4,7 @@ My personal configuration files. feel free to steal whatever you like.
 
 See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfiles) repo.
 
-## Requirements
+# Requirements
 - python 3.7+
 - git
 - zsh
@@ -13,26 +13,26 @@ See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfi
 - tee
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
-### Debian / Ubuntu
+## Debian / Ubuntu
 ```sh
 sudo apt install python3 python3-pip python git zsh vim vim-airline tmux curl wget net-tools htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils
 ```
 
-#### More Packages
+### More Packages
 ```sh
 sudo apt install build-essential cmake postfix
 ```
 
-### Fedora
+## Fedora
 ```sh
 sudo dnf install python3 python git zsh vim vim-airline tmux curl wget ncdu redhat-lsb-core python3-pip htop iftop iotop mutt bind-utils rsync iptables
 ```
-#### More Packages
+### More Packages
 ```sh
 sudo dnf install make gcc-c++ gcc cmake sqlite postfix
 ```
 
-### CentOS 7
+## CentOS 7
 ```sh
 sudo yum install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip ncdu htop iftop iotop mutt bind-utils rsync iptables
 # because centos ships an ancient version of ZSH we have to build a recent version by our self
@@ -52,7 +52,7 @@ chsh -s /usr/local/bin/zsh
 exec zsh
 ```
 
-#### More Packages
+### More Packages
 ```sh
 sudo yum install cmake postfix
 ```
@@ -90,14 +90,14 @@ sudo yum install cmake postfix
 - lxterminal
 - gimp
 
-## Install
+# Install
 __Keep always an old terminal open, in case of failures!__
 
 ```sh
 curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
 ```
 
-## Update
+# Update
 Copy and paste into terminal.
 
 __Keep always an old terminal open, in case of failures!__
@@ -136,14 +136,53 @@ function ask_yn_n_callback {
 ask_yn
 ```
 
-## Sway Desktop Notifications (Wayland)
+# Sway Desktop Notifications (Wayland)
 Install:
 - mako
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
-## i3 Desktop Notifications (X11)
+# i3 Desktop Notifications (X11)
 Install:
 - [deadd-notification-center](https://github.com/phuhl/linux_notification_center)
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
+
+
+# UI Settings
+Using:
+- `lxappearance`
+- Default Font: Helvetica LT Pro 11
+
+## GTK Themes
+- [Azure](https://github.com/vinceliuice/Azure-theme)
+- [Arc-Dark-OSX](https://github.com/Dr-Noob/Arc-Dark-OSX)
+
+## Icon Themes
+- Adwaita
+- Breeze
+  - breeze-gtk
+  - breeze-cursor-theme
+  - breeze-icon-theme
+
+## Firefox Theme
+- [Nord Polar Night](https://addons.mozilla.org/en-US/firefox/addon/nord-polar-night-theme/)
+  - [TreeTabs Themes](home/.config/firefox-themes)
+
+## Troubleshooting
+### Create links to missing cursors
+```sh
+cd ~/.icons/theme/cursors/
+ln -s right_ptr arrow
+ln -s cross crosshair
+ln -s right_ptr draft_large
+ln -s right_ptr draft_small
+ln -s cross plus
+ln -s left_ptr top_left_arrow
+ln -s cross tcross
+ln -s hand hand1
+ln -s hand hand2
+ln -s left_side left_tee
+ln -s left_ptr ul_angle
+ln -s left_ptr ur_angle
+```

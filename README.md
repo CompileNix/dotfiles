@@ -166,7 +166,7 @@ Using:
 
 ## Firefox Theme
 - [Nord Polar Night](https://addons.mozilla.org/en-US/firefox/addon/nord-polar-night-theme/)
-  - [TreeTabs Themes](./home/.config/firefox-themes)
+  - [TreeTabs Themes](home/.config/firefox-themes)
 
 ## Troubleshooting
 ### Create links to missing cursors

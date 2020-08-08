@@ -378,7 +378,8 @@ fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 ZSH_TMUX_AUTOSTART=false
 ZSH_TMUX_AUTOQUIT=false
 ZSH_TMUX_FIXTERM=false
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS=true
+DISABLE_MAGIC_FUNCTIONS=true
 
 source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
@@ -421,7 +422,7 @@ antigen bundle ascii-soup/zsh-url-highlighter
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 set-zsh-highlighting-full
-export ZSH_HIGHLIGHT_MAXLENGTH=80
+export ZSH_HIGHLIGHT_MAXLENGTH=512
 
 antigen bundle zsh-users/zsh-autosuggestions
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

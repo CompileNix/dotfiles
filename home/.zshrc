@@ -195,6 +195,7 @@ alias get-random-alias='alias | sort --random-sort | head -n 1'
 alias get-random-password-strong='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:print:]" | head -c $len | awk "{ print $1 }"'  # awk adds a newline
 alias get-random-password-alnum='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:alnum:]" | head -c $len | awk "{ print $1 }"'
 alias get-random-password-alnum-lower='echo -n "length: "; read len; cat /dev/urandom | tr -dc "[:digit:][:lower:]" | head -c $len | awk "{ print $1 }"'
+alias get-random-number-range='echo -n "from: "; read from; echo -n "to: "; read to; shuf -i ${from}-${to} -n 1'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
 alias set-clipboard-x11="xclip -i -sel c -f"

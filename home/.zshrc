@@ -586,7 +586,7 @@ fi
 antigen apply
 autoload -U compinit && compinit -u
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
-spaceship_vi_mode_enable
+spaceship_vi_mode_disable
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     mkdir -pv "$HOME/.gnupg"

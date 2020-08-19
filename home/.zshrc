@@ -166,23 +166,27 @@ function get-cert-remote {
 function get-cert-file {
     openssl x509 -noout -text -in $1
 }
-export dnsStats='+stats'
+
 function set-dns-stats-enable {
     export dnsStats='+stats'
 }
 function set-dns-stats-disable {
     export dnsStats=''
 }
-export dnsTrace=''
-function set-dns-trace-enable {
-    export dnsTrace='+trace'
+
+function set-dns-additional-enable {
+    export dnsAdditional='+additional'
 }
-function set-dns-trace-disable {
-    export dnsTrace=''
+function set-dns-additional-disable {
+    export dnsAdditional=''
 }
-alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer"
-alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec"
-alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsTrace) +answer +dnssec +sigchase"
+
+set-dns-stats-enable
+set-dns-additional-enable
+alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer"
+alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer +dnssec"
+alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer +dnssec +sigchase"
+
 alias get-picture-metadata-curl='echo -n "URL: "; read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='echo -n "file path: "; read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
 alias get-weather='curl wttr.in'

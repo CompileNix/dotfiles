@@ -34,9 +34,6 @@ then
     return
 fi
 
-bindkey '^[[1~' beginning-of-line
-bindkey '^[[4~' end-of-line
-
 # TODO: do the following for htop, too.
 unalias tmux 2>/dev/null
 if [ -f $(which tmux 2>/dev/null) ]; then
@@ -584,6 +581,12 @@ else
 fi
 
 antigen apply
+
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[[3;5~' kill-word # Ctrl+Del
+bindkey '^H' backward-kill-word # Ctrl+Backspacce
+
 autoload -U compinit && compinit -u
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
 spaceship_vi_mode_disable

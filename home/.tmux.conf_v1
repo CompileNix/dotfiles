@@ -6,7 +6,7 @@ set -g status-bg '#4e4e4e'
 set -g status-fg '#ffffff'
 set -g set-titles on
 set -g base-index 1
-set -g window-status-current-format "#[bg=green]#I:#W"
+set -g window-status-current-format "#[bg=blue,fg=white]#I:#W"
 set -g set-clipboard on
 set -g mode-mouse on
 set -g mouse-utf8 on
@@ -21,7 +21,7 @@ set -g status-interval 1
 set -g status-left "#S #[fg=green]#(tmux-mem-cpu-load --graph-lines 0 --averages-count 0) #[default]"
 set -g status-left-length 60
 
-set -g status-right "#T - #H %H:%M %d-%b-%y"
+set -g status-right "#H - %Y-%m-%d %H:%M:%S"
 set -g status-right-length 150
 
 # Horizontal splits with s or C-s

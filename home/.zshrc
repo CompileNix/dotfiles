@@ -38,13 +38,11 @@ fi
 unalias tmux 2>/dev/null
 if [ -f $(which tmux 2>/dev/null) ]; then
     if [ ! -f "$HOME/.tmux.conf_configured" ]; then
+        unlink "$HOME/.tmux.conf" 2>/dev/null
+        ln -s "$HOME/.homesick/repos/server-dotfiles/home/.tmux.conf_v2" "$HOME/.tmux.conf"
         if [[ $(tmux -V) == *"1."* ]]; then
             unlink "$HOME/.tmux.conf" 2>/dev/null
-            ln -s "$HOME/.homesick/repos/dotfiles/home/.tmux.conf_v1" "$HOME/.tmux.conf"
-        fi
-        if [[ $(tmux -V) == *"2."* ]]; then
-            unlink "$HOME/.tmux.conf" 2>/dev/null
-            ln -s "$HOME/.homesick/repos/dotfiles/home/.tmux.conf_v2" "$HOME/.tmux.conf"
+            ln -s "$HOME/.homesick/repos/server-dotfiles/home/.tmux.conf_v1" "$HOME/.tmux.conf"
         fi
         touch "$HOME/.tmux.conf_configured"
     fi

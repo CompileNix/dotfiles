@@ -84,7 +84,7 @@ bar {
 }
 
 set $mod Mod4
-set $term lxterminal
+set $term gnome-terminal
 
 hide_edge_borders both
 workspace_layout tabbed

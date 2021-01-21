@@ -79,7 +79,7 @@ application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
 
 [Added Associations]
-inode/directory=code.desktop;
+inode/directory=thunar.desktop;code.desktop;
 application/x-java-archive=nautilus-autorun-software.desktop;
 audio/x-vorbis+ogg=vlc.desktop;
 application/x-shellscript=code.desktop;
@@ -99,3 +99,4 @@ application/xhtml+xml=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
 application/download=firefox.desktop;
+message/rfc822=code.desktop;

@@ -1,17 +1,6 @@
 # Read `man 5 sway` for a complete reference.
 
-font pango:Helvetica Neue 9
-
-# header border
-# header background
-# header text
-# split indicator
-# window border
-# client.focused          #4C7899 #285577 #FFFFFF #700000   #285577
-# client.focused_inactive #333333 #5F676A #FFFFFF #700000   #5F676A
-# client.unfocused        #AAAAAA #222222 #DDDDDD #700000   #222222
-# client.urgent           #2F343A #900000 #FFFFFF #700000   #900000
-# client.placeholder      #000000 #0C0C0C #FFFFFF #700000   #0C0C0C
+font pango:Helvetica Neue 10
 
 # default theme
 # --------------------------------------
@@ -29,34 +18,64 @@ font pango:Helvetica Neue 9
 # set $indicator-unfocused         #00FF00
 # set $indicator-focused-inactive  #00FF00
 # set $indicator-urgent            #00FF00
+# client.focused          $border-color          $bg-color          $text-color           $indicator
+# client.unfocused        $inactive-border-color $inactive-bg-color $inactive-text-color  $indicator-unfocused
+# client.focused_inactive $inactive-border-color $inactive-bg-color $unfocused-text-color $indicator-focused-inactive
+# client.urgent           $urgent-border-color   $urgent-bg-color   $urgent-text-color    $indicator-urgent
 # --------------------------------------
 
 # cyberpunk theme
 # --------------------------------------
-set $bg-color 	                 #556064
-set $inactive-bg-color           #2F3D44
-set $border-color                #556064
-set $inactive-border-color       #2F3D44
-set $urgent-border-color         #CB4B16
-set $text-color                  #80FFF9
-set $urgent-text-color           #1ABC9C
-set $inactive-text-color         #1ABC9C
-set $unfocused-text-color        #1ABC9C
-set $urgent-bg-color             #E53935
-set $indicator                   #E53935
-set $indicator-unfocused         #454948
-set $indicator-focused-inactive  #454948
-set $indicator-urgent            #268BD2
-client.placeholder       #000000 #0c0c0c #ffffff #000000
-client.background        #2B2C2B
+# set $bg-color                    #556064
+# set $inactive-bg-color           #2F3D44
+# set $border-color                #556064
+# set $inactive-border-color       #2F3D44
+# set $urgent-border-color         #CB4B16
+# set $text-color                  #80FFF9
+# set $urgent-text-color           #1ABC9C
+# set $inactive-text-color         #1ABC9C
+# set $unfocused-text-color        #1ABC9C
+# set $urgent-bg-color             #E53935
+# set $indicator                   #E53935
+# set $indicator-unfocused         #454948
+# set $indicator-focused-inactive  #454948
+# set $indicator-urgent            #268BD2
+# client.placeholder               #000000 #0c0c0c #ffffff #000000
+# client.background                #2B2C2B
+# client.focused          $border-color          $bg-color          $text-color           $indicator
+# client.unfocused        $inactive-border-color $inactive-bg-color $inactive-text-color  $indicator-unfocused
+# client.focused_inactive $inactive-border-color $inactive-bg-color $unfocused-text-color $indicator-focused-inactive
+# client.urgent           $urgent-border-color   $urgent-bg-color   $urgent-text-color    $indicator-urgent
 # --------------------------------------
 
-# window colors
-#                       border                 background         text                  indicator
-client.focused          $border-color          $bg-color          $text-color           $indicator
-client.unfocused        $inactive-border-color $inactive-bg-color $inactive-text-color  $indicator-unfocused
-client.focused_inactive $inactive-border-color $inactive-bg-color $unfocused-text-color $indicator-focused-inactive
-client.urgent           $urgent-border-color   $urgent-bg-color   $urgent-text-color    $indicator-urgent
+# eighties theme
+# # Author: Chris Kempson (http://chriskempson.com)
+# --------------------------------------
+set $base00 #2d2d2d
+set $base01 #393939
+set $base02 #515151
+set $base03 #747369
+set $base04 #a09f93
+set $base05 #d3d0c8
+set $base06 #e8e6df
+set $base07 #f2f0ec
+set $base08 #f2777a
+set $base09 #f99157
+set $base0A #ffcc66
+set $base0B #99cc99
+set $base0C #66cccc
+set $base0D #6699cc
+set $base0E #cc99cc
+set $base0F #d27b53
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base0D $base02 $base05 $base0D $base02
+client.focused_inactive $base01 $base01 $base04 $base01 $base01
+client.unfocused        $base01 $base01 $base04 $base01 $base01
+client.urgent           $base0A $base0A $base00 $base0A $base0A
+client.placeholder      $base00 $base00 $base04 $base00 $base00
+client.background       $base02
+# --------------------------------------
 
 # Read `man 5 sway-bar` for more information about this section.
 bar {

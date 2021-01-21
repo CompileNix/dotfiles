@@ -1,3 +1,5 @@
+# vim: sw=4 et
+
 set -g default-terminal "screen-256color"
 set -g utf8 on
 set -g status-utf8 on
@@ -54,5 +56,3 @@ bind m \
              display 'Mouse: OFF'
 
              source-file ~/.tmux.conf_include
-
-# vim: sw=4 et

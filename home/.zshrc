@@ -371,7 +371,21 @@ if [ ! -f "$HOME/.tmux.conf_include" ]; then
 fi
 
 if [ ! -f "$HOME/.gitconfig_include" ]; then
-    echo -e "# vim: sw=4 et\n\n[user]\n\tname = CompileNix\n#\temail = compilenix@gmail.org\n#\tsigningkey = 3C713073CAC92AE0\n#[commit]\n\t# https://help.github.com/articles/signing-commits-using-gpg/\n#\tgpgsign = true\n#[credential]\n#\thelper = store\n" > "$HOME/.gitconfig_include"
+cat << EOF | tee $HOME/.gitconfig_include >/dev/null
+# vim: sw=4 et
+
+[user]
+     name = CompileNix
+     email = compilenix@gmail.com
+     signingkey = C94DD853DD6493CCC47C8C853C713073CAC92AE0
+
+# https://help.github.com/articles/signing-commits-using-gpg/
+[commit]
+     gpgsign = true
+
+[credential]
+    helper = store
+EOF
 fi
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"

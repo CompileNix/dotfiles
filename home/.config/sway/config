@@ -246,32 +246,47 @@ for_window [window_type="tooltip"] floating enable
 for_window [window_type="notification"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="Preferences"] floating enable
-for_window [class="Firefox" window_role="page-info"] floating enable
 for_window [title="chromeIPass"] floating enable
-for_window [title="About Mozilla Firefox"] floating enable
 for_window [title="Steam - News"] floating enable
 for_window [title="Steam Library Folders"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
 for_window [title="SpeedCrunch"] floating enable
 for_window [title="Create or select new Steam library folder"] floating enable
-for_window [title="noVNC"] floating enable
 for_window [title="RDP: *"] floating disable
-for_window [title="Edit Security Group - *"] floating enable
-for_window [title="Edit User Mailbox - *"] floating enable
-for_window [title="Select Full Access - *"] floating enable
-for_window [title="Edit Distribution Group - *"] floating enable
-for_window [title="Select Members - *"] floating enable
-for_window [title="Select Send As - *"] floating enable
-for_window [title="Select Send On Behalf - *"] floating enable
-for_window [title="Edit Room Mailbox - *"] floating enable
-for_window [title="Select User - Entire Forest - *"] floating enable
-for_window [title="User Mailbox - *"] floating enable
 for_window [title="JetBrains Toolbox"] floating enable
 for_window [title="Attach To Entry"] floating enable
 for_window [class="Nautilus" instance="file_progress"] floating enable
-for_window [title="Sign in - Google Accounts - Mozilla"] floating enable
 for_window [app_id="com.seafile.seafile-applet"] floating enable
 for_window [title="win0" class="jetbrains-*"] floating enable
+for_window [title="Quit GIMP" class="Gimp"] floating enable
+for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
+for_window [class="Toplevel" title="Git Gui *"] floating enable
+for_window [title="Close" instance="jetbrains*"] floating enable
+for_window [title=" " instance="jetbrains*"] floating enable
+for_window [title="Settings" instance="jetbrains*"] floating enable
+for_window [title="Progress" app_id="zenity"] floating enable
+for_window [title="File Operation Progress" app_id="thunar"] floating enable
+for_window [title="File Operation Progress" app_id="Thunar"] floating enable
+for_window [app_id="file-roller" title="Compress"] floating enable
+## Browser
+for_window [title="noVNC"] floating enable
+for_window [title="Sign in - Google Accounts *"] floating enable
+for_window [class="Firefox" window_role="page-info"] floating enable
+for_window [title="About Mozilla Firefox"] floating enable
+for_window [title="Close Firefox"] floating enable
+for_window [title="Firefox — Sharing Indicator"] floating enable
+for_window [app_id="firefox" title="Page Info — *"] floating enable
+### Exchange
+for_window [title="Edit Security Group *"] floating enable
+for_window [title="Edit User Mailbox *"] floating enable
+for_window [title="Select Full Access *"] floating enable
+for_window [title="Edit Distribution Group *"] floating enable
+for_window [title="Select Members *"] floating enable
+for_window [title="Select Send As *"] floating enable
+for_window [title="Select Send On Behalf *"] floating enable
+for_window [title="Edit Room Mailbox *"] floating enable
+for_window [title="Select User - Entire Forest *"] floating enable
+for_window [title="User Mailbox *"] floating enable
 
 mouse_warping none
 

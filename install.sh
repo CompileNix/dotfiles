@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=8 et
 
 condition_for_install=1
 if [[ \
@@ -20,7 +21,7 @@ if [[ ${condition_for_install} -eq 0 ]]; then
         chsh -s /bin/zsh
     else
         echo "you are not root, so you are not allowed to change your own shell to zsh"
-        echo "retrying with sudo..."
+        echo "retry with sudo..."
         sudo chsh -s /bin/zsh "$USERNAME"
     fi
     popd
@@ -28,5 +29,3 @@ if [[ ${condition_for_install} -eq 0 ]]; then
 else
     echo "one or more of the following hard dependencies are not installed: git, zsh, python"
 fi
-
-# vim: sw=4 et

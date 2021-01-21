@@ -1,0 +1,20 @@
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+input "1133:49977:Logitech_Pro_Gaming_Keyboard" {
+    xkb_layout us,de
+    xkb_variant ,nodeadkeys
+    xkb_options grp:alt_shift_toggle
+    repeat_delay 125
+    repeat_rate 37
+}
+
+input "1133:16477:Logitech_G403" {
+    accel_profile flat
+    pointer_accel 0 # set mouse sensitivity (between -1 and 1)
+}
+
+input "1133:49282:Logitech_G403_Prodigy_Wired/Wireless_Gaming_Mouse" {
+    accel_profile flat
+    pointer_accel 0 # set mouse sensitivity (between -1 and 1)
+}

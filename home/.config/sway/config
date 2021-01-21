@@ -290,4 +290,4 @@ for_window [title="User Mailbox *"] floating enable
 
 mouse_warping none
 
-include $HOME/.config/sway/config.d/*
+include $HOME/.config/sway/config.d/*.config

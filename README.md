@@ -15,7 +15,7 @@ See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfi
 
 ## Debian / Ubuntu
 ```sh
-sudo apt install python3 python3-pip python git zsh vim vim-airline tmux curl wget net-tools htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils language-pack-de neovim
+sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux curl wget net-tools acl htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils lxappearance language-pack-de
 ```
 
 ### More Packages
@@ -25,7 +25,7 @@ sudo apt install build-essential cmake postfix
 
 ## Fedora
 ```sh
-sudo dnf install python3 python git zsh vim vim-airline tmux curl wget ncdu redhat-lsb-core python3-pip htop iftop iotop mutt bind-utils rsync iptables langpacks-de neovim
+sudo dnf install python3 python git zsh vim vim-airline neovim tmux curl wget ncdu redhat-lsb-core python3-pip acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de
 ```
 ### More Packages
 ```sh
@@ -34,7 +34,7 @@ sudo dnf install make gcc-c++ gcc cmake sqlite postfix
 
 ## CentOS 7
 ```sh
-sudo yum install python3 python git zsh vim vim-airline tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip ncdu htop iftop iotop mutt bind-utils rsync iptables langpacks-de neovim
+sudo yum install python3 python git zsh vim vim-airline neovim tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip ncdu acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de
 # because centos ships an ancient version of ZSH we have to build a recent version by our self
 # see https://sourceforge.net/projects/zsh/files/zsh/
 cd /opt
@@ -69,8 +69,10 @@ sudo yum install cmake postfix
 - swayidle (turn off & on displays)
 - dmenu
 - rofi
-- lxterminal
+- gnome-terminal
+- mako
 - gimp
+- thunar (filemanager)
 
 ## X11 .xinitrc Requirements
 - i3
@@ -89,6 +91,7 @@ sudo yum install cmake postfix
 - rofi
 - lxterminal
 - gimp
+- thunar (filemanager)
 
 # Install
 __Keep always an old terminal open, in case of failures!__
@@ -153,6 +156,13 @@ Using:
 - `lxappearance`
 - Default Font: Helvetica LT Pro 11
 
+## Replace text cursor with regular mouse pointer
+```sh
+cd /usr/share/icons/Adwaita/cursors/
+sudo ln -sf left_ptr text
+sudo ln -sf left_ptr xterm
+```
+
 ## GTK Themes
 - [Azure](https://github.com/vinceliuice/Azure-theme)
 - [Arc-Dark-OSX](https://github.com/Dr-Noob/Arc-Dark-OSX)
@@ -185,3 +195,11 @@ ln -s left_side left_tee
 ln -s left_ptr ul_angle
 ln -s left_ptr ur_angle
 ```
+
+# Windows
+## Tools / Software
+- [7-ZIP](https://www.7-zip.org/): archive file management
+- [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer): more advanced Task Manager
+- [TeraCopy](https://www.codesector.com/teracopy): better file copy & move
+- [Visual Studio Code](https://code.visualstudio.com/download): text editor
+- [NetLimiter](https://www.netlimiter.com/): alternative firewall (not based on Windows Firewall)

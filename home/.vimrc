@@ -1,63 +1,68 @@
+" vim: sw=4 et
+
 " Get the defaults that most users want.
 if filereadable(glob("$VIMRUNTIME/defaults.vim"))
     source $VIMRUNTIME/defaults.vim
-endif
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
-  endif
-endif
-
-if &t_Co > 2 || has("gui_running")
-  " Switch on highlighting the last used search pattern.
-  set hlsearch
 endif
 
 " Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " Set 'textwidth' for all text files
+  autocmd FileType text setlocal textwidth=72
 augroup END
 
+" Add optional packages.
+"
+" The matchit plugin makes the % command work better, but it is not backwards
+" compatible.
+" The ! means the package won't be loaded right away but when plugins are
+" loaded during initialization.
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
+
 set t_Co=256
-set relativenumber
 set invnumber
-set tw=792034
-set cc=80
+set textwidth=792034
+set cc=72 " columns to highlight
+set formatoptions=cq
+set noswapfile " whether to use a swapfile for a buffer
 set nobackup
-set noswapfile
 set noundofile
-set background=dark
 set clipboard=unnamedplus
-set expandtab
-set tabstop=4
-set shiftwidth=4
 set mouse=a
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
 set showmatch
 set wildmenu
 set wildmode=full
 set showcmd
 set modeline
+set autoindent " take indent for new line from previous line
+set copyindent " make 'autoindent' use existing indent structure
+set preserveindent " preserve the indent structure when reindenting
+set shiftwidth=4 " number of spaces to use for (auto)indent step
+set background=dark " 'dark' or 'light', used for highlight colors
+set expandtab " use spaces when <Tab> is inserted
+set tabstop=4 " number of spaces that <Tab> in file uses
+set laststatus=0 " tells when last window has status lines
+set norelativenumber " show relative line number in front of each line
+set number " print the line number in front of each line
+set numberwidth=3 " number of columns used for the line number
+set splitbelow " new window from split is below the current one
+set splitright " new window is put right of the current one
+set exrc " read .vimrc and .exrc in the current directory
+set hlsearch " highlight matches with last search pattern
+set ignorecase " ignore case in search patterns
+set incsearch " highlight match while typing search pattern
+set smartcase " no ignore case when pattern has uppercase
+set nowrapscan " searches wrap around the end of the file
+set smartindent
+noh
 
 colorscheme mustang
-noh
 syntax on
 filetype on
-
-" Copy
-map <C-C> "+y
-" Paste
-map <C-V> "+p
 
 function StripTrailingWhitespace()
   if !&binary && &filetype != 'diff'
@@ -78,35 +83,22 @@ function FixIndentation()
 endfunction
 command -bar -nargs=0 FixIndentation call FixIndentation()
 
-function Save()
-  w
-endfunction
-command -bar -nargs=0 Save call Save()
-
-function SaveForce()
-  w!
-endfunction
-command -bar -nargs=0 SaveForce call SaveForce()
-
-function Exit()
-  q
-endfunction
-command -bar -nargs=0 Exit call Exit()
-
-function ExitForce()
-  q!
-endfunction
-command -bar -nargs=0 ExitForce call ExitForce()
-
 function SaveAsRoot()
   w !sudo tee > /dev/null %
 endfunction
 command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 
 set pastetoggle=<F11>
-map <F12> :noh<CR>
-map <F8> :!$SHELL<CR>
 
 if filereadable(glob("~/.vimrc_include"))
     source ~/.vimrc_include
+endif
+
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file (restore to previous version)
+  if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+  endif
 endif

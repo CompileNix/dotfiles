@@ -8,15 +8,25 @@
         "sway/window"
     ],
     "modules-right": [
-        "pulseaudio",
         "network",
+        "disk",
         "cpu",
         "memory",
+        "pulseaudio",
         "tray",
         "clock"
     ],
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
+    },
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 14,
+        "icon-theme": "Numix-Circle",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "all-outputs": "true"
     },
     "tray": {
         "spacing": 5
@@ -33,8 +43,13 @@
         "tooltip": true
     },
     "memory": {
-        "format": "MEM {}%",
+        "format": "Memory {}%",
         "tooltip": true
+    },
+    "disk": {
+        "interval": 30,
+        "format": "Disk Free {percentage_free}%",
+        "path": "/"
     },
     "network": {
         "format-wifi": "{essid} ({signalStrength}%) ",
@@ -44,7 +59,7 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
+        "format": "Volume {volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",

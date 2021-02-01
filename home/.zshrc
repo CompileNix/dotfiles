@@ -86,7 +86,7 @@ if [[ $operatingSystem == "Linux" ]]; then
     unset distro_result
 fi
 alias get-distro="lsb_release -a"
-alias get-distro-name="$distro"
+alias get-distro-name="echo $distro"
 
 # aliases
 if [[ $operatingSystem == "Mac" ]]; then
@@ -115,19 +115,19 @@ alias brexit='echo "disable all network interfaces, delete 50% of all files and 
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read()));"'
 alias urldecode='python3 -c "import sys, urllib.parse; print(urllib.parse.unquote_plus(sys.stdin.read()));"'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
-alias clean-swap='sudo swapoff -a; sudo swapon -a'
-alias reset-swap='clean-swap'
-alias drop-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
-alias reset-fscache='drop-fscache'
+alias reset-swap='sudo swapoff -a; sudo swapon -a'
+alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
 alias dns-retransfer-zones='rndc retransfer'
 alias dns-reload-zones='rndc reload'
 alias get-ip-local='ip a'
 alias get-ip-internet='curl https://ip.compilenix.org'
 alias get-ip-routes='ip route | column -t'
-alias get-network-listening='sudo netstat -tunpl'
-alias get-network-active-connections='sudo netstat -tun'
-alias get-network-active-connections-by-type="sudo netstat -tun | awk '{print \$6}' | sort | uniq -c | sort -n | tail -n +2"
-alias get-network-active-connections-by-type-program="sudo netstat -tunp | awk '{print \$6,\$7}' | sort | uniq -c | sort -n | tail -n +2"
+alias get-network-listening-netstat='sudo netstat -tunpl'
+alias get-network-listening='sudo ss --oneline --numeric --listening --processes --tcp --udp'
+alias get-network-active-connections-netstat='sudo netstat -tun'
+alias get-network-active-connections='ss --oneline --numeric --processes --tcp --udp -o state synchronized'
+alias get-network-active-connections-by-type-netstat="sudo netstat -tun | awk '{print \$6}' | sort | uniq -c | sort -n | tail -n +2"
+alias get-network-active-connections-by-type="sudo ss --summary"
 alias get-iptables-v4='sudo iptables -L -v'
 alias get-iptables-v4-nat='sudo iptables -t nat -L -v'
 alias get-iptables-v6='sudo ip6tables -L -v'
@@ -175,12 +175,8 @@ set-dns-additional-enable
 alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer"
 alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer +dnssec"
 alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer +dnssec +sigchase"
-
 alias get-picture-metadata-curl='echo -n "URL: "; read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='echo -n "file path: "; read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
-alias get-weather='curl wttr.in'
-alias get-weather-in='echo -n "enter location (name or 3-letters airport code): "; read a; curl wttr.in/$a'
-alias get-moon-phase='curl wttr.in/Moon'
 alias get-random-alias='alias | sort --random-sort | head -n 1'
 alias get-random-password-strong='echo -n "length: "; read len; cat /dev/random | tr -dc "[:print:]" | head -c $len | awk "{ print $1 }"'  # awk adds a newline
 alias get-random-password-alnum='echo -n "length: "; read len; cat /dev/random | tr -dc "[:alnum:]" | head -c $len | awk "{ print $1 }"'
@@ -281,6 +277,7 @@ alias get-processes-systemd='systemd-cgls'
 alias get-memory='free -h -m'
 alias get-disk-space='df -h'
 alias get-disks='lsblk'
+alias get-disks-id='blkid'
 alias get-mounts='mount | column -t'
 alias systemctl-status='systemctl status'
 alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'

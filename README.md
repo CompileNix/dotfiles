@@ -4,6 +4,13 @@ My personal configuration files. feel free to steal whatever you like.
 
 See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfiles) repo.
 
+# Install
+__Keep always an old terminal open, in case of failures!__
+
+```sh
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
+```
+
 # Requirements
 - python 3.7+
 - git
@@ -22,7 +29,7 @@ sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux 
 
 ### More Packages
 ```sh
-sudo apt install build-essential cmake postfix
+sudo apt install build-essential cmake
 ```
 
 ## Fedora
@@ -31,32 +38,7 @@ sudo dnf install python3 python git zsh vim vim-airline neovim tmux curl wget nc
 ```
 ### More Packages
 ```sh
-sudo dnf install make gcc-c++ gcc cmake sqlite postfix
-```
-
-## CentOS 7
-```sh
-sudo yum install python3 python git zsh vim vim-airline neovim tmux curl wget redhat-lsb-core make gcc-c++ gcc ncurses-devel python3-pip ncdu acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de
-# because centos ships an ancient version of ZSH we have to build a recent version by our self
-# see https://sourceforge.net/projects/zsh/files/zsh/
-cd /opt
-wget https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download
-tar -xJf download
-rm -f download
-cd zsh-*
-./configure
-make -j$(nproc) && sudo make install
-cd ..
-rm -rf zsh-*
-cd ~
-echo "/usr/local/bin/zsh" >>/etc/shells
-chsh -s /usr/local/bin/zsh
-exec zsh
-```
-
-### More Packages
-```sh
-sudo yum install cmake postfix
+sudo dnf install make gcc-c++ gcc cmake sqlite
 ```
 
 ## Sway Requirements
@@ -94,13 +76,6 @@ sudo yum install cmake postfix
 - lxterminal
 - gimp
 - thunar (filemanager)
-
-# Install
-__Keep always an old terminal open, in case of failures!__
-
-```sh
-curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
-```
 
 # Update
 Copy and paste into terminal.

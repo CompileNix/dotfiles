@@ -18,6 +18,8 @@ case "${unameOut}" in
 esac
 unset unameOut
 
+DOTFILES_REPO_NAME=dotfiles
+
 if [[ $operatingSystem == "Linux" ]]; then
     n=$(nice)
     # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
@@ -48,10 +50,10 @@ unalias tmux 2>/dev/null
 if [ -f $(which tmux 2>/dev/null) ]; then
     if [ ! -f "$HOME/.tmux.conf_configured" ]; then
         unlink "$HOME/.tmux.conf" 2>/dev/null
-        ln -s "$HOME/.homesick/repos/server-dotfiles/home/.tmux.conf_v2" "$HOME/.tmux.conf"
+        ln -s "$HOME/.homesick/repos/${DOTFILES_REPO_NAME}/home/.tmux.conf_v2" "$HOME/.tmux.conf"
         if [[ $(tmux -V) == *"1."* ]]; then
             unlink "$HOME/.tmux.conf" 2>/dev/null
-            ln -s "$HOME/.homesick/repos/server-dotfiles/home/.tmux.conf_v1" "$HOME/.tmux.conf"
+            ln -s "$HOME/.homesick/repos/${DOTFILES_REPO_NAME}/home/.tmux.conf_v1" "$HOME/.tmux.conf"
         fi
         touch "$HOME/.tmux.conf_configured"
     fi
@@ -338,7 +340,7 @@ function remove-podman-fedora {
     exec zsh
 }
 
-export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/${DOTFILES_REPO_NAME}/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
 unalias vim 2>/dev/null
 alias vim='nvim'
 

@@ -15,6 +15,8 @@ See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfi
 
 ## Debian / Ubuntu
 ```sh
+# How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
+sudo ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
 sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux curl wget net-tools acl htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils lxappearance language-pack-de
 ```
 

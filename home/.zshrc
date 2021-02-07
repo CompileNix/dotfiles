@@ -99,6 +99,18 @@ else
     alias iotop='iotop -d 1 -P -o'
 fi
 
+function ask_yn {
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes)
+                ask_yn_y_callback
+                break;;
+            No)
+                ask_yn_n_callback
+                break;;
+        esac
+    done
+}
 alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
 alias sudosu='sudo su -'
 alias pls='sudo'
@@ -111,7 +123,6 @@ alias l='la'
 alias grep='grep --color'
 alias htop='htop -d 10'
 alias rsync="rsync --progress --numeric-ids --human-readable --copy-links --hard-links"
-alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read()));"'
 alias urldecode='python3 -c "import sys, urllib.parse; print(urllib.parse.unquote_plus(sys.stdin.read()));"'
@@ -225,24 +236,21 @@ alias update-yum='sudo yum update'
 alias update-redhat='sudo dnf update'
 alias update-fedora='update-redhat'
 function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; pushd "$i"; git reset --hard; popd >/dev/null; done; }
-function fix-antigen_and_homesick_vim {
+function update-dotfiles-non-interactive {
     if [[ $EUID -eq 0 ]]; then
         rm /usr/local/bin/tmux-mem-cpu-load
     fi
     # Migrate from 1.x antigen to 2.x antigen
-    if [[ -d ~/.homesick/repos/dotfiles/home/.antigen ]]
+    if [[ -d ~/.homesick/repos/${DOTFILES_REPO_NAME}/home/.antigen ]]
     then
         pushd ~/.homesick/repos
-        rm -rf dotfiles
-        git clone --recursive https://git.compilenix.org/CompileNix/dotfiles.git
+        rm -rf ${DOTFILES_REPO_NAME}
+        git clone --recursive https://git.compilenix.org/CompileNix/${DOTFILES_REPO_NAME}.git
         popd >/dev/null
         pushd ~
         rm -rf .antigen
         rm -rf .vim/bundle/vundle
-        ln -sfv .homesick/repos/dotfiles/antigen .antigen
-        popd >/dev/null
-        pushd ~/.vim/bundle
-        ln -sfv ../../.homesick/repos/dotfiles/vim/vundle vundle
+        ln -sfv .homesick/repos/${DOTFILES_REPO_NAME}/antigen .antigen
         popd >/dev/null
     fi
     antigen-cleanup
@@ -258,7 +266,20 @@ function fix-antigen_and_homesick_vim {
 
     exec zsh
 }
-alias update-zshrc='pushd ~/.homesick/repos/dotfiles; git status; popd >/dev/null; echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"; function ask_yn_y_callback { fix-antigen_and_homesick_vim; }; function ask_yn_n_callback { echo -n ""; }; ask_yn'
+function update-dotfiles {
+    pushd ~/.homesick/repos/${DOTFILES_REPO_NAME}
+    git status
+    popd >/dev/null
+    echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/${DOTFILES_REPO_NAME} && git status\""
+    echo "Do you want proceed anyway?"
+    function ask_yn_y_callback {
+        update-dotfiles-non-interactive
+    }
+    function ask_yn_n_callback {
+        echo -n ""
+    }
+    ask_yn
+}
 alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=760866" -O /tmp/code-insiders.rpm && sudo yum install -y /tmp/code-insiders.rpm && rm /tmp/code-insiders.rpm'
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'
 alias test-mail-mutt='mutt -s "test" '

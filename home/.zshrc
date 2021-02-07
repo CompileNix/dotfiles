@@ -653,6 +653,35 @@ fi
 EOF
 fi
 
+if [ ! -f "$HOME/.ssh/config" ]; then
+mkdir -p $HOME/.ssh
+cat << EOF | tee $HOME/.ssh/config >/dev/null
+# vim: sw=4 et
+
+ForwardAgent yes
+VerifyHostKeyDNS yes
+HashKnownHosts yes
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,rsa-sha2-512,ssh-rsa
+PubkeyAcceptedKeyTypes ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,rsa-sha2-512,ssh-rsa
+ServerAliveInterval 60
+Compression yes
+ControlMaster auto
+ControlPath ~/.ssh/ssh-%r@%h:%p.socket
+ControlPersist 7d
+UseRoaming no
+ExitOnForwardFailure no
+
+#StrictHostKeyChecking accept-new # requires modern openssh
+#ForwardX11 yes
+#ForwardX11Trusted yes
+
+EOF
+chmod 0600 $HOME/.ssh/config
+fi
+
 # wget: Use UTF-8 as the default system encoding if it's supported
 if [[ -f $(which wget 2>/dev/null) && -f $(which grep 2>/dev/null) ]]; then
     if wget --help | grep -q "local-encoding"; then

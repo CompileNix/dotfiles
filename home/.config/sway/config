@@ -105,7 +105,7 @@ bindsym button3 floating toggle
 bindsym $mod+space focus mode_toggle
 
 # Start your launcher
-bindsym $mod+d exec "rofi -i -modi window,run -show run -scroll-method 1"
+bindsym $mod+d exec "rofi -i -modi window,run -show run -scroll-method 1 -m $(wl-xwayland-get-active-output.sh)"
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.

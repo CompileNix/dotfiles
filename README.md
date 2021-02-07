@@ -15,7 +15,7 @@ curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | ba
 - python 3.7+
 - git
 - zsh
-- vim
+- neovim or vim
 - sudo
 - tee
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
@@ -24,21 +24,12 @@ curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | ba
 ```sh
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
 sudo ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
-sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux curl wget net-tools acl htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils lxappearance language-pack-de
-```
-
-### More Packages
-```sh
-sudo apt install build-essential cmake
+sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux curl wget net-tools acl htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils lxappearance language-pack-de build-essential cmake
 ```
 
 ## Fedora
 ```sh
-sudo dnf install python3 python git zsh vim vim-airline neovim tmux curl wget ncdu redhat-lsb-core python3-pip acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de
-```
-### More Packages
-```sh
-sudo dnf install make gcc-c++ gcc cmake sqlite
+sudo dnf install python3 python git zsh vim vim-airline neovim tmux curl wget ncdu redhat-lsb-core python3-pip acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de make gcc-c++ gcc cmake sqlite
 ```
 
 ## Sway Requirements

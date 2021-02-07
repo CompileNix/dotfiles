@@ -1,5 +1,5 @@
 #!/bin/bash
-# vim: sw=8 et
+# vim: sw=4 et
 
 condition_for_install=1
 if [[ \

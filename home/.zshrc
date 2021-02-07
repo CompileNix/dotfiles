@@ -399,6 +399,7 @@ cat << EOF | tee $HOME/.gitconfig_include >/dev/null
 
 [credential]
     helper = store
+
 EOF
 fi
 
@@ -648,6 +649,7 @@ export FT2_SUBPIXEL_HINTING=1
 if [ -z "\$SSH_AUTH_SOCK" ] ; then
     eval \`ssh-agent -s\`
 fi
+
 EOF
 fi
 

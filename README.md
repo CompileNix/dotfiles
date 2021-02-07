@@ -69,6 +69,11 @@ sudo dnf install python3 python git zsh vim vim-airline neovim tmux curl wget nc
 - thunar (filemanager)
 
 # Update
+Use the zsh function `update-dotfiles`.
+
+If you have a really old version, you may need to update it manually.
+
+## Manual Update
 Copy and paste into terminal.
 
 __Keep always an old terminal open, in case of failures!__
@@ -77,7 +82,8 @@ __Keep always an old terminal open, in case of failures!__
 cd ~/.homesick/repos/dotfiles
 git status
 popd >/dev/null
-echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\"\nDo you want preced anyway?"
+echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\""
+echo "Do you want proceed anyway?"
 function ask_yn_y_callback {
     if [[ $EUID -eq 0 ]]; then
         rm /usr/local/bin/tmux-mem-cpu-load

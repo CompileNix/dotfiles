@@ -44,7 +44,6 @@ then
     return
 fi
 
-# TODO: do the following for htop, too.
 unalias tmux 2>/dev/null
 if [ -f $(which tmux 2>/dev/null) ]; then
     if [ ! -f "$HOME/.tmux.conf_configured" ]; then
@@ -284,7 +283,7 @@ alias systemctl-status='systemctl status'
 alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'
 alias install-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
 alias install-node-fnm='install-fnm'
-alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash'
+alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
 alias add-user='useradd'
 alias remove-user='deluser'
 alias inspect-docker-image='dive'  # https://github.com/wagoodman/dive
@@ -340,8 +339,6 @@ function remove-podman-fedora {
 }
 
 export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/dotfiles/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
-# Don’t clear the screen after quitting a manual page.
-#export MANPAGER='less -X';
 unalias vim 2>/dev/null
 alias vim='nvim'
 

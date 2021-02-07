@@ -609,7 +609,7 @@ function my-chpwd {
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
 
 if [ ! -f "$HOME/.zshrc_include" ]; then
-cat << EOF | tee $HOME/.gitconfig_include.test >/dev/null
+cat << EOF | tee $HOME/.zshrc_include >/dev/null
 # vim: sw=4 et
 
 alias vim='nvim'
@@ -624,7 +624,6 @@ export FT2_SUBPIXEL_HINTING=1
 
 if [ -z "\$SSH_AUTH_SOCK" ] ; then
     eval \`ssh-agent -s\`
-    # export SSH_AUTH_SOCK="\$XDG_RUNTIME_DIR/keeagent.sock"
 fi
 EOF
 fi

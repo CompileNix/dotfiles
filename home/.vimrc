@@ -91,14 +91,9 @@ command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 set pastetoggle=<F11>
 
 if filereadable(glob("~/.vimrc_include"))
-    source ~/.vimrc_include
+  source ~/.vimrc_include
 endif
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
-  endif
+if has('persistent_undo')
+  set undofile	" keep an undo file (undo changes after closing)
 endif

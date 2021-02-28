@@ -29,5 +29,5 @@ export BEMENU_BACKEND=wayland
 # https://github.com/Alexays/Waybar/issues/21
 #export XDG_CURRENT_DESKTOP=Unity
 
-/usr/bin/sway
+/usr/bin/sway $*
 

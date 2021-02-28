@@ -310,6 +310,9 @@ alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/mas
 alias add-user='useradd'
 alias remove-user='deluser'
 alias inspect-docker-image='dive'  # https://github.com/wagoodman/dive
+alias get-hostname='hostname -s'
+alias get-hostname-fqdn='hostname -f'
+alias get-hostname-domain='hostname -d'
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install --no-install-recommends '

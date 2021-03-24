@@ -707,7 +707,7 @@ autoload -U compinit && compinit -u
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
 
 if [[ $ZSH_MINIMAL != "true" ]]; then
-    spaceship_vi_mode_disable
+    spaceship_vi_mode_disable || bindkey -e
 fi
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then

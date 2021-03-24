@@ -29,7 +29,7 @@ sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux 
 
 ## Fedora
 ```sh
-sudo dnf install python3 python git zsh vim vim-airline neovim tmux curl wget ncdu redhat-lsb-core python3-pip NetworkManager-tui acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de make gcc-c++ gcc cmake sqlite mlocate
+sudo dnf install which python3 python git zsh vim vim-airline neovim tmux curl wget ncdu redhat-lsb-core python3-pip NetworkManager-tui acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de make gcc-c++ gcc cmake sqlite mlocate
 ```
 
 ## Sway Requirements

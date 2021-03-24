@@ -618,8 +618,6 @@ function use-fnm {
     fnm use 2>/dev/null || { fnm install && fnm use }
 }
 
-enable-fnm
-
 function my-chpwd {
     if [[ -f .nvmrc ]]
     then

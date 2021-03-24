@@ -15,7 +15,8 @@ if [[ ${condition_for_install} -eq 0 ]]; then
     cd $HOME
     mkdir -pv $HOME/bin
     git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-    $HOME/.homesick/repos/homeshick/bin/homeshick clone https://git.compilenix.org/CompileNix/dotfiles.git
+    echo "n" | $HOME/.homesick/repos/homeshick/bin/homeshick clone https://git.compilenix.org/CompileNix/dotfiles.git
+    $HOME/.homesick/repos/homeshick/bin/homeshick link --skip
     ln -sv .homesick/repos/dotfiles/antigen .antigen
     if [[ $EUID -eq 0 ]]; then
         chsh -s /bin/zsh

@@ -52,11 +52,12 @@
         "path": "/"
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-wifi": " {bandwidthDownBits}  {bandwidthUpBits}  {essid} ({signalStrength}%)",
+        "format-ethernet": " {bandwidthDownBits}  {bandwidthUpBits}  {ifname}: {ipaddr}/{cidr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": " disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click-right": "nm-connection-editor",
     },
     "pulseaudio": {
         "format": "Volume {volume}% {icon} {format_source}",

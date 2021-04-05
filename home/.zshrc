@@ -195,6 +195,11 @@ alias get-random-password-alnum='echo -n "length: "; read len; cat /dev/random |
 alias get-random-password-alnum-lower='echo -n "length: "; read len; cat /dev/random | tr -dc "[:digit:][:lower:]" | head -c $len | awk "{ print $1 }"'
 alias get-random-number-range='echo -n "from: "; read from; echo -n "to: "; read to; shuf -i ${from}-${to} -n 1'
 alias get-random-guid='uuidgen'
+alias get-random-hex-2='cat /dev/random | tr -dc "0-9a-f" | head -c 2'
+alias get-random-hex-4='cat /dev/random | tr -dc "0-9a-f" | head -c 4'
+alias get-random-ip4='python3 -c "import ipaddress, random; print(ipaddress.ip_address(random.randint(0, 0x7FFFFFFF)))"'
+alias get-random-ip6='python3 -c "import ipaddress, random; print(ipaddress.ip_address(random.randint(0, 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)))"'
+alias get-random-port='shuf -i 16385-49151 -n 1'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
 alias set-clipboard-x11="xclip -i -sel c -f"

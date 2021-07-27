@@ -236,7 +236,7 @@ alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { sudo 
 alias update-archlinux-pacman='sudo pacman -Syu'
 alias update-archlinux-yaourt='sudo yaourt -Syu'
 alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
-alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { sudo apt update; }; ask_yn_n_callback() { echo ""; }; ask_yn; apt autoremove; echo; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
+alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { set -x; sudo apt update; set +x; }; ask_yn_n_callback() { echo ""; }; ask_yn; set -x; apt autoremove; apt list --upgradable; sudo apt upgrade -y; sudo apt autoremove; sudo apt autoclean; set +x'
 alias update-yum='sudo yum update'
 alias update-fedora='sudo dnf update'
 function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; pushd "$i"; git reset --hard; popd >/dev/null; done; }

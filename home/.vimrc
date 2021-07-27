@@ -2,7 +2,7 @@
 
 " Get the defaults that most users want.
 if filereadable(glob("$VIMRUNTIME/defaults.vim"))
-    source $VIMRUNTIME/defaults.vim
+  source $VIMRUNTIME/defaults.vim
 endif
 
 " Put these in an autocmd group, so that we can delete them easily.
@@ -16,7 +16,7 @@ augroup END
 set t_Co=256
 set invnumber
 set textwidth=792034
-set cc=72 " columns to highlight
+set cc=80 " columns to highlight
 set formatoptions=cq
 set noswapfile " whether to use a swapfile for a buffer
 set nobackup
@@ -47,10 +47,10 @@ set ignorecase " ignore case in search patterns
 set incsearch " highlight match while typing search pattern
 set smartcase " no ignore case when pattern has uppercase
 set nowrapscan " searches wrap around the end of the file
+set wrap " text wrapping
 set smartindent
 noh
 
-colorscheme mustang
 syntax on
 filetype on
 

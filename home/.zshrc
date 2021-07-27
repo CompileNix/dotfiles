@@ -645,6 +645,30 @@ function my-chpwd {
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
 
+if [ ! -f "$HOME/.vimrc_include" ]; then
+cat << EOF | tee $HOME/.vimrc_include >/dev/null
+" vim: sw=4 et
+
+"colorscheme mustang
+
+" columns to highlight
+"set cc=80
+
+" text wrapping
+"set wrap
+
+" number of spaces to use for (auto)indent step
+"set shiftwidth=4
+
+" use spaces when <Tab> is inserted
+"set expandtab
+
+" number of spaces that <Tab> in file uses
+"set tabstop=4
+
+EOF
+fi
+
 if [ ! -f "$HOME/.zshrc_include" ]; then
 cat << EOF | tee $HOME/.zshrc_include >/dev/null
 # vim: sw=4 et

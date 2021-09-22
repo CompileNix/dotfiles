@@ -77,7 +77,8 @@ Copy and paste into terminal, after that start a new (separat) terminal / sessio
 __Keep always a additional terminal open, in case of any issues!__
 
 ```sh
-curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
+rm -rf ~/dotfiles 2>/dev/null
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
 exit
 zsh
 ```

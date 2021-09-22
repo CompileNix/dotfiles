@@ -6,7 +6,7 @@ My personal configuration files. feel free to steal whatever you like.
 __Keep always an old terminal open, in case of failures!__
 
 ```sh
-curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
 ```
 
 # Requirements

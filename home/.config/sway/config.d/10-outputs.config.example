@@ -1,3 +1,4 @@
+# vim: sw=4 et
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 # Read `man 5 sway-output` for more information about this section.
 
@@ -9,3 +10,4 @@ output "Samsung Electric Company S27H85x H1AK500000" adaptive_sync on max_render
 
 # right
 output "Samsung Electric Company S27H85x H4ZK900576" adaptive_sync on max_render_time 2 pos 5120 0
+

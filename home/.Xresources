@@ -1,3 +1,5 @@
+! vim: sw=4 et
+
 *font: "xft:Helvetica Neue:size=11"
 *TkTheme: tileqt
 rofi*font: "Helvetica Neue" 11
@@ -74,4 +76,3 @@ URxvt*color7:       #ababab
 xterm*color15:      #f9f9f9
 URxvt*color15:      #f9f9f9
 
-! vim: sw=4 et

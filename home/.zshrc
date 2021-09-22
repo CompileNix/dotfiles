@@ -1,11 +1,5 @@
 # vim: sw=4 et
 
-if [ ! -f "~/.zshrc.env" ]; then
-cat << EOF | tee $HOME/.zshrc.env >/dev/null
-ZSH_LIGHT=false
-ZSH_MINIMAL=false
-EOF
-fi
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"
@@ -18,15 +12,21 @@ case "${unameOut}" in
 esac
 unset unameOut
 
-DOTFILES_REPO_NAME=dotfiles
-
 if [[ $operatingSystem == "Linux" ]]; then
     n=$(nice)
     # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
     if [[ $EUID -eq 0 ]]; then
-        renice -n -20 $$ >/dev/null
-        ionice -c 2 -n 0 -p $$ >/dev/null
+        renice -n -20 $$ >/dev/null 2>&1
+        ionice -c 2 -n 0 -p $$ >/dev/null 2>&1
     fi
+fi
+
+if [[ $operatingSystem == "Mac" ]]; then
+    alias ls='ls -h -G'
+    alias make="make -j\$(sysctl -n hw.ncpu)"
+else
+    alias ls='ls -h --color'
+    alias make="make -j\$(nproc)"
 fi
 
 stty -ixon -ixoff 2>/dev/null
@@ -34,7 +34,6 @@ unicode_start 2>/dev/null
 kbd_mode -u 2>/dev/null # set unicode mode
 kbd_mode 2>/dev/null # check keyboard mode, should be Unicode (UTF-8)
 
-# save emacs!
 if [[ "$TERM" == "dumb" ]]
 then
     unsetopt zle
@@ -44,19 +43,6 @@ then
     unfunction preexec
     PS1='$ '
     return
-fi
-
-unalias tmux 2>/dev/null
-if [ -f $(which tmux 2>/dev/null) ]; then
-    if [ ! -f "$HOME/.tmux.conf_configured" ]; then
-        unlink "$HOME/.tmux.conf" 2>/dev/null
-        ln -s "$HOME/.homesick/repos/${DOTFILES_REPO_NAME}/home/.tmux.conf_v2" "$HOME/.tmux.conf"
-        if [[ $(tmux -V) == *"1."* ]]; then
-            unlink "$HOME/.tmux.conf" 2>/dev/null
-            ln -s "$HOME/.homesick/repos/${DOTFILES_REPO_NAME}/home/.tmux.conf_v1" "$HOME/.tmux.conf"
-        fi
-        touch "$HOME/.tmux.conf_configured"
-    fi
 fi
 
 distro=''
@@ -89,16 +75,6 @@ fi
 alias get-distro="lsb_release -a"
 alias get-distro-name="echo $distro"
 
-# aliases
-if [[ $operatingSystem == "Mac" ]]; then
-    alias ls='ls -h -G'
-    alias make="make -j\$(sysctl -n hw.ncpu)"
-else
-    alias ls='ls -h --color'
-    alias make="make -j\$(nproc)"
-    alias iotop='iotop -d 1 -P -o'
-fi
-
 function ask_yn {
     select yn in "Yes" "No"; do
         case $yn in
@@ -122,6 +98,7 @@ alias la='ls -al'
 alias l='la'
 alias grep='grep --color'
 alias htop='htop -d 10'
+alias iotop='iotop -d 1 -P -o'
 alias rsync="rsync --progress --numeric-ids --human-readable --copy-links --hard-links"
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read()));"'
@@ -129,8 +106,8 @@ alias urldecode='python3 -c "import sys, urllib.parse; print(urllib.parse.unquot
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias reset-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
-alias dns-retransfer-zones='rndc retransfer'
-alias dns-reload-zones='rndc reload'
+alias dns-retransfer='rndc retransfer'
+alias dns-reload='rndc reload'
 alias get-ip-local='ip a'
 alias get-ip-internet='curl https://ip.compilenix.org'
 alias get-ip-routes='ip route | column -t'
@@ -236,46 +213,49 @@ alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { sudo 
 alias update-archlinux-pacman='sudo pacman -Syu'
 alias update-archlinux-yaourt='sudo yaourt -Syu'
 alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
-alias update-debian='echo "do a \"apt update\"?"; ask_yn_y_callback() { set -x; sudo apt update; set +x; }; ask_yn_n_callback() { echo ""; }; ask_yn; set -x; apt autoremove; apt list --upgradable; sudo apt upgrade -y; sudo apt autoremove; sudo apt autoclean; set +x'
+function update-debian {
+    echo "do an \"apt update\"?"
+    function ask_yn_y_callback {
+        set -x
+        sudo apt update
+        set +x
+    }
+    function ask_yn_n_callback {
+        echo ""
+    }
+    ask_yn
+    set -x
+    apt autoremove
+    apt list --upgradable
+    sudo apt upgrade -y
+    sudo apt autoremove
+    sudo apt autoclean
+    set +x
+    unset -f ask_yn_y_callback
+    unset -f ask_yn_n_callback
+}
 alias update-yum='sudo yum update'
 alias update-fedora='sudo dnf update'
-function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; pushd "$i"; git reset --hard; popd >/dev/null; done; }
+function reset-git {
+    for i in $*; do
+        echo -e "\033[0;36m$i\033[0;0m"
+        pushd "$i" >/dev/null
+            git reset --hard
+        popd >/dev/null
+    done
+}
 function update-dotfiles-non-interactive {
-    if [[ $EUID -eq 0 ]]; then
-        rm /usr/local/bin/tmux-mem-cpu-load
-    fi
-    # Migrate from 1.x antigen to 2.x antigen
-    if [[ -d ~/.homesick/repos/${DOTFILES_REPO_NAME}/home/.antigen ]]
-    then
-        pushd ~/.homesick/repos
-        rm -rf ${DOTFILES_REPO_NAME}
-        git clone --recursive https://git.compilenix.org/CompileNix/${DOTFILES_REPO_NAME}.git
-        popd >/dev/null
-        pushd ~
-        rm -rf .antigen
-        rm -rf .vim/bundle/vundle
-        ln -sfv .homesick/repos/${DOTFILES_REPO_NAME}/antigen .antigen
-        popd >/dev/null
-    fi
-    antigen-cleanup
-    git-reset ~/.homesick/repos/*
-    if [[ -d ~/.vim/bundle ]]
-    then
-        rm -rf ~/.vim/bundle
-    fi
-    homeshick pull
-    homeshick link
-    antigen update
-    rm ~/.tmux.conf_configured
-
-    exec zsh
+    reset-git ~/dotfiles
+    pushd ~/dotfiles >/dev/null
+        ./update.sh
+    popd >/dev/null
 }
 function update-dotfiles {
-    pushd ~/.homesick/repos/${DOTFILES_REPO_NAME}
-    git status
+    pushd ~/dotfiles >/dev/null
+        git status
     popd >/dev/null
-    echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/${DOTFILES_REPO_NAME} && git status\""
-    echo "Do you want proceed anyway?"
+    echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/dotfiles && git status\""
+    echo "Do you want proceed with the update?"
     function ask_yn_y_callback {
         update-dotfiles-non-interactive
     }
@@ -283,6 +263,8 @@ function update-dotfiles {
         echo -n ""
     }
     ask_yn
+    unset -f ask_yn_y_callback
+    unset -f ask_yn_n_callback
 }
 alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=760866" -O /tmp/code-insiders.rpm && sudo yum install -y /tmp/code-insiders.rpm && rm /tmp/code-insiders.rpm'
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'
@@ -306,14 +288,11 @@ alias get-disk-space='df -h'
 alias get-disks='lsblk'
 alias get-disks-id='blkid'
 alias get-mounts='mount | column -t'
-alias systemctl-status='systemctl status'
 alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'
-alias install-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
-alias install-node-fnm='install-fnm'
-alias install-nvm='curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
+alias install-node-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
 alias add-user='useradd'
 alias remove-user='deluser'
-alias inspect-docker-image='dive'  # https://github.com/wagoodman/dive
+alias docker-inspect-image='dive' # https://github.com/wagoodman/dive
 alias get-hostname='hostname -s'
 alias get-hostname-fqdn='hostname -f'
 alias get-hostname-domain='hostname -d'
@@ -324,7 +303,6 @@ function insert-datetime {
     # [2021-03-30 19:03:02 CEST]: fooo
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
 }
-
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install --no-install-recommends '
@@ -376,9 +354,11 @@ function remove-podman-fedora {
     exec zsh
 }
 
-export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.homesick/repos/${DOTFILES_REPO_NAME}/home/bin_dotfiles:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/dotfiles/home/dotfiles_bin:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
 unalias vim 2>/dev/null
 alias vim='nvim'
+export EDITOR='nvim'
+export WORDCHARS=''
 
 # if it's an ssh session export GPG_TTY
 if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
@@ -386,40 +366,20 @@ if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
     export GPG_TTY
 fi
 
-setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate.
-setopt EXTENDEDGLOB
-setopt EXTENDED_HISTORY       # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY     # Write to the history file immediately, not when the shell exits.
-setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_SPACE      # Don't record an entry starting with a space.
-setopt HIST_VERIFY            # Don't execute immediately upon history expansion.
-unsetopt SHARE_HISTORY
+setopt hist_ignore_all_dups   # Delete old recorded entry if new entry is a duplicate.
+setopt extendedglob
+setopt extended_history       # Write the history file in the ":start:elapsed;command" format.
+setopt inc_append_history     # Write to the history file immediately, not when the shell exits.
+setopt hist_expire_dups_first # Expire duplicate entries first when trimming history.
+setopt hist_ignore_space      # Don't record an entry starting with a space.
+setopt hist_verify            # Don't execute immediately upon history expansion.
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt long_list_jobs
+unsetopt share_history
 
-if [ ! -f "$HOME/.tmux.conf_include" ]; then
-    touch "$HOME/.tmux.conf_include"
-fi
-
-if [ ! -f "$HOME/.gitconfig_include" ]; then
-cat << EOF | tee $HOME/.gitconfig_include >/dev/null
-# vim: sw=4 et
-
-[user]
-     name = CompileNix
-     email = compilenix@gmail.com
-     signingkey = C94DD853DD6493CCC47C8C853C713073CAC92AE0
-
-# https://help.github.com/articles/signing-commits-using-gpg/
-[commit]
-     gpgsign = true
-
-[credential]
-    helper = store
-
-EOF
-fi
-
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+fpath=( "$HOME/bin/.zfunctions" $fpath )
 
 ZSH_TMUX_AUTOSTART=false
 ZSH_TMUX_AUTOQUIT=false
@@ -427,11 +387,7 @@ ZSH_TMUX_FIXTERM=false
 COMPLETION_WAITING_DOTS=true
 DISABLE_MAGIC_FUNCTIONS=true
 
-if [[ $ZSH_MINIMAL != "true" ]]; then
-    source $HOME/.antigen/antigen.zsh
-    antigen use oh-my-zsh
-    antigen theme denysdovhan/spaceship-prompt
-
+if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     SPACESHIP_PROMPT_ADD_NEWLINE=false
     SPACESHIP_PROMPT_SEPARATE_LINE=false
     SPACESHIP_TIME_SHOW=true
@@ -440,7 +396,7 @@ if [[ $ZSH_MINIMAL != "true" ]]; then
     SPACESHIP_HOST_SHOW_FULL=true
     SPACESHIP_BATTERY_THRESHOLD=25
     SPACESHIP_EXIT_CODE_SHOW=true
-    SPACESHIP_EXIT_CODE_SUFFIX=" (╯°□°）╯︵ ┻━┻ "
+    # SPACESHIP_EXIT_CODE_SUFFIX=" (╯°□°）╯︵ ┻━┻ "
 
     SPACESHIP_NODE_SHOW=false
     SPACESHIP_RUBY_SHOW=false
@@ -459,52 +415,16 @@ if [[ $ZSH_MINIMAL != "true" ]]; then
     SPACESHIP_DOTNET_SHOW=false
     SPACESHIP_EMBER_SHOW=false
     SPACESHIP_PACKAGE_SHOW=false
-
-    if [[ $ZSH_LIGHT != "true" ]]; then
-        antigen bundle systemd
-        antigen bundle colored-man-pages
-        antigen bundle command-not-found
-        antigen bundle zsh-users/zsh-completions
-        antigen bundle ascii-soup/zsh-url-highlighter
-        # antigen bundle RobSis/zsh-completion-generator
-
-        antigen bundle zsh-users/zsh-syntax-highlighting
-        set-zsh-highlighting-full
-        export ZSH_HIGHLIGHT_MAXLENGTH=512
-
-        antigen bundle zsh-users/zsh-autosuggestions
-        export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-        export ZSH_AUTOSUGGEST_USE_ASYNC=true
-    fi
-else
-    PS1='$ '
 fi
 
-unalias sudo 2>/dev/null
-unalias make 2>/dev/null
-unalias cmake 2>/dev/null
-unalias gcc 2>/dev/null
-unalias g++ 2>/dev/null
-unalias c++ 2>/dev/null
-condition_for_tmux_mem_cpu_load=1
-if [[ \
-    $EUID -eq 0 && \
-    -f $(which sudo 2>/dev/null) && \
-    -f $(which make 2>/dev/null) && \
-    -f $(which cmake 2>/dev/null) && \
-    -f $(which gcc 2>/dev/null) && \
-    -f $(which g++ 2>/dev/null) && \
-    -f $(which c++ 2>/dev/null) \
-    ]]; then
-
-    condition_for_tmux_mem_cpu_load=0
-fi
-
-if [[ ${condition_for_tmux_mem_cpu_load} -eq 0 ]]; then
-    if [[ $ZSH_MINIMAL != "true" ]]; then
-        #antigen bundle thewtex/tmux-mem-cpu-load
-        antigen bundle compilenix/tmux-mem-cpu-load
+if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then
+    if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+        source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    else
+        echo "Warning: you requested to enable the ZSH Autosuggestions plugin, but it could not be found at the following expected location: /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     fi
+    export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    export ZSH_AUTOSUGGEST_USE_ASYNC=true
 fi
 
 if which tmux &> /dev/null
@@ -571,51 +491,18 @@ if which tmux &> /dev/null
 fi
 
 [ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
-[ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _global_ssh_hosts=()
+# [ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _global_ssh_hosts=()
 #[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 #[ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 hosts=(
   "$_ssh_config[@]"
-  "$_global_ssh_hosts[@]"
-#  "$_ssh_hosts[@]"
+#   "$_global_ssh_hosts[@]"
+#   "$_ssh_hosts[@]"
 #   "$_etc_hosts[@]"
-#  "$HOST"
-#  localhost
+#   "$HOST"
+#   localhost
 )
 zstyle ':completion:*:hosts' hosts $hosts
-
-export nvmAutoEnable=0
-export nvmEnabled=0
-function enable-nvm {
-    [[ nvmEnabled -eq 1 ]] && return 0
-    echo "loading Node Version Manager..."
-    export NVM_DIR="$(realpath $HOME/.nvm)"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || {
-        echo "you need nvm (https://github.com/creationix/nvm)"
-        unset NVM_DIR
-        return 1
-    }
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-    export nvmEnabled=1
-}
-
-function disable-nvm {
-    unset NVM_DIR
-    export nvmEnabled=0
-}
-
-function use-nvm {
-    enable-nvm || return 1
-    nvm i || return 1
-}
-
-if [[ -f .nvmrc ]]
-then
-    if [[ $nvmAutoEnable == 1 ]]
-    then
-        $(type nvm 2>/dev/null) && $nvmEnabled && [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
-    fi
-fi
 
 # fast node manager (https://github.com/Schniz/fnm)
 function enable-fnm {
@@ -638,123 +525,187 @@ function my-chpwd {
             use-fnm
             return
         fi
-
-        [[ $nvmAutoEnable != 1 ]] && return
-        [[ "$(nvm version 2>/dev/null)" == "$(cat .nvmrc)" ]] || use-nvm
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
 
-if [ ! -f "$HOME/.vimrc_include" ]; then
-cat << EOF | tee $HOME/.vimrc_include >/dev/null
-" vim: sw=4 et
-
-"colorscheme mustang
-
-" columns to highlight
-"set cc=80
-
-" text wrapping
-"set wrap
-
-" number of spaces to use for (auto)indent step
-"set shiftwidth=4
-
-" use spaces when <Tab> is inserted
-"set expandtab
-
-" number of spaces that <Tab> in file uses
-"set tabstop=4
-
-EOF
-fi
-
-if [ ! -f "$HOME/.zshrc_include" ]; then
-cat << EOF | tee $HOME/.zshrc_include >/dev/null
-# vim: sw=4 et
-
-alias vim='nvim'
-export EDITOR=nvim
-export LANG="en_US.UTF-8"
-export HISTSIZE=10000
-export HISTFILE="\$HOME/.history"
-export SAVEHIST=$HISTSIZE
-
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export FT2_SUBPIXEL_HINTING=1
-
-if [ -z "\$SSH_AUTH_SOCK" ] ; then
-    eval \`ssh-agent -s\`
-fi
-
-EOF
-fi
-
-if [ ! -f "$HOME/.ssh/config" ]; then
-mkdir -p $HOME/.ssh
-cat << EOF | tee $HOME/.ssh/config >/dev/null
-# vim: sw=4 et
-
-ForwardAgent yes
-VerifyHostKeyDNS yes
-HashKnownHosts yes
-Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
-MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
-HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,rsa-sha2-512,ssh-rsa
-PubkeyAcceptedKeyTypes ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,rsa-sha2-512,ssh-rsa
-ServerAliveInterval 60
-Compression yes
-ControlMaster auto
-ControlPath ~/.ssh/ssh-%r@%h:%p.socket
-ControlPersist 7d
-UseRoaming no
-ExitOnForwardFailure no
-
-#StrictHostKeyChecking accept-new # requires modern openssh
-#ForwardX11 yes
-#ForwardX11Trusted yes
-
-EOF
-chmod 0600 $HOME/.ssh/config
-fi
-
-# wget: Use UTF-8 as the default system encoding if it's supported
-if [[ -f $(which wget 2>/dev/null) && -f $(which grep 2>/dev/null) ]]; then
-    if wget --help | grep -q "local-encoding"; then
-        sed -i 's/\#local_encoding/local_encoding/g' ~/.wgetrc
-    fi
-fi
-
 source "$HOME/.zshrc_include"
 
-if [[ $ZSH_MINIMAL != "true" ]]; then
-    antigen apply
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+  function zle-line-init() {
+    echoti smkx
+  }
+  function zle-line-finish() {
+    echoti rmkx
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
 fi
 
-bindkey '^[[1~' beginning-of-line
-bindkey '^[[4~' end-of-line
-bindkey '^[[3;5~' kill-word # Ctrl+Del
+# [PageUp] - Up a line of history
+if [[ -n "${terminfo[kpp]}" ]]; then
+  bindkey -M emacs "${terminfo[kpp]}" up-line-or-history
+  bindkey -M viins "${terminfo[kpp]}" up-line-or-history
+  bindkey -M vicmd "${terminfo[kpp]}" up-line-or-history
+fi
+# [PageDown] - Down a line of history
+if [[ -n "${terminfo[knp]}" ]]; then
+  bindkey -M emacs "${terminfo[knp]}" down-line-or-history
+  bindkey -M viins "${terminfo[knp]}" down-line-or-history
+  bindkey -M vicmd "${terminfo[knp]}" down-line-or-history
+fi
+
+# Start typing + [Up-Arrow] - fuzzy find history forward
+if [[ -n "${terminfo[kcuu1]}" ]]; then
+  autoload -U up-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+
+  bindkey -M emacs "${terminfo[kcuu1]}" up-line-or-beginning-search
+  bindkey -M viins "${terminfo[kcuu1]}" up-line-or-beginning-search
+  bindkey -M vicmd "${terminfo[kcuu1]}" up-line-or-beginning-search
+fi
+# Start typing + [Down-Arrow] - fuzzy find history backward
+if [[ -n "${terminfo[kcud1]}" ]]; then
+  autoload -U down-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+
+  bindkey -M emacs "${terminfo[kcud1]}" down-line-or-beginning-search
+  bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
+  bindkey -M vicmd "${terminfo[kcud1]}" down-line-or-beginning-search
+fi
+
+# [Home] - Go to beginning of line
+if [[ -n "${terminfo[khome]}" ]]; then
+  bindkey -M emacs "${terminfo[khome]}" beginning-of-line
+  bindkey -M viins "${terminfo[khome]}" beginning-of-line
+  bindkey -M vicmd "${terminfo[khome]}" beginning-of-line
+fi
+# [End] - Go to end of line
+if [[ -n "${terminfo[kend]}" ]]; then
+  bindkey -M emacs "${terminfo[kend]}"  end-of-line
+  bindkey -M viins "${terminfo[kend]}"  end-of-line
+  bindkey -M vicmd "${terminfo[kend]}"  end-of-line
+fi
+
+# [Shift-Tab] - move through the completion menu backwards
+if [[ -n "${terminfo[kcbt]}" ]]; then
+  bindkey -M emacs "${terminfo[kcbt]}" reverse-menu-complete
+  bindkey -M viins "${terminfo[kcbt]}" reverse-menu-complete
+  bindkey -M vicmd "${terminfo[kcbt]}" reverse-menu-complete
+fi
+
+# [Backspace] - delete backward
+bindkey -M emacs '^?' backward-delete-char
+bindkey -M viins '^?' backward-delete-char
+bindkey -M vicmd '^?' backward-delete-char
+# [Delete] - delete forward
+if [[ -n "${terminfo[kdch1]}" ]]; then
+  bindkey -M emacs "${terminfo[kdch1]}" delete-char
+  bindkey -M viins "${terminfo[kdch1]}" delete-char
+  bindkey -M vicmd "${terminfo[kdch1]}" delete-char
+else
+  bindkey -M emacs "^[[3~" delete-char
+  bindkey -M viins "^[[3~" delete-char
+  bindkey -M vicmd "^[[3~" delete-char
+
+  bindkey -M emacs "^[3;5~" delete-char
+  bindkey -M viins "^[3;5~" delete-char
+  bindkey -M vicmd "^[3;5~" delete-char
+fi
+
+# [Ctrl-Delete] - delete whole forward-word
+bindkey -M emacs '^[[3;5~' kill-word
+bindkey -M viins '^[[3;5~' kill-word
+bindkey -M vicmd '^[[3;5~' kill-word
+
+# [Ctrl-RightArrow] - move forward one word
+bindkey -M emacs '^[[1;5C' forward-word
+bindkey -M viins '^[[1;5C' forward-word
+bindkey -M vicmd '^[[1;5C' forward-word
+# [Ctrl-LeftArrow] - move backward one word
+bindkey -M emacs '^[[1;5D' backward-word
+bindkey -M viins '^[[1;5D' backward-word
+bindkey -M vicmd '^[[1;5D' backward-word
+
+bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
+bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search backward incrementally for a specified string. The string may begin with ^ to anchor the search to the beginning of the line.
+bindkey ' ' magic-space                               # [Space] - don't do history expansion
+
+# Edit the current command line in $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
+
+# file rename magick
+bindkey "^[m" copy-prev-shell-word
+
 bindkey '^H' backward-kill-word # Ctrl+Backspacce
 
-autoload -U compinit && compinit -u
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
+bindkey '^n' expand-or-complete
+bindkey '^p' reverse-menu-complete
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+# disable named-directories autocompletion
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+# Use caching so that commands like apt and dpkg complete are useable
+zstyle ':completion:*' use-cache yes
+if [ ! -d "$HOME/.cache/zsh" ]; then mkdir -p "$HOME/.cache/zsh"; fi
+zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
+# Don't complete uninteresting users
+zstyle ':completion:*:*:*:users' ignored-patterns \
+        adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
+        clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
+        gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm \
+        ldap lp mail mailman mailnull man messagebus  mldonkey mysql nagios \
+        named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn \
+        operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
+        rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
+        usbmux uucp vcsa wwwrun xfs '_*'
+# ... unless we really want to.
+zstyle '*' single-ignored show
 
-if [[ $ZSH_MINIMAL != "true" ]]; then
+if [[ $COMPLETION_WAITING_DOTS = true ]]; then
+  expand-or-complete-with-dots() {
+    print -Pn "%F{red}...%f"
+    zle expand-or-complete
+    zle redisplay
+  }
+  zle -N expand-or-complete-with-dots
+  # Set the function as the default tab completion widget
+  bindkey -M emacs "^I" expand-or-complete-with-dots
+  bindkey -M viins "^I" expand-or-complete-with-dots
+  bindkey -M vicmd "^I" expand-or-complete-with-dots
+fi
+
+autoload -U +X bashcompinit && bashcompinit
+autoload -U compinit && compinit -u
+autoload -U promptinit && promptinit
+
+if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
+    prompt spaceship
     spaceship_vi_mode_disable || bindkey -e
 fi
 
-if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
-    mkdir -pv "$HOME/.gnupg"
-    chmod 0700 "$HOME/.gnupg"
-    touch "$HOME/.gnupg/gpg-agent.env"
+if [[ $ENABLE_ZSH_SYNTAX_HIGHLIGHTING == "true" ]]; then
+    set-zsh-highlighting-full
+    export ZSH_HIGHLIGHT_MAXLENGTH=512
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
+    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+        source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    else
+        echo "Warning: you requested to enable the ZSH Syntax Highlighting plugin, but it could not be found at the following expected location: /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    fi
 fi
 
 if [[ $operatingSystem == "Linux" ]]; then
     if [[ $EUID -eq 0 ]]; then
-        renice -n $n $$ > /dev/null
+        renice -n $n $$ >/dev/null 2>&1
     fi
 fi
+unset n
 
 # Rust
 if [ -f $HOME/.cargo/env ]; then
@@ -763,5 +714,3 @@ fi
 
 echo "here is a random shell alias you might not known about: $(get-random-alias)"
 
-unset n
-unset condition_for_tmux_mem_cpu_load

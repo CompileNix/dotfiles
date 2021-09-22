@@ -1,5 +1,7 @@
 # vim: sw=4 et
 
+[include]
+    path = ~/.gitconfig_include
 [core]
     fscache = true
     preloadindex = true
@@ -15,8 +17,7 @@
     a = add
     aa = add -A
     b = branch
-    d = diff --word-diff=color
-    dr = diff --word-diff=color origin/master
+    d = diff --word-diff=color -U5
     l = log --oneline --graph --decorate --all
     la = log --graph --decorate --all --show-signature
     tags = tag -l
@@ -30,7 +31,6 @@
 [diff]
     renames = copies
 [help]
-    # Automatically correct and execute mistyped commands
     autocorrect = 30
 [gui]
     fontdiff = -family \"Fira Code\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
@@ -40,11 +40,7 @@
 [push]
     default = matching
     followTags = true
-[oh-my-zsh]
-    hide-status = 1
 [pull]
     ff = only
-[include]
-    path = ~/.gitconfig_include
 [init]
     defaultBranch = main

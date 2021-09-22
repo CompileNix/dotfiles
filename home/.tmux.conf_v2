@@ -38,12 +38,14 @@ bind-key v split-window -h
 bind-key C-v split-window -h
 
 # set mouse on with prefix m
-    bind m \
-        set -g mouse on \;\
-        display 'Mouse: ON'
+bind m \
+    set -g mouse on \;\
+    display 'Mouse: ON'
+
 # set mouse off with prefix M
-    bind M \
-        set -g mouse off \;\
-        display 'Mouse: OFF'
+bind M \
+    set -g mouse off \;\
+    display 'Mouse: OFF'
 
 source-file ~/.tmux.conf_include
+

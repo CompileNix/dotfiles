@@ -3,3 +3,4 @@ curl -sv --compressed "$@" 2>&1 >/dev/null |
   grep -v "^\*" |
   grep -v "^}" |
 cut -c3-
+

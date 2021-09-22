@@ -1,4 +1,5 @@
 #!/bin/zsh
+# vim: sw=4 et
 xrdb .Xresources
 
 for i in {1..100}
@@ -22,8 +23,7 @@ setxkbmap -option 'grp:alt_shift_toggle'
 autocutsel -selection PRIMARY -fork
 xsetroot -cursor_name left_ptr
 numlockx
-pushd /usr/share/icons/Adwaita/cursors/
-sudo ln -sf left_ptr xterm
-popd
+pushd /usr/share/icons/Adwaita/cursors/ >/dev/null
+    sudo ln -sf left_ptr xterm
+popd >/dev/null
 
-# vim: sw=4 et

@@ -144,3 +144,4 @@ else
     notifyError "Error taking screenshot with grim"
   fi
 fi
+

@@ -5,19 +5,11 @@ if filereadable(glob("$VIMRUNTIME/defaults.vim"))
   source $VIMRUNTIME/defaults.vim
 endif
 
-" Put these in an autocmd group, so that we can delete them easily.
-augroup vimrcEx
-  au!
-
-  " Set 'textwidth' for all text files
-  autocmd FileType text setlocal textwidth=72
-augroup END
-
 set t_Co=256
 set invnumber
-set textwidth=792034
 set cc=80 " columns to highlight
-set formatoptions=cq
+set textwidth=79
+set formatoptions=tcq
 set noswapfile " whether to use a swapfile for a buffer
 set nobackup
 set noundofile
@@ -25,7 +17,7 @@ set clipboard=unnamedplus
 set mouse=a
 set showmatch
 set wildmenu
-set wildmode=full
+set wildmode=longest:list,full
 set showcmd
 set modeline
 set autoindent " take indent for new line from previous line
@@ -49,41 +41,44 @@ set smartcase " no ignore case when pattern has uppercase
 set nowrapscan " searches wrap around the end of the file
 set wrap " text wrapping
 set smartindent
+set noequalalways
+set encoding=UTF-8
 noh
 
 syntax on
 filetype on
 
 function StripTrailingWhitespace()
-  if !&binary && &filetype != 'diff'
-    normal mz
-    normal Hmy
-    %s/\s\+$//e
-    normal 'yz<CR>
-    normal `z
-  endif
+    if !&binary && &filetype != 'diff'
+        normal mz
+        normal Hmy
+        %s/\s\+$//e
+        normal 'yz<CR>
+        normal `z
+    endif
 endfunction
 command -bar -nargs=0 StripTrailingWhitespace call StripTrailingWhitespace()
 command -bar -nargs=0 TrimTrailingWhitespace call StripTrailingWhitespace()
 
 function FixIndentation()
-  if !&binary && &filetype != 'diff'
-    normal gg=G<C-o><C-o>ii
-  endif
+    if !&binary && &filetype != 'diff'
+        normal gg=G<C-o><C-o>ii
+    endif
 endfunction
 command -bar -nargs=0 FixIndentation call FixIndentation()
 
 function SaveAsRoot()
-  w !sudo tee > /dev/null %
+    w !sudo tee > /dev/null %
 endfunction
 command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 
 set pastetoggle=<F11>
 
 if filereadable(glob("~/.vimrc_include"))
-  source ~/.vimrc_include
+    source ~/.vimrc_include
 endif
 
 if has('persistent_undo')
-  set undofile	" keep an undo file (undo changes after closing)
+    set undofile " keep an undo file (undo changes after closing)
 endif
+

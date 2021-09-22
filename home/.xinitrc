@@ -1,4 +1,5 @@
 #!/bin/zsh
+# vim: sw=4 et
 . ~/.xinitrc_reset
 
 # xrandr
@@ -9,8 +10,8 @@ if [ -f $HOME/.xinitrc_xrandr ]; then
 fi
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
-	eval `ssh-agent -s`
-	#export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keeagent.sock"
+    eval `ssh-agent -s`
+    #export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keeagent.sock"
 fi
 
 xsetroot -cursor_name left_ptr &
@@ -28,4 +29,3 @@ fi
 
 exec i3
 
-# vim: sw=4 et

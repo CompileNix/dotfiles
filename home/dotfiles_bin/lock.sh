@@ -7,3 +7,4 @@ dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPl
 i3lock -i /tmp/screen.png
 rm /tmp/screen.jpg
 rm /tmp/screen.png
+

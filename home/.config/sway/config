@@ -1,3 +1,4 @@
+# vim: sw=4 et
 # Read `man 5 sway` for a complete reference.
 
 font pango:Helvetica Neue 10
@@ -292,3 +293,4 @@ for_window [title="User Mailbox *"] floating enable
 mouse_warping none
 
 include $HOME/.config/sway/config.d/*.config
+

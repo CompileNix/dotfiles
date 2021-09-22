@@ -2,8 +2,6 @@
 
 My personal configuration files. feel free to steal whatever you like.
 
-See also my [server-dotfiles](https://git.compilenix.org/CompileNix/server-dotfiles) repo.
-
 # Install
 __Keep always an old terminal open, in case of failures!__
 
@@ -12,24 +10,24 @@ curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | ba
 ```
 
 # Requirements
-- python 3.7+
+- python 3.8+
 - git
 - zsh
-- neovim or vim
-- sudo
 - tee
+- zstd
 - [powerline-fonts](https://github.com/powerline/fonts/releases)
 
 ## Debian / Ubuntu
 ```sh
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
-sudo ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
-sudo apt install python3 python3-pip python git zsh vim vim-airline neovim tmux curl wget net-tools acl htop ncdu iftop iotop mutt lsb-release rsync brotli gzip zip unzip bind9utils lxappearance build-essential cmake sqlite mlocate
+ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
+
+apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python python3 python3-pip rsync sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
 ```
 
 ## Fedora
 ```sh
-sudo dnf install util-linux-user findutils which python3 python git zsh vim vim-airline neovim tmux curl wget ncdu redhat-lsb-core python3-pip NetworkManager-tui acl htop iftop iotop mutt bind-utils rsync iptables lxappearance langpacks-de make gcc-c++ gcc cmake sqlite mlocate
+dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python python3 python3-pip redhat-lsb-core rsync sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd
 ```
 
 ## Sway Requirements
@@ -59,7 +57,7 @@ sudo dnf install util-linux-user findutils which python3 python git zsh vim vim-
 - numlockx
 - autocutsel
     - https://github.com/sigmike/autocutsel
-    - `sudo dnf install libX11-devel libXaw-devel`
+    - `dnf install libX11-devel libXaw-devel`
 - dbus-launch
 - ImageMagick (for screen lock image processing)
 - dmenu
@@ -74,43 +72,45 @@ Use the zsh function `update-dotfiles`.
 If you have a really old version, you may need to update it manually.
 
 ## Manual Update
-Copy and paste into terminal.
+Copy and paste into terminal, after that start a new (separat) terminal / session to verify everthing worked out fine.
 
-__Keep always an old terminal open, in case of failures!__
+__Keep always a additional terminal open, in case of any issues!__
 
 ```sh
-cd ~/.homesick/repos/dotfiles
-git status
-popd >/dev/null
-echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles && git status\""
-echo "Do you want proceed anyway?"
-function ask_yn_y_callback {
-    if [[ $EUID -eq 0 ]]; then
-        rm /usr/local/bin/tmux-mem-cpu-load
-    fi
-    pushd ~
-    rm -rf .vim/bundle
-    pushd ~/.homesick/repos
-    rm -rf dotfiles
-    git clone --recursive https://git.compilenix.org/CompileNix/dotfiles.git
-    popd >/dev/null
-    pushd ~
-    rm -rf .antigen
-    ln -sfv .homesick/repos/dotfiles/antigen .antigen
-    popd >/dev/null
-    antigen-cleanup
-    git-reset ~/.homesick/repos/*
-    homeshick pull
-    homeshick link
-    antigen update
-    rm ~/.tmux.conf_configured
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh | bash
+exit
+zsh
+```
 
-    exec zsh
-}
-function ask_yn_n_callback {
-    echo -n ""
-}
-ask_yn
+## Update Spaceship Prompt Plugin
+```bash
+cd ~/dotfiles
+temp_dir="/tmp/$(uuidgen)"
+mkdir -pv "$temp_dir"
+cd "$temp_dir"
+git clone https://github.com/spaceship-prompt/spaceship-prompt.git --depth=1 git_repo
+cd git_repo
+commit_id=$(git rev-parse HEAD)
+tar --create --file "../${commit_id}.tar.zstd" --preserve-permissions --zstd .
+cp -v "${commit_id}.tar.zstd" ~/dotfiles/zsh-plugins/spaceship-prompt/
+popd
+popd
+```
+
+## Update tmux-mem-cpu-load Plugin
+```bash
+cd ~/dotfiles
+temp_dir="/tmp/$(uuidgen)"
+mkdir -pv "$temp_dir"
+cd "$temp_dir"
+git clone https://github.com/thewtex/tmux-mem-cpu-load.git --depth=1 git_repo
+cd git_repo
+commit_id=$(git rev-parse HEAD)
+cmake .
+make
+cp -v "tmux-mem-cpu-load" "$HOME/dotfiles/zsh-plugins/tmux-mem-cpu-load/${commit_id}"
+popd
+popd
 ```
 
 # Sway Desktop Notifications (Wayland)
@@ -133,8 +133,8 @@ Using:
 ## Replace text cursor with regular mouse pointer
 ```sh
 cd /usr/share/icons/Adwaita/cursors/
-sudo ln -sf left_ptr text
-sudo ln -sf left_ptr xterm
+ln -sf left_ptr text
+ln -sf left_ptr xterm
 ```
 
 ## GTK Themes
@@ -177,3 +177,4 @@ ln -s left_ptr ur_angle
 - [TeraCopy](https://www.codesector.com/teracopy): better file copy & move
 - [Visual Studio Code](https://code.visualstudio.com/download): text editor
 - [NetLimiter](https://www.netlimiter.com/): alternative firewall (not based on Windows Firewall)
+

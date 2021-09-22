@@ -24,3 +24,4 @@ left_meters=LeftCPUs Memory Swap CPU
 left_meter_modes=1 1 1 1
 right_meters=RightCPUs Tasks Load Uptime
 right_meter_modes=1 2 2 2
+

@@ -6,7 +6,7 @@ if [[ \
     -f $(which git 2>/dev/null) && \
     -f $(which zsh 2>/dev/null) && \
     -f $(which python3 2>/dev/null) && \
-    -f $(which pip 2>/dev/null)
+    -f $(which pip3 2>/dev/null)
     ]]; then
 
     condition_for_install=0

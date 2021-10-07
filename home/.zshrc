@@ -418,9 +418,16 @@ if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then
+    ZSH_AUTOSUGGEST_ENABLED="false"
     if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
         source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    else
+        ZSH_AUTOSUGGEST_ENABLED="true"
+    fi
+    if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+        source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        ZSH_AUTOSUGGEST_ENABLED="true"
+    fi
+    if [[ $ZSH_AUTOSUGGEST_ENABLED == "false" ]]; then
         echo "Warning: you requested to enable the ZSH Autosuggestions plugin, but it could not be found at the following expected location: /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     fi
     export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -693,9 +700,16 @@ if [[ $ENABLE_ZSH_SYNTAX_HIGHLIGHTING == "true" ]]; then
     set-zsh-highlighting-full
     export ZSH_HIGHLIGHT_MAXLENGTH=512
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan" # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Character-Highlighting
+    ZSH_SYNTAX_HIGHLIGHTING_ENABLED="false"
     if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
         source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    else
+        ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
+    fi
+    if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+        source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
+    fi
+    if [[ $ZSH_SYNTAX_HIGHLIGHTING_ENABLED == "false" ]]; then
         echo "Warning: you requested to enable the ZSH Syntax Highlighting plugin, but it could not be found at the following expected location: /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     fi
 fi

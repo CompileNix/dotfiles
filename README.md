@@ -2,13 +2,6 @@
 
 My personal configuration files. feel free to steal whatever you like.
 
-# Install
-__Keep always an old terminal open, in case of failures!__
-
-```sh
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
-```
-
 # Requirements
 - python 3.8+
 - git
@@ -28,6 +21,25 @@ apt update && apt install acl bind9utils brotli coreutils curl git gzip htop ift
 ## Fedora
 ```sh
 dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python python3 python3-pip redhat-lsb-core rsync sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+```
+
+## MacOS
+```sh
+# Install Brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install software & tools
+brew install acl2 brotli coreutils curl git gzip htop iftop ncdu neovim net-tools python python3 rsync sqlite tmux unzip vim wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+
+# Install python modules required to install dotfiles
+pip3 install rich pyyaml neovim
+```
+
+# Install
+__Keep always an old terminal open, in case of failures!__
+
+```sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
 ```
 
 ## Sway Requirements

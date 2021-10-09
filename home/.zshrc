@@ -214,6 +214,7 @@ alias update-archlinux-pacman='sudo pacman -Syu'
 alias update-archlinux-yaourt='sudo yaourt -Syu'
 alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
 function update-debian {
+    set -e
     echo "do an \"apt update\"?"
     function ask_yn_y_callback {
         set -x
@@ -227,10 +228,11 @@ function update-debian {
     set -x
     apt autoremove
     apt list --upgradable
-    sudo apt upgrade -y
+    sudo apt upgrade
     sudo apt autoremove
     sudo apt autoclean
     set +x
+    set +e
     unset -f ask_yn_y_callback
     unset -f ask_yn_n_callback
 }

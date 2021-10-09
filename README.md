@@ -15,12 +15,12 @@ My personal configuration files. feel free to steal whatever you like.
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
 ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
 
-apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python python3 python3-pip rsync sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python python3 python3-pip rsync sudo sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
 ```
 
 ## Fedora
 ```sh
-dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python python3 python3-pip redhat-lsb-core rsync sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python python3 python3-pip redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd
 ```
 
 ## MacOS

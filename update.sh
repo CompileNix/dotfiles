@@ -461,7 +461,7 @@ export LC_PAPER="de_DE.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export SAVEHIST=10000
 export HISTSIZE=10000
-export HISTFILE="\$HOME/.history"
+export HISTFILE="$HOME/.history"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export FT2_SUBPIXEL_HINTING=1

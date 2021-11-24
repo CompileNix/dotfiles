@@ -1,6 +1,8 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 condition_for_install=1
 if [[ \
     -f $(which git 2>/dev/null) && \
@@ -32,4 +34,6 @@ if [[ ${condition_for_install} -eq 0 ]]; then
 else
     echo "one or more of the following dependencies are not installed: git, zsh, python, pip"
 fi
+
+set +e
 

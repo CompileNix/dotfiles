@@ -339,6 +339,9 @@ echo "remove ZSH cache"
 rm -fv "$HOME/.zcompdump" 2>/dev/null
 rm -fv "$HOME/.zshrc.zwc" 2>/dev/null
 
+echo "install required python libs"
+pip3 install --user rich pyyaml neovim
+
 echo "link new files"
 python3 ./install.py
 

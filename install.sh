@@ -19,8 +19,6 @@ if [[ ${condition_for_install} -eq 0 ]]; then
         mkdir -pv "$HOME/bin"
         echo "git clone https://git.compilenix.org/CompileNix/dotfiles.git \"$HOME/dotfiles\""
         git clone https://git.compilenix.org/CompileNix/dotfiles.git "$HOME/dotfiles"
-        echo "install required python libs"
-        pip3 install --user rich pyyaml neovim
         pushd "$HOME/dotfiles" >/dev/null
             ./update.sh
         popd >/dev/null

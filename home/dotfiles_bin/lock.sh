@@ -1,4 +1,6 @@
 #!/bin/bash
+# vim: sw=4 et
+
 scrot -q 100 /tmp/screen.jpg
 convert /tmp/screen.jpg -scale 2.5% -scale 4000% /tmp/screen.png
 # convert /tmp/screen.jpg -scale 1.25% -scale 8000% /tmp/screen.png

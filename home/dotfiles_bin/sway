@@ -1,4 +1,6 @@
 #!/bin/bash
+# vim: sw=4 et
+
 # Wayland is used by default if XDG_SESSION_TYPE=wayland is set (ie. if you use a display manager)
 #export XDG_SESSION_TYPE=wayland
 # To use your monitor's DPI instead of the default of 96 DPI

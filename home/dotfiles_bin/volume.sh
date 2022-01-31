@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=4 et
 
 if [ "$1" == "inc" ]; then
    amixer -q sset Master 2%+

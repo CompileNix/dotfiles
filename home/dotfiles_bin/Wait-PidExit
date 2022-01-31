@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=4 et
 
 for pid in "$@"; do
     while kill -0 "$pid" 2> /dev/null; do

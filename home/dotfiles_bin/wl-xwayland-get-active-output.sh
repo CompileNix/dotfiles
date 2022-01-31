@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=4 et
 
 # Second variant ist much faster
 # RE="$(swaymsg -t get_outputs | jq -r '.[] | select(.focused).rect | "\(.width)\\/\\d+?x\(.height)\\/\\d+?\\+\(.x)\\+\(.y)"')"

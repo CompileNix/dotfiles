@@ -25,7 +25,7 @@ if [[ $operatingSystem == "Mac" ]]; then
     alias ls='ls -h -G'
     alias make="make -j\$(sysctl -n hw.ncpu)"
 else
-    alias ls='ls -h --color'
+    alias ls='ls -h --color --group-directories-first'
     alias make="make -j\$(nproc)"
 fi
 
@@ -728,5 +728,5 @@ if [ -f $HOME/.cargo/env ]; then
     source $HOME/.cargo/env
 fi
 
-echo "here is a random shell alias you might not known about: $(get-random-alias)"
+echo "here is a shell alias you might not known about (get-random-alias):\n    $(get-random-alias)"
 

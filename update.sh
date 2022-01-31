@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=4 et
 
 spaceship_prompt_version=7fd996383de095c9a43d8129628ae10c5cfa8de5
 tmux_mem_cpu_load_version=b6afa5c5e96620743f9466a8a41e1db6238de39d
@@ -7,27 +8,27 @@ echo "pull dotfiles from remote"
 git pull --all || exit $?
 
 echo "remove old stuff"
-# remove old stuff
 if [ -d "$HOME/antigen" ]; then
     rm -r "$HOME/antigen"
-    echo "removed directory '$HOME/.homesick'"
+    echo "    removed directory '$HOME/.homesick'"
 fi
 if [ -d "$HOME/.antigen" ]; then
     rm -r "$HOME/.antigen"
-    echo "removed directory '$HOME/.antigen'"
+    echo "    removed directory '$HOME/.antigen'"
 fi
 if [ -d "$HOME/bin_dotfiles" ]; then
     rm -r "$HOME/bin_dotfiles"
-    echo "removed directory '$HOME/bin_dotfiles'"
+    echo "    removed directory '$HOME/bin_dotfiles'"
 fi
 if [ -d "$HOME/.vim/bundle/vundle" ]; then
     rm -r "$HOME/.vim/bundle/vundle"
-    echo "removed directory '$HOME/.vim/bundle/vundle'"
+    echo "    removed directory '$HOME/.vim/bundle/vundle'"
 fi
 if [ -f "$HOME/.tmux.conf_configured" ]; then
     rm -v "$HOME/.tmux.conf_configured"
 fi
-# Remove Symlinks from from files of most recent version
+
+echo "Remove Symlinks from from files of most recent version"
 if [ -f "$HOME/.Xresources" ]; then
     if [[ "$(readlink -- $HOME/.Xresources)" =~ ".homesick/repos/" ]]; then
         rm -v "$HOME/.Xresources"
@@ -46,6 +47,7 @@ fi
 if [ -d "$HOME/.config/firefox-themes" ]; then
     if [[ "$(readlink -- $HOME/.config/firefox-themes)" =~ ".homesick/repos/" ]]; then
         rm -rv "$HOME/.config/firefox-themes"
+        echo "    removed directory '$HOME/.config/firefox-themes'"
     fi
 fi
 if [ -f "$HOME/.config/git/gitk" ]; then

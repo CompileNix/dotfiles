@@ -1,6 +1,7 @@
-FROM fedora:34
+FROM fedora:35
 ENV TZ="UTC"
-RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime && dnf install -y acl bind-utils coreutils curl findutils git htop iftop iotop iptables mlocate ncdu neovim NetworkManager-tui python python3 python3-pip redhat-lsb-core rsync sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd && pip3 install --user rich pyyaml
+RUN dnf update --refresh -y
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime && dnf install -y acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich
 WORKDIR /root
 CMD [ "/bin/bash" ]
 

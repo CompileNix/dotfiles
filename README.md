@@ -126,6 +126,22 @@ popd
 popd
 ```
 
+# Test / Build / Dev
+- Comment out git clone in install.sh
+- Comment out git pull in update.sh
+
+```bash
+docker build -t local/dotfiles:ubuntu -f ubuntu.Dockerfile .
+docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:ubuntu
+# Run bash ./dotfiles/install.sh
+# Run zsh
+
+docker build -t local/dotfiles:fedora -f fedora.Dockerfile .
+docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:fedora
+# Run bash ./dotfiles/install.sh
+# Run zsh
+```
+
 # Sway Desktop Notifications (Wayland)
 Install:
 - mako

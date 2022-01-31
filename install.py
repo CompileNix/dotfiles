@@ -1,15 +1,19 @@
 #!/usr/bin/env python
+# vim: sw=4 et
 
-from rich import print
-from rich.console import Console
-from rich.repr import Result
-console = Console()
-from rich.traceback import install
-install(show_locals=True)
 from pathlib import Path
 import os
 from pathlib import Path
 import yaml
+
+try:
+    from rich import print
+    from rich.console import Console
+    console = Console()
+    from rich.traceback import install
+    install(show_locals=True)
+except:
+    print('INFO: Could not load optional python module "rich".')
 
 os.chdir('./home/')
 folders = list(Path('.').rglob('.'))

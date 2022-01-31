@@ -15,12 +15,12 @@ My personal configuration files. feel free to steal whatever you like.
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
 ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
 
-apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python python3 python3-pip rsync sudo sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python3 rsync sudo sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-yaml
 ```
 
 ## Fedora
 ```sh
-dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python python3 python3-pip redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich
 ```
 
 ## MacOS
@@ -29,7 +29,7 @@ dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptable
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install software & tools
-brew install acl2 brotli coreutils curl git gzip htop iftop ncdu neovim net-tools python python3 rsync sqlite tmux unzip vim wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+brew install acl2 brotli coreutils curl git gzip htop iftop ncdu neovim net-tools python3 rsync sqlite tmux unzip vim wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
 
 # Install python modules required to install dotfiles
 pip3 install rich pyyaml neovim
@@ -179,7 +179,7 @@ ln -sf left_ptr xterm
 
 ## Firefox Theme
 - [Nord Polar Night](https://addons.mozilla.org/en-US/firefox/addon/nord-polar-night-theme/)
-  - [TreeTabs Themes](home/.config/firefox-themes)
+- [TreeTabs Themes](home/.config/firefox-themes)
 
 ## Troubleshooting
 ### Create links to missing cursors

@@ -19,10 +19,12 @@ os.chdir('./home/')
 folders = list(Path('.').rglob('.'))
 os.chdir('..')
 
-config = dict(
+default_config = dict(
     link_fonts = False,
-    link_desktop_software_configs = False
+    link_desktop_software_configs = False,
+    enable_hush_login = True,
 )
+config = dict()
 
 
 def ask_yn(prompt: str, default: bool):
@@ -43,14 +45,35 @@ def ask_yn(prompt: str, default: bool):
     return result
 
 
-if not os.path.exists('config.yml'):
-    config['link_fonts'] = ask_yn('Install fonts?', config['link_fonts'])
-    config['link_desktop_software_configs'] = ask_yn('Install install desktop software configs?', config['link_desktop_software_configs'])
-    with open('config.yml', 'x', 1024, 'utf8') as config_file:
-        yaml.safe_dump(config, config_file)
-config = yaml.safe_load(open("config.yml"))
+if os.path.exists('config.yml'):
+    config = yaml.safe_load(open("config.yml"))
+
+
+is_loaded_config_partial = False
+if 'link_fonts' not in config:
+    config['link_fonts'] = ask_yn('Install fonts?', default_config['link_fonts'])
+    is_loaded_config_partial = True
+if 'link_desktop_software_configs' not in config:
+    is_loaded_config_partial = True
+    config['link_desktop_software_configs'] = ask_yn('Install install desktop software configs?', default_config['link_desktop_software_configs'])
+if 'enable_hush_login' not in config:
+    config['enable_hush_login'] = ask_yn('Disable login banner?', default_config['enable_hush_login'])
+    is_loaded_config_partial = True
+
+if is_loaded_config_partial:
+    if os.path.isfile('config.yml'):
+        with open('config.yml', 'w', 1024, 'utf8') as config_file:
+            yaml.safe_dump(config, config_file)
+    else:
+        with open('config.yml', 'x', 1024, 'utf8') as config_file:
+            yaml.safe_dump(config, config_file)
 
 print(f'config: {config}')
+
+if config['enable_hush_login']:
+    print('enable hush login')
+    print(f'create file "{os.getenv("HOME")}/.hushlogin"')
+    os.mknod(f'{os.getenv("HOME")}/.hushlogin')
 
 for folder in folders:
     destination_path = f'{os.getenv("HOME")}/{folder}'
@@ -95,7 +118,7 @@ for folder in folders:
             os.remove(f'{destination_path}/{filename}')
         if filename == '.tmux.conf_v1' or filename == '.tmux.conf_v2':
             continue
-        print(f'create link: "{destination_path}/{filename}"')
+        print(f'create link "{destination_path}/{filename}"')
         link_file = Path(f'{destination_path}/{filename}')
         link_file.symlink_to(f'{os.getcwd()}/home/{folder}/{filename}')
 

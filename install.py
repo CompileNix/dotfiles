@@ -70,7 +70,7 @@ if is_loaded_config_partial:
 
 print(f'config: {config}')
 
-if config['enable_hush_login']:
+if config['enable_hush_login'] and not os.path.exists(f'{os.getenv("HOME")}/.hushlogin'):
     print('enable hush login')
     print(f'create file "{os.getenv("HOME")}/.hushlogin"')
     os.mknod(f'{os.getenv("HOME")}/.hushlogin')

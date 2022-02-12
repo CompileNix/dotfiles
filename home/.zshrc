@@ -106,8 +106,6 @@ alias urldecode='python3 -c "import sys, urllib.parse; print(urllib.parse.unquot
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias reset-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
-alias dns-retransfer='rndc retransfer'
-alias dns-reload='rndc reload'
 alias get-ip-local='ip a'
 alias get-ip-internet='curl https://ip.compilenix.org'
 alias get-ip-routes='ip route | column -t'
@@ -146,24 +144,40 @@ function get-cert-file {
     openssl x509 -noout -text -in $1
 }
 
-function set-dns-stats-enable {
-    export dnsStats='+stats'
+function set-dns-query-stats-enable {
+    export dns_query_stats='+stats'
 }
-function set-dns-stats-disable {
-    export dnsStats=''
+function set-dns-query-stats-disable {
+    export dns_query_stats=''
 }
 
-function set-dns-additional-enable {
-    export dnsAdditional='+additional'
+function set-dns-query-additional-enable {
+    export dns_query_additional='+additional'
 }
-function set-dns-additional-disable {
-    export dnsAdditional=''
+function set-dns-query-additional-disable {
+    export dns_query_additional=''
 }
-set-dns-stats-enable
-set-dns-additional-enable
-alias get-dns="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer"
-alias get-dns-dnssec="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer +dnssec"
-alias get-dns-dnssec-verify="dig +noall \$(echo \$dnsStats) \$(echo \$dnsAdditional) +answer +dnssec +sigchase"
+set-dns-query-stats-enable
+set-dns-query-additional-enable
+alias get-dns="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer"
+alias get-dns-dnssec="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer +dnssec"
+alias get-dns-dnssec-verify="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer +dnssec +sigchase"
+alias invoke-dns-retransfer='rndc retransfer'
+alias invoke-dns-reload='rndc reload'
+function compare-dns-soa-servers {
+    local domain_name
+    echo -n "Domain name: "; read domain_name
+
+    local dns_servers
+    echo -n "DNS Server ip addresses (space separated): "; read dns_servers
+
+    local dns_server
+    for dns_server in ${=dns_servers}; do
+        echo "Testing $dns_server"
+        dig +noall +answer SOA "$domain_name" "@$dns_server"
+        dig +noall +answer NS "$domain_name" "@$dns_server"
+    done
+}
 alias get-picture-metadata-curl='echo -n "URL: "; read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='echo -n "file path: "; read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
 alias get-random-alias='alias | sort --random-sort | head -n 1'

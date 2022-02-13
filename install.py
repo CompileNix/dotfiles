@@ -91,14 +91,14 @@ if is_loaded_config_partial:
         with open(config_file, 'x', 1024, 'utf8') as config_file:
             yaml.safe_dump(config, config_file)
 
+print(f'config file location: {config_file}')
 print(f'config: {config}')
 
 hushlogin_file = f'{os.getenv("HOME")}/.hushlogin'
 if config['enable_hush_login'] and not os.path.exists(hushlogin_file):
-    print('enable hush login')
     print(f'create file "{os.getenv("HOME")}/.hushlogin"')
     os.mknod(hushlogin_file)
-elif os.path.exists(hushlogin_file):
+if not config['enable_hush_login'] and os.path.exists(hushlogin_file):
         os.remove(hushlogin_file)
         print(f'removed \'{hushlogin_file}\'')
 

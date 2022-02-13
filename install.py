@@ -20,8 +20,9 @@ os.chdir('./home/')
 folders = list(Path('.').rglob('.'))
 os.chdir('..')
 
-default_config_file_path = f'{os.getenv("HOME")}/.config/dotfiles/compilenix/config.yml'
-config_file_paths = default_config_file_path, f'{os.getenv("HOME")}/.config/dotfiles/compilenix/config.yaml'
+home_path = f'{os.getenv("HOME")}'
+default_config_file_path = f'{home_path}/.config/dotfiles/compilenix/config.yml'
+config_file_paths = default_config_file_path, f'{home_path}/.config/dotfiles/compilenix/config.yaml'
 default_config = dict(
     link_fonts = False,
     link_desktop_software_configs = False,
@@ -94,25 +95,28 @@ if is_loaded_config_partial:
 print(f'config file location: {config_file}')
 print(f'config: {config}')
 
-hushlogin_file = f'{os.getenv("HOME")}/.hushlogin'
+hushlogin_file = f'{home_path}/.hushlogin'
 if config['enable_hush_login'] and not os.path.exists(hushlogin_file):
-    print(f'create file "{os.getenv("HOME")}/.hushlogin"')
+    print(f'create file "{home_path}/.hushlogin"')
     os.mknod(hushlogin_file)
 if not config['enable_hush_login'] and os.path.exists(hushlogin_file):
         os.remove(hushlogin_file)
         print(f'removed \'{hushlogin_file}\'')
 
 for folder in folders:
-    destination_path = f'{os.getenv("HOME")}/{folder}'
-    if destination_path.startswith(f'{os.getenv("HOME")}/.fonts'):
+    if str(folder) == '.':
+        destination_path = f'{home_path}'
+    else:
+        destination_path = f'{home_path}/{folder}'
+    if destination_path.startswith(f'{home_path}/.fonts'):
         if config['link_fonts'] == False:
             continue
-    if destination_path.startswith(f'{os.getenv("HOME")}/.config/clipit') or \
-        destination_path.startswith(f'{os.getenv("HOME")}/.config/git') or \
-        destination_path.startswith(f'{os.getenv("HOME")}/.config/i3') or \
-        destination_path.startswith(f'{os.getenv("HOME")}/.config/sway') or \
-        destination_path.startswith(f'{os.getenv("HOME")}/.config/volumeicon') or \
-        destination_path.startswith(f'{os.getenv("HOME")}/.config/waybar'):
+    if destination_path.startswith(f'{home_path}/.config/clipit') or \
+        destination_path.startswith(f'{home_path}/.config/git') or \
+        destination_path.startswith(f'{home_path}/.config/i3') or \
+        destination_path.startswith(f'{home_path}/.config/sway') or \
+        destination_path.startswith(f'{home_path}/.config/volumeicon') or \
+        destination_path.startswith(f'{home_path}/.config/waybar'):
         if config['link_desktop_software_configs'] == False:
             continue
 
@@ -147,5 +151,8 @@ for folder in folders:
             continue
         print(f'create link "{destination_path}/{filename}"')
         link_file = Path(f'{destination_path}/{filename}')
-        link_file.symlink_to(f'{os.getcwd()}/home/{folder}/{filename}')
+        if str(folder) == '.':
+            link_file.symlink_to(f'{os.getcwd()}/home/{filename}')
+        else:
+            link_file.symlink_to(f'{os.getcwd()}/home/{folder}/{filename}')
 

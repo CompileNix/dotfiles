@@ -93,10 +93,14 @@ if is_loaded_config_partial:
 
 print(f'config: {config}')
 
-if config['enable_hush_login'] and not os.path.exists(f'{os.getenv("HOME")}/.hushlogin'):
+hushlogin_file = f'{os.getenv("HOME")}/.hushlogin'
+if config['enable_hush_login'] and not os.path.exists(hushlogin_file):
     print('enable hush login')
     print(f'create file "{os.getenv("HOME")}/.hushlogin"')
-    os.mknod(f'{os.getenv("HOME")}/.hushlogin')
+    os.mknod(hushlogin_file)
+elif os.path.exists(hushlogin_file):
+        os.remove(hushlogin_file)
+        print(f'removed \'{hushlogin_file}\'')
 
 for folder in folders:
     destination_path = f'{os.getenv("HOME")}/{folder}'

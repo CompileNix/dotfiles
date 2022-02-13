@@ -4,6 +4,7 @@
 from pathlib import Path
 import os
 from pathlib import Path
+from re import split
 import yaml
 
 try:
@@ -19,6 +20,8 @@ os.chdir('./home/')
 folders = list(Path('.').rglob('.'))
 os.chdir('..')
 
+default_config_file_path = f'{os.getenv("HOME")}/.config/dotfiles/compilenix/config.yml'
+config_file_paths = default_config_file_path, f'{os.getenv("HOME")}/.config/dotfiles/compilenix/config.yaml'
 default_config = dict(
     link_fonts = False,
     link_desktop_software_configs = False,
@@ -28,7 +31,7 @@ config = dict()
 
 
 def ask_yn(prompt: str, default: bool):
-    default_yn = "Y/n" if default else "y/N"
+    default_yn = 'Y/n' if default else 'y/N'
     result = default
     while True:
         answer = input(f'{prompt} [{default_yn}]: ').lower()
@@ -45,9 +48,29 @@ def ask_yn(prompt: str, default: bool):
     return result
 
 
-if os.path.exists('config.yml'):
-    config = yaml.safe_load(open("config.yml"))
+config_file = None
+for file in config_file_paths:
+    if os.path.isfile(file):
+        config_file = file
+        break
 
+if config_file is None:
+    existing_path = ''
+    path_list = split(r'\/', default_config_file_path)
+    path_list.remove('')
+    filename = path_list.pop()
+    config_file = default_config_file_path
+
+    for element in path_list:
+        if element == filename:
+            break # we are done here
+        existing_path = f'{existing_path}/{element}'
+        if os.path.isdir(existing_path):
+            continue # path exists, continue traversing path structure
+        os.mkdir(existing_path)
+
+if os.path.exists(config_file):
+    config = yaml.safe_load(open(config_file))
 
 is_loaded_config_partial = False
 if 'link_fonts' not in config:
@@ -61,11 +84,11 @@ if 'enable_hush_login' not in config:
     is_loaded_config_partial = True
 
 if is_loaded_config_partial:
-    if os.path.isfile('config.yml'):
-        with open('config.yml', 'w', 1024, 'utf8') as config_file:
+    if os.path.isfile(config_file):
+        with open(config_file, 'w', 1024, 'utf8') as config_file:
             yaml.safe_dump(config, config_file)
     else:
-        with open('config.yml', 'x', 1024, 'utf8') as config_file:
+        with open(config_file, 'x', 1024, 'utf8') as config_file:
             yaml.safe_dump(config, config_file)
 
 print(f'config: {config}')
@@ -109,7 +132,7 @@ for folder in folders:
             f'{destination_path}/{filename}'.endswith('/dotfiles_bin/wl-xwayland-get-active-output.sh'):
             if config['link_desktop_software_configs'] == False:
                 continue
-        
+
         # existing file or symlink
         if os.path.exists(f'{destination_path}/{filename}'):
             continue

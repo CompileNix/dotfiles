@@ -1,0 +1,1 @@
+bash ./dotfiles/install.sh

@@ -4,14 +4,14 @@
 spaceship_prompt_version=7fd996383de095c9a43d8129628ae10c5cfa8de5
 tmux_mem_cpu_load_version=b6afa5c5e96620743f9466a8a41e1db6238de39d
 
+echo "pull dotfiles from remote"
+git pull --all || exit $?
+
 if [ -f "$HOME/dotfiles/config.yml" ]; then
     echo "Migrate dotfiles config file from \"$HOME/dotfiles/config.yml\" to \"$HOME/.config/dotfiles/compilenix/config.yml\""
     mkdir -pv "$HOME/.config/dotfiles/compilenix"
     mv -v "$HOME/dotfiles/config.yml" "$HOME/.config/dotfiles/compilenix/config.yml"
 fi
-
-echo "pull dotfiles from remote"
-git pull --all || exit $?
 
 echo "remove old stuff"
 if [ -d "$HOME/antigen" ]; then

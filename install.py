@@ -92,7 +92,7 @@ if is_loaded_config_partial:
         with open(config_file, 'x', 1024, 'utf8') as config_file:
             yaml.safe_dump(config, config_file)
 
-print(f'config file location: {config_file}')
+print(f'config file location: {str(config_file)}')
 print(f'config: {config}')
 
 hushlogin_file = f'{home_path}/.hushlogin'

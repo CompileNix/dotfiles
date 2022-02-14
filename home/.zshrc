@@ -393,6 +393,7 @@ setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt long_list_jobs
+setopt interactive_comments
 unsetopt share_history
 
 fpath=( "$HOME/bin/.zfunctions" $fpath )

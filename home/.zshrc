@@ -143,7 +143,76 @@ function get-cert-remote {
 function get-cert-file {
     openssl x509 -noout -text -in $1
 }
+function new-dhparam {
+    local dhparam_size
+    echo -n "dhparam size [2048]: "; read dhparam_size
 
+    openssl dhparam -out dhparam.pem "$dhparam_size"
+
+    echo
+    ls -l dhparam.pem
+}
+function new-cert-selfsigned {
+    local cert_type
+    echo "Certificate Type, valid options are:"
+    echo "- rsa:2048"
+    echo "- rsa:4096"
+    echo "- ed25519"
+    echo -n "Certificate Type: "; read cert_type
+    if [[ "$cert_type" = "ed25519" ]]; then
+        openssl genpkey -algorithm ed25519 -out privkey.pem
+    fi
+    if [[ "$cert_type" = "rsa:2048" ]]; then
+        openssl genrsa -out privkey.pem 2048
+    fi
+    if [[ "$cert_type" = "rsa:4096" ]]; then
+        openssl genrsa -out privkey.pem 4096
+    fi
+    if [ ! -f privkey.pem ]; then
+        echo "no valid certificate type choosen or error during generation" >/dev/stderr
+        return 1
+    fi
+
+    local valid_for
+    echo -n "Valid for days [3650]: "; read valid_for
+
+    if [[ "$cert_type" != "ed25519" ]]; then
+        local hash_alg
+        echo -n "Hash Alg [-sha256 -sha384 -sha512]: "; read hash_alg
+    fi
+
+    local cert_subject
+    echo -n "Subject [/C=/ST=/L=/O=/OU=/CN=localhost]: "; read cert_subject
+
+    local cert_subject_alt_name
+    echo -n "Subject Alt Names [DNS:localhost, DNS:localhost.localdomain]: "; read cert_subject_alt_name
+
+    if [[ "$cert_type" = "ed25519" ]]; then
+        openssl req \
+            -key privkey.pem \
+            -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nbasicConstraints=CA:FALSE\nkeyUsage=nonRepudiation,digitalSignature,keyEncipherment\nsubjectAltName=${cert_subject_alt_name}")) \
+            -subj "$cert_subject" \
+            -extensions SAN \
+            -nodes \
+            -x509 \
+            -days "$valid_for" \
+            -out cert.pem
+    else
+        openssl req \
+            -key privkey.pem \
+            -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nbasicConstraints=CA:FALSE\nkeyUsage=nonRepudiation,digitalSignature,keyEncipherment\nsubjectAltName=${cert_subject_alt_name}")) \
+            "$hash_alg" \
+            -subj "$cert_subject" \
+            -extensions SAN \
+            -nodes \
+            -x509 \
+            -days "$valid_for" \
+            -out cert.pem
+    fi
+
+    echo
+    ls -l privkey.pem cert.pem
+}
 function set-dns-query-stats-enable {
     export dns_query_stats='+stats'
 }

@@ -255,8 +255,7 @@ alias get-random-password-alnum='echo -n "length: "; read len; cat /dev/random |
 alias get-random-password-alnum-lower='echo -n "length: "; read len; cat /dev/random | tr -dc "[:digit:][:lower:]" | head -c $len | awk "{ print $1 }"'
 alias get-random-number-range='echo -n "from: "; read from; echo -n "to: "; read to; shuf -i ${from}-${to} -n 1'
 alias get-random-guid='uuidgen'
-alias get-random-hex-2='cat /dev/random | tr -dc "0-9a-f" | head -c 2'
-alias get-random-hex-4='cat /dev/random | tr -dc "0-9a-f" | head -c 4'
+alias get-random-hex='echo -n "length: "; read len; cat /dev/random | tr -dc "0-9a-f" | head -c $len | awk "{ print $1 }"'
 alias get-random-ip4='python3 -c "import ipaddress, random; print(ipaddress.ip_address(random.randint(0, 0x7FFFFFFF)))"'
 alias get-random-ip6='python3 -c "import ipaddress, random; print(ipaddress.ip_address(random.randint(0, 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)))"'
 alias get-random-port='shuf -i 16385-49151 -n 1'
@@ -381,6 +380,7 @@ alias docker-inspect-image='dive' # https://github.com/wagoodman/dive
 alias get-hostname='hostname -s'
 alias get-hostname-fqdn='hostname -f'
 alias get-hostname-domain='hostname -d'
+
 function insert-datetime {
     # Example:
     # echo fooo 2>&1 1>/dev/null | insert-datetime | tee /tmp/test.log

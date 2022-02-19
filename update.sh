@@ -391,7 +391,7 @@ if [ ! -f "$HOME/.tmux.conf_include" ]; then
     touch "$HOME/.tmux.conf_include"
 fi
 
-# if [ ! -f "$HOME/.zshrc.env" ]; then
+if [ ! -f "$HOME/.zshrc.env" ]; then
 echo "create default ~/.zshrc.env"
 cat << EOF | tee $HOME/.zshrc.env >/dev/null
 ENABLE_ZSH_AUTOSUGGEST=true
@@ -399,7 +399,7 @@ ENABLE_ZSH_SPACESHIP_PROMPT=true
 ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
 
 EOF
-# fi
+fi
 
 if [ ! -f "$HOME/.gitconfig_include" ]; then
 echo "create default ~/.gitconfig_include"
@@ -421,7 +421,7 @@ cat << EOF | tee $HOME/.gitconfig_include >/dev/null
 EOF
 fi
 
-# if [ ! -f "$HOME/.vimrc_include" ]; then
+if [ ! -f "$HOME/.vimrc_include" ]; then
 echo "create default ~/.vimrc_include"
 cat << EOF | tee $HOME/.vimrc_include >/dev/null
 " vim: sw=4 et
@@ -452,7 +452,7 @@ cat << EOF | tee $HOME/.vimrc_include >/dev/null
 "set noequalalways
 
 EOF
-# fi
+fi
 
 if [ ! -f "$HOME/.zshrc_include" ]; then
 echo "create default ~/.zshrc_include"

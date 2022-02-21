@@ -8,7 +8,7 @@ endif
 set t_Co=256
 set invnumber
 set cc=80 " columns to highlight
-set textwidth=79
+set textwidth=999999
 set formatoptions=tcq
 set noswapfile " whether to use a swapfile for a buffer
 set nobackup

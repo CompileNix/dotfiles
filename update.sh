@@ -416,7 +416,7 @@ cat << EOF | tee $HOME/.gitconfig_include >/dev/null
     gpgsign = true
 
 [credential]
-    helper = store
+    helper = cache
 
 EOF
 fi

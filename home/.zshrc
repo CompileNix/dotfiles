@@ -850,5 +850,14 @@ if [ -f $HOME/.cargo/env ]; then
     source $HOME/.cargo/env
 fi
 
+if [ -f "$HOME/.git-credentials" ]; then
+    echo "Remove unencrypted on-disk git credential cache"
+    rm -v "$HOME/.git-credentials"
+fi
+if [ -f "$XDG_CONFIG_HOME/git/credentials" ]; then
+    echo "Remove unencrypted on-disk git credential cache"
+    rm -v "$XDG_CONFIG_HOME/git/credentials"
+fi
+
 echo "here is a shell alias you might not known about (get-random-alias):\n    $(get-random-alias)"
 

@@ -462,11 +462,15 @@ cat << EOF | tee $HOME/.zshrc_include >/dev/null
 #alias vim='nvim'
 #export EDITOR=nvim
 export LANG="en_US.UTF-8"
-export LC_MEASUREMENT="de_DE.UTF-8"
-export LC_MONETARY="de_DE.UTF-8"
 export LC_NUMERIC="en_US.UTF-8"
-export LC_PAPER="de_DE.UTF-8"
 export LC_TIME="en_US.UTF-8"
+
+# dnf install langpacks-de
+# apt install language-pack-de
+# export LC_MEASUREMENT="de_DE.UTF-8"
+# export LC_MONETARY="de_DE.UTF-8"
+# export LC_PAPER="de_DE.UTF-8"
+
 export SAVEHIST=10000
 export HISTSIZE=10000
 export HISTFILE="$HOME/.history"
@@ -502,7 +506,7 @@ ControlPath ~/.ssh/ssh-%r@%h:%p.socket
 ControlPersist 30d
 UseRoaming no
 ExitOnForwardFailure no
-StrictHostKeyChecking accept-new # requires modern openssh
+StrictHostKeyChecking accept-new
 #ForwardX11 yes
 #ForwardX11Trusted yes
 

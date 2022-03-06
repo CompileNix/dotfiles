@@ -29,10 +29,17 @@ else
     alias make="make -j\$(nproc)"
 fi
 
+# ixon: enable XON/XOFF flow control
+# ixoff: enable sending of start/stop characters
+# iutf8: assume input characters are UTF-8 encoded
 stty -ixon -ixoff 2>/dev/null
+
+# put keyboard and console in unicode mode.
+# UNICODE_START(1)
 unicode_start 2>/dev/null
-kbd_mode -u 2>/dev/null # set unicode mode
-kbd_mode 2>/dev/null # check keyboard mode, should be Unicode (UTF-8)
+
+# set unicode mode
+kbd_mode -u 2>/dev/null
 
 if [[ "$TERM" == "dumb" ]]
 then
@@ -75,6 +82,25 @@ fi
 alias get-distro="lsb_release -a"
 alias get-distro-name="echo $distro"
 
+# function to interactivly ask a simple "YES / NO" question with.
+# Usage:
+#  - Define "Yes" branch function like:
+#    function ask_yn_y_callback { echo "You choose Yes"; }
+#  - Define "No" branch function like:
+#    function ask_yn_n_callback { echo "You choose No"; }
+#  - Echo / Print your question (qithout linebreak at the end)
+#  - call ask_yn
+#  - unset ask_yn_y_callback and ask_yn_n_callback
+# Example:
+#     function ask_yn_y_callback {
+#         echo "You said yes, so doing stuff"
+#     }
+#     function ask_yn_n_callback {
+#         echo "You said no, doing stuff"
+#     }
+#     echo -n "Do want to do it?"; ask_yn
+#     unset -f ask_yn_y_callback
+#     unset -f ask_yn_n_callback
 function ask_yn {
     select yn in "Yes" "No"; do
         case $yn in

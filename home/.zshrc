@@ -123,6 +123,7 @@ alias ll='ls -l'
 alias la='ls -al'
 alias l='la'
 alias grep='grep --color'
+alias less='less --RAW-CONTROL-CHARS' # only ANSI "color" escape sequences and OSC 8 hyperlink sequences are output in "raw" form.
 alias htop='htop -d 10'
 alias iotop='iotop -d 1 -P -o'
 alias rsync="rsync --progress --numeric-ids --human-readable --copy-links --hard-links"

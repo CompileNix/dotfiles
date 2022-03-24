@@ -305,8 +305,83 @@ alias set-clipboard-x11="xclip -i -sel c -f"
 alias set-clipboard-wayland="wl-copy"
 alias get-clipboard-wayland="wl-paste"
 alias get-ssh-pubkey='if [ -f ~/.ssh/id_ed25519.pub ]; then cat ~/.ssh/id_ed25519.pub; elif [ -f ~/.ssh/id_ed25519_pub ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
-alias get-ssh-prikey='if [ -f ~/.ssh/id_ed25519 ]; then cat ~/.ssh/id_ed25519; elif [ -f ~/.ssh/id_ed25519 ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
-alias get-ssh-pubkeys-host='(for file in /etc/ssh/*_key.pub; do echo "$file"; ssh-keygen -l -E md5 -f $file; ssh-keygen -l -E sha256 -f "$file"; echo; done; ssh-keygen -r $(hostname -s))'
+alias get-ssh-privkey='if [ -f ~/.ssh/id_ed25519 ]; then cat ~/.ssh/id_ed25519; elif [ -f ~/.ssh/id_ed25519 ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
+alias get-ssh-pubkeys-host='(for file in /etc/ssh/*_key.pub; do echo "$file"; ssh-keygen -l -E md5 -f $file; ssh-keygen -l -E sha256 -f "$file"; echo; done)'
+function get-sshfp-from-public-key {
+    local keytype="$1"
+    local keydata="$2"
+    local hostname="$3"
+
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "Usage: keytype keydata [hostname]"
+        echo "defaults:"
+        echo "  hostname: hostname -s"
+        echo ""
+        echo "example: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdid7enWOuT8g0Z69wDm2gDPGer/aCQKcPhVojoZdyI hostname"
+        return 0
+    fi
+
+    if [ ! -n "$3" ]; then
+        hostname="$(hostname -s)"
+    fi
+
+    # fallback to openssl if sha1sum or sha256sum is not present
+    if which openssl >/dev/null 2>&1; then
+        if ! which sha1sum >/dev/null 2>&1; then
+            sha1sum() {
+                openssl dgst -sha1 | grep -E -o "[0-9a-f]{40}"
+            }
+        fi
+        if ! which sha256sum >/dev/null 2>&1; then
+            sha256sum() {
+                openssl dgst -sha256 | grep -E -o "[0-9a-f]{64}"
+            }
+        fi
+    fi
+
+    case "$keytype"; in
+    ssh-rsa)
+        echo "$hostname IN SSHFP 1 1 $(echo "$keydata" | base64 --decode | sha1sum  | cut -f 1 -d ' ')"
+        echo "$hostname IN SSHFP 1 2 $(echo "$keydata" | base64 --decode | sha256sum  | cut -f 1 -d ' ')"
+    ;;
+    ssh-dsa)
+        echo "$hostname IN SSHFP 2 1 $(echo "$keydata" | base64 --decode | sha1sum  | cut -f 1 -d ' ')"
+        echo "$hostname IN SSHFP 2 2 $(echo "$keydata" | base64 --decode | sha256sum  | cut -f 1 -d ' ')"
+    ;;
+    ecdsa-*)
+        echo "$hostname IN SSHFP 3 1 $(echo "$keydata" | base64 --decode | sha1sum  | cut -f 1 -d ' ')"
+        echo "$hostname IN SSHFP 3 2 $(echo "$keydata" | base64 --decode | sha256sum  | cut -f 1 -d ' ')"
+    ;;
+    ssh-ed25519)
+        echo "$hostname IN SSHFP 4 1 $(echo "$keydata" | base64 --decode | sha1sum  | cut -f 1 -d ' ')"
+        echo "$hostname IN SSHFP 4 2 $(echo "$keydata" | base64 --decode | sha256sum  | cut -f 1 -d ' ')"
+    ;;
+    ssh-ed448)
+        echo "$hostname IN SSHFP 6 1 $(echo "$keydata" | base64 --decode | sha1sum  | cut -f 1 -d ' ')"
+        echo "$hostname IN SSHFP 6 2 $(echo "$keydata" | base64 --decode | sha256sum  | cut -f 1 -d ' ')"
+    ;;
+    esac
+}
+function get-sshfp-from-public-key-file {
+    local file="$1"
+    local hostname="$2"
+
+    get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"
+}
+function get-sshfp-from-public-key-directory {
+    local directory="$1"
+    local hostname="$2"
+
+    for file in $directory/ssh_host_*_key.pub; do
+        get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"
+    done
+}
+function get-ssh-keys-from-remote {
+    local hostname="$1"
+    local port="$2"
+
+    nmap "$hostname" -Pn -p "$port" --script +ssh-hostkey --script-args ssh_hostkey=all
+}
 function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' }
 function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
 # Create a data URL from a file

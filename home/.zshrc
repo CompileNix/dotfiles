@@ -297,7 +297,7 @@ alias get-random-guid='uuidgen'
 alias get-random-hex='echo -n "length: "; read len; cat /dev/random | tr -dc "0-9a-f" | head -c $len | awk "{ print $1 }"'
 alias get-random-ip4='python3 -c "import ipaddress, random; print(ipaddress.ip_address(random.randint(0, 0x7FFFFFFF)))"'
 alias get-random-ip6='python3 -c "import ipaddress, random; print(ipaddress.ip_address(random.randint(0, 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)))"'
-alias get-random-ip6-ula-network='python3 -c "from ipaddress import IPv6Network; import random; ula = IPv6Network(\"fd00::/8\"); print(IPv6Network((ula.network_address + (random.getrandbits(64 - ula.prefixlen) << 64 ), 64)))"'
+alias get-random-ip6-ula-network='python3 -c "from ipaddress import IPv6Network; import random; ula = IPv6Network(\"fd00::/8\"); print(IPv6Network((ula.network_address + (random.getrandbits(40) << 80), 48)))"'
 alias get-random-port='shuf -i 16385-49151 -n 1'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"

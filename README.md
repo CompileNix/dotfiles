@@ -154,6 +154,24 @@ Install:
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
+# GNOME Alt+Tab behavior
+The default is to have `Alt-Tab` switch you between applications in the current workspace. One can use `Alt-backtick` (or whatever key you have above Tab) to switch between windows in the current application.
+
+I prefer a Windows-like setup, where `Alt-Tab` switches between windows in the current workspace, regardless of the application to which they belong.
+
+```sh
+gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab', '<Super>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward  "['<Alt><Shift>Tab', '<Super><Shift>Tab']"
+```
+
+## Changing windows across all workspaces
+If you'd like to switch between windows in all workspaces, rather than in the current workspace, find the `org.gnome.shell.window-switcher current-workspace-only` GSettings key and change it. You can do this in `dconf-editor`, or on the command line with:
+```sh
+gsettings set org.gnome.shell.window-switcher current-workspace-only true
+```
+
 # UI Settings
 Using:
 - `lxappearance`

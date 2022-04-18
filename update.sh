@@ -353,10 +353,12 @@ python3 ./install.py
 echo "install ZSH Spaceship prompt"
 rm -rf "$HOME/bin/spaceship-prompt" 2>/dev/null
 mkdir -p "$HOME/bin/spaceship-prompt"
-tar --extract --preserve-permissions --file "$HOME/dotfiles/zsh-plugins/spaceship-prompt/${spaceship_prompt_version}.tar.zstd" -C "$HOME/bin/spaceship-prompt/" || {
+tar --extract --preserve-permissions --file "$HOME/dotfiles/zsh-plugins/spaceship-prompt/${spaceship_prompt_version}.tar.zstd" -C "$HOME/bin/spaceship-prompt/" 2>/dev/null || {
     zstd -f -d "$HOME/dotfiles/zsh-plugins/spaceship-prompt/${spaceship_prompt_version}.tar.zstd" -o "/tmp/${spaceship_prompt_version}.tar"
     tar --extract --preserve-permissions --file "/tmp/${spaceship_prompt_version}.tar" -C "$HOME/bin/spaceship-prompt/"
+    rm -v "/tmp/${spaceship_prompt_version}.tar"
 }
+chown -R "$USER":"$USER" "$HOME/bin/spaceship-prompt/"
 mkdir -p "$HOME/bin/.zfunctions"
 if [ ! -f "$HOME/bin/.zfunctions/prompt_spaceship_setup" ]; then
     ln -sf "$HOME/bin/spaceship-prompt/spaceship.zsh" "$HOME/bin/.zfunctions/prompt_spaceship_setup"

@@ -558,6 +558,7 @@ export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.ya
 unalias vim 2>/dev/null
 alias vim='nvim'
 export EDITOR='nvim'
+export MERGE='vimdiff'
 export WORDCHARS=''
 
 # if it's an ssh session export GPG_TTY

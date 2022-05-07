@@ -7,17 +7,21 @@
     preloadindex = true
 [alias]
     s = status
-    c = config
     ch = checkout
+    switch = checkout
+    c = config
     cl = config -l
     ce = config -e
+    g = gui
     cr = clone --recursive
     f = fetch
-    p = pull
+    down = pull
+    up = push
     a = add
     aa = add -A
     b = branch
     d = diff --word-diff=color -U5
+    m = merge
     l = log --oneline --graph --decorate --all
     la = log --graph --decorate --all --show-signature
     tags = tag -l
@@ -44,3 +48,4 @@
     ff = only
 [init]
     defaultBranch = main
+

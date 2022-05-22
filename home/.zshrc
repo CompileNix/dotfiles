@@ -468,6 +468,26 @@ function update-dotfiles {
 alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=760866" -O /tmp/code-insiders.rpm && sudo yum install -y /tmp/code-insiders.rpm && rm /tmp/code-insiders.rpm'
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'
 alias test-mail-mutt='mutt -s "test" '
+function send-mail {
+    local to="$1"
+
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "" ]]; then
+        echo "Usage: echo \"message\" | send-mail \"to-address\" \"subject\""
+        return 1
+    fi
+
+    local subject="$2"
+    local body="$(< /dev/stdin)"
+
+    cat << EOF | sendmail "$to"
+From: ${USER}@$(hostname -f)
+To: $to
+Subject: $subject
+
+$body
+
+EOF
+}
 function apache-configtest { sudo apache2ctl -t }
 function apache-reload { apache-configtest && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
 function apache-restart { apache-configtest && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }

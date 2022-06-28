@@ -25,7 +25,7 @@ if [[ ${condition_for_install} -eq 0 ]]; then
             chsh -s /bin/zsh
         else
             echo "you are not root, so you are not allowed to change your own shell to zsh"
-            echo 'retry with: sudo chsh -s /bin/zsh "$USERNAME"'
+            echo 'retry with: sudo chsh -s /bin/zsh "$USER"'
         fi
     popd >/dev/null
 else

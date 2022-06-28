@@ -39,7 +39,7 @@ pip3 install rich pyyaml neovim
 __Keep always an old terminal open, in case of failures!__
 
 ```sh
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
 ```
 
 ## Sway Requirements

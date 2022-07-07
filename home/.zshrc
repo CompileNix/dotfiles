@@ -138,7 +138,8 @@ alias reset-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
 alias get-ip-local='ip a'
 alias get-ip-internet='curl https://ip.compilenix.org'
-alias get-ip-routes='ip route | column -t'
+function get-ip4-routes { ip -4 route $* | column -t }
+function get-ip6-routes { ip -6 route $* | column -t }
 alias get-network-listening-netstat='sudo netstat -tunpl'
 alias get-network-listening='sudo ss --numeric --listening --processes --tcp --udp'
 alias get-network-active-connections-netstat='sudo netstat -tun'

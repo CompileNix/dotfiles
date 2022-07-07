@@ -116,6 +116,7 @@ function ask_yn {
 alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
 alias sudosu='sudo su -'
 alias pls='sudo'
+alias root='sudo su -l root'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
@@ -132,6 +133,7 @@ alias brexit='echo "disable all network interfaces, delete 50% of all files and 
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read()));"'
 alias urldecode='python3 -c "import sys, urllib.parse; print(urllib.parse.unquote_plus(sys.stdin.read()));"'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
+alias ceph-watch-status='watch -n 1 ceph -s'
 alias reset-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
 alias get-ip-local='ip a'
@@ -149,7 +151,6 @@ alias get-iptables-v6='sudo ip6tables -L -v'
 alias get-iptables-v6-nat='sudo ip6tables -t nat -L -v'
 alias get-mem-dirty='cat /proc/meminfo | grep Dirty'
 alias watch-mem-dirty='watch -n 1 "cat /proc/meminfo | grep Dirty"'
-alias watch-ceph-status='watch -n 1 ceph -s'
 alias get-date='date +"%Y-%m-%d.%H%M"'
 alias get-date-unixtime='date +%s'
 alias get-date-from-unixtime='read a; date -d @$a'
@@ -272,7 +273,7 @@ alias get-dns-dnssec="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_
 alias get-dns-dnssec-verify="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer +dnssec +sigchase"
 alias invoke-dns-retransfer='rndc retransfer'
 alias invoke-dns-reload='rndc reload'
-function compare-dns-soa-servers {
+function compare-dns-soa-rr {
     local domain_name
     echo -n "Domain name: "; read domain_name
 
@@ -495,11 +496,10 @@ function nginx-status { sudo systemctl status nginx }
 function nginx-configtest { sudo nginx -t }
 function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
 function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
-function read-logfile {
+function view-logfile {
     file="$1"
     sudo cat "${file}" | ccze -A | less -R
 }
-alias root='sudo su -l root'
 alias get-processes='ps -aux'
 alias get-processes-systemd='systemd-cgls'
 alias get-memory='free -h -m'

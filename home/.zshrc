@@ -90,7 +90,7 @@ alias get-distro-name="echo $distro"
 #    function ask_yn_n_callback { echo "You choose No"; }
 #  - Echo / Print your question (qithout linebreak at the end)
 #  - call ask_yn
-#  - unset ask_yn_y_callback and ask_yn_n_callback
+#  - ask_yn_y_callback and ask_yn_n_callback do get unset automatically
 # Example:
 #     function ask_yn_y_callback {
 #         echo "You said yes, so doing stuff"
@@ -99,8 +99,6 @@ alias get-distro-name="echo $distro"
 #         echo "You said no, doing stuff"
 #     }
 #     echo -n "Do want to do it?"; ask_yn
-#     unset -f ask_yn_y_callback
-#     unset -f ask_yn_n_callback
 function ask_yn {
     select yn in "Yes" "No"; do
         case $yn in
@@ -112,7 +110,9 @@ function ask_yn {
                 break;;
         esac
     done
+    unset -f ask_yn_y_callback ask_yn_n_callback
 }
+
 alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
 alias sudosu='sudo su -'
 alias pls='sudo'

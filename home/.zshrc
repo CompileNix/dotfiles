@@ -302,7 +302,7 @@ alias get-random-ip6='python3 -c "import ipaddress, random; print(ipaddress.ip_a
 alias get-random-ip6-ula-network='python3 -c "from ipaddress import IPv6Network; import random; ula = IPv6Network(\"fd00::/8\"); print(IPv6Network((ula.network_address + (random.getrandbits(40) << 80), 48)))"'
 alias get-random-port='shuf -i 16385-49151 -n 1'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
-alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
+alias get-process-zombie="ps --cols=9999 aux | awk '{if (\$8==\"Z\") { print \$1,\$2,\$11 }}'"
 alias set-clipboard-x11="xclip -i -sel c -f"
 alias set-clipboard-wayland="wl-copy"
 alias get-clipboard-wayland="wl-paste"

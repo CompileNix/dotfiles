@@ -501,7 +501,7 @@ function view-logfile {
     file="$1"
     sudo cat "${file}" | ccze -A | less -R
 }
-alias get-processes='ps -aux'
+alias get-processes='ps --cols=9999 aux'
 alias get-processes-systemd='systemd-cgls'
 alias get-memory='free -h -m'
 alias get-disk-space='df -h'
@@ -516,6 +516,7 @@ alias docker-inspect-image='dive' # https://github.com/wagoodman/dive
 alias get-hostname='hostname -s'
 alias get-hostname-fqdn='hostname -f'
 alias get-hostname-domain='hostname -d'
+alias view-kernel-log='dmesg -H'
 
 function insert-datetime {
     # Example:
@@ -566,7 +567,6 @@ function install-podman-fedora {
     echo "alias docker='podman'"
     exec zsh
 }
-
 function remove-podman-fedora {
     sudo dnf remove podman
     sudo dnf update container-selinux

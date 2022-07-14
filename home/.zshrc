@@ -174,12 +174,12 @@ alias get-cert-info-stdin='echo "paste pem cert and hit Control+D: ";cert=$(cat)
 function get-cert-remote-raw {
     hostName=$1
     portNumber=$2
-    echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509
+    echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509 -text
 }
 function get-cert-remote {
     hostName=$1
     portNumber=$2
-    get-cert-remote-raw $hostName $portNumber | openssl x509 -noout -text
+    echo | openssl s_client -showcerts -x509_strict -connect ${hostName}:${portNumber} -servername ${hostName}
 }
 function get-cert-file {
     openssl x509 -noout -text -in $1

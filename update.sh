@@ -1,8 +1,7 @@
 #!/bin/bash
 # vim: sw=4 et
 
-spaceship_prompt_version=7fd996383de095c9a43d8129628ae10c5cfa8de5
-tmux_mem_cpu_load_version=b6afa5c5e96620743f9466a8a41e1db6238de39d
+spaceship_prompt_version=a5d55898822e75cb34ee1c3cefe52822c820c220
 
 echo "pull dotfiles from remote"
 git pull --all || exit $?
@@ -350,7 +349,7 @@ rm -fv "$HOME/.zshrc.zwc" 2>/dev/null
 echo "link new files"
 python3 ./install.py
 
-echo "install ZSH Spaceship prompt"
+echo "install ZSH Spaceship prompt: ${spaceship_prompt_version}"
 rm -rf "$HOME/bin/spaceship-prompt" 2>/dev/null
 mkdir -p "$HOME/bin/spaceship-prompt"
 tar --extract --preserve-permissions --file "$HOME/dotfiles/zsh-plugins/spaceship-prompt/${spaceship_prompt_version}.tar.zstd" -C "$HOME/bin/spaceship-prompt/" 2>/dev/null || {

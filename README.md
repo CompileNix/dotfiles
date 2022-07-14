@@ -104,26 +104,11 @@ cd "$temp_dir"
 git clone https://github.com/spaceship-prompt/spaceship-prompt.git --depth=1 git_repo
 cd git_repo
 commit_id=$(git rev-parse HEAD)
+echo "commit id: $commit_id"
 tar --create --file "../${commit_id}.tar.zstd" --preserve-permissions --zstd .
-cp -v "${commit_id}.tar.zstd" ~/dotfiles/zsh-plugins/spaceship-prompt/
-popd
-popd
-```
-
-## Update tmux-mem-cpu-load Plugin
-```bash
-cd ~/dotfiles
-temp_dir="/tmp/$(uuidgen)"
-mkdir -pv "$temp_dir"
-cd "$temp_dir"
-git clone https://github.com/thewtex/tmux-mem-cpu-load.git --depth=1 git_repo
-cd git_repo
-commit_id=$(git rev-parse HEAD)
-cmake .
-make
-cp -v "tmux-mem-cpu-load" "$HOME/dotfiles/zsh-plugins/tmux-mem-cpu-load/${commit_id}"
-popd
-popd
+cp -v "../${commit_id}.tar.zstd" ~/dotfiles/zsh-plugins/spaceship-prompt/
+popd >/dev/null
+popd >/dev/null
 ```
 
 # Test / Build / Dev

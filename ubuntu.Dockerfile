@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 ENV TZ="UTC"
 ENV DEBIAN_FRONTEND=noninteractive
 RUN ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette && ln -sf /usr/share/zoneinfo/UTC /etc/localtime && apt update

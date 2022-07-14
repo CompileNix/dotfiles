@@ -19,7 +19,7 @@ set -g base-index 1
 setw -g pane-base-index 1
 
 set -g status-interval 1
-#set -g status-left "#S #[fg=green]#(tmux-mem-cpu-load --graph-lines 0 --averages-count 0) #[default]"
+#set -g status-left "#S #[fg=green] #[default]"
 set -g status-left "#S #[default]"
 set -g status-left-length 60
 

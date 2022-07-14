@@ -375,9 +375,6 @@ if [ -f $(which tmux 2>/dev/null) ]; then
     fi
 fi
 
-echo "install tmux-mem-cpu-load"
-cp -f "$HOME/dotfiles/zsh-plugins/tmux-mem-cpu-load/$tmux_mem_cpu_load_version" "$HOME/bin/tmux-mem-cpu-load"
-
 # wget: Use UTF-8 as the default system encoding if it's supported
 if [[ -f $(which wget 2>/dev/null) && -f $(which grep 2>/dev/null) ]]; then
     if wget --help | grep -q "local-encoding"; then

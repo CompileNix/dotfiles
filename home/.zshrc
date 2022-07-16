@@ -82,24 +82,32 @@ fi
 alias get-distro="lsb_release -a"
 alias get-distro-name="echo $distro"
 
-# function to interactivly ask a simple "YES / NO" question with.
-# Usage:
-#  - Define "Yes" branch function like:
-#    function ask_yn_y_callback { echo "You choose Yes"; }
-#  - Define "No" branch function like:
-#    function ask_yn_n_callback { echo "You choose No"; }
-#  - Echo / Print your question (qithout linebreak at the end)
-#  - call ask_yn
-#  - ask_yn_y_callback and ask_yn_n_callback do get unset automatically
-# Example:
-#     function ask_yn_y_callback {
-#         echo "You said yes, so doing stuff"
-#     }
-#     function ask_yn_n_callback {
-#         echo "You said no, doing stuff"
-#     }
-#     echo -n "Do want to do it?"; ask_yn
 function ask_yn {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to interactivly ask a simple "YES / NO" question with.
+
+Usage:
+ - Define "Yes" branch function like:
+   function ask_yn_y_callback { echo "You choose Yes"; }
+ - Define "No" branch function like:
+   function ask_yn_n_callback { echo "You choose No"; }
+ - Echo / Print your question (with a linebreak at the end)
+ - call ask_yn
+ - ask_yn_y_callback and ask_yn_n_callback do get unset automatically
+
+Example:
+    function ask_yn_y_callback {
+        echo "You said yes, so doing stuff"
+    }
+    function ask_yn_n_callback {
+        echo "You said no, doing stuff"
+    }
+    echo "Do want to do it?"; ask_yn
+EOF
+        return 1
+    fi
+
     select yn in "Yes" "No"; do
         case $yn in
             Yes)
@@ -110,7 +118,13 @@ function ask_yn {
                 break;;
         esac
     done
-    unset -f ask_yn_y_callback ask_yn_n_callback
+
+    if [ -x ask_yn_y_callback ]; then
+        unset -f ask_yn_y_callback
+    fi
+    if [ -x ask_yn_n_callback ]; then
+        unset -f ask_yn_n_callback
+    fi
 }
 
 alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
@@ -172,21 +186,75 @@ alias get-date-iso-8601-ns='date --iso-8601=ns'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
 alias get-cert-info-stdin='echo "paste pem cert and hit Control+D: ";cert=$(cat); echo $cert | openssl x509 -text -noout'
 function get-cert-remote-raw {
+    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+        cat << EOF
+Function to receive X509 pem encoded certificate from a remote system.
+
+Requirements:
+- openssl
+
+Usage: $(echo $funcstack[-1]) server.domain.tld port_number
+
+Example: $(echo $funcstack[-1]) google.com 443
+EOF
+        return 1
+    fi
     hostName=$1
     portNumber=$2
     echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509 -text
 }
 function get-cert-remote {
+    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+        cat << EOF
+Function to make a full tls connect, printing various useful info, including
+all X509 certificates (pem encoded) the remote systems has sent.
+
+Requirements:
+- openssl
+
+Usage: $(echo $funcstack[-1]) server.domain.tld port_number
+
+Example: $(echo $funcstack[-1]) google.com 443
+EOF
+        return 1
+    fi
     hostName=$1
     portNumber=$2
     echo | openssl s_client -showcerts -x509_strict -connect ${hostName}:${portNumber} -servername ${hostName}
 }
 function get-cert-file {
+    if [ ! -n "$1" ]; then
+        cat << EOF
+Function to receive X509 pem encoded certificate from a local file.
+
+Requirements:
+- openssl
+
+Usage: $(echo $funcstack[-1]) /some/path/to/file.pem
+EOF
+        return 1
+    fi
     openssl x509 -noout -text -in $1
 }
 function new-dhparam {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to generate DH Parameters file (pem encoded) and save it to
+./dhparam.pem.
+
+Requirements:
+- openssl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     local dhparam_size
     echo -n "dhparam size [2048]: "; read dhparam_size
+    if [[ "$dhparam_size" = "" ]]; then
+        dhparam_size=2048
+    fi
 
     openssl dhparam -out dhparam.pem "$dhparam_size"
 
@@ -194,6 +262,18 @@ function new-dhparam {
     ls -l dhparam.pem
 }
 function new-cert-selfsigned {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to generate a new self-signed certificate and private key.
+
+Requirements:
+- openssl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     local cert_type
     echo "Certificate Type, valid options are:"
     echo "- rsa:2048"
@@ -216,6 +296,9 @@ function new-cert-selfsigned {
 
     local valid_for
     echo -n "Valid for days [3650]: "; read valid_for
+    if [[ "$valid_for" = "" ]]; then
+        valid_for=3650
+    fi
 
     if [[ "$cert_type" != "ed25519" ]]; then
         local hash_alg
@@ -275,6 +358,18 @@ alias get-dns-dnssec-verify="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns
 alias invoke-dns-retransfer='rndc retransfer'
 alias invoke-dns-reload='rndc reload'
 function compare-dns-soa-rr {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to fetch and compare DNS SOA RR from differend dns servers.
+
+Requirements:
+- dig
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     local domain_name
     echo -n "Domain name: "; read domain_name
 
@@ -310,18 +405,39 @@ alias get-ssh-pubkey='if [ -f ~/.ssh/id_ed25519.pub ]; then cat ~/.ssh/id_ed2551
 alias get-ssh-privkey='if [ -f ~/.ssh/id_ed25519 ]; then cat ~/.ssh/id_ed25519; elif [ -f ~/.ssh/id_ed25519 ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
 alias get-ssh-pubkeys-host='(for file in /etc/ssh/*_key.pub; do echo "$file"; ssh-keygen -l -E md5 -f $file; ssh-keygen -l -E sha256 -f "$file"; echo; done)'
 function get-sshfp-from-public-key {
+    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+        cat << EOF
+Function to generate SSHFP (SSH Fingerprint) DNS RR from a given base64
+encoded ssh public key file.
+
+Requirements:
+- hostname
+- openssl
+- sha1sum
+- which
+
+Usage: $(echo $funcstack[-1]) keytype keydata [hostname]
+
+keytype     One of the following options:
+                ssh-rsa
+                ssh-dsa
+                ecdsa-*
+                ssh-ed25519
+                ssh-ed448
+keydata     Base64 encoded key data.
+hostname    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is "$(hostname -s)".
+
+Examples:
+$(echo $funcstack[-1]) ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdid7enWOuT8g0Z69wDm2gDPGer/aCQKcPhVojoZdyI
+$(echo $funcstack[-1]) ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdid7enWOuT8g0Z69wDm2gDPGer/aCQKcPhVojoZdyI hostname
+EOF
+        return 1
+    fi
+
     local keytype="$1"
     local keydata="$2"
     local hostname="$3"
-
-    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-        echo "Usage: keytype keydata [hostname]"
-        echo "defaults:"
-        echo "  hostname: hostname -s"
-        echo ""
-        echo "example: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdid7enWOuT8g0Z69wDm2gDPGer/aCQKcPhVojoZdyI hostname"
-        return 0
-    fi
 
     if [ ! -n "$3" ]; then
         hostname="$(hostname -s)"
@@ -365,12 +481,59 @@ function get-sshfp-from-public-key {
     esac
 }
 function get-sshfp-from-public-key-file {
+    if [ ! -n "$1" ]; then
+        cat << EOF
+Function to generate SSHFP (SSH Fingerprint) DNS RR from a ssh public key file.
+
+Requirements:
+- hostname
+- openssl
+- sha1sum
+- which
+
+Usage: $(echo $funcstack[-1]) file [hostname]
+
+file        path to a ssh public key file.
+hostname    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is "$(hostname -s)".
+
+Examples:
+$(echo $funcstack[-1]) /etc/ssh/ssh_host_ed25519_key.pub
+$(echo $funcstack[-1]) /etc/ssh/ssh_host_ed25519_key.pub hostname
+EOF
+        return 1
+    fi
+
     local file="$1"
     local hostname="$2"
 
     get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"
 }
 function get-sshfp-from-public-key-directory {
+    if [ ! -n "$1" ]; then
+        cat << EOF
+Function to generate SSHFP (SSH Fingerprint) DNS RR from a directory
+which contains one or more ssh public key files named "ssh_host_*_key.pub".
+
+Requirements:
+- hostname
+- openssl
+- sha1sum
+- which
+
+Usage: $(echo $funcstack[-1]) directory [hostname]
+
+directory   path to a directory which contains ssh public key files.
+hostname    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is "$(hostname -s)".
+
+Examples:
+$(echo $funcstack[-1]) /etc/ssh
+$(echo $funcstack[-1]) /etc/ssh hostname
+EOF
+        return 1
+    fi
+
     local directory="$1"
     local hostname="$2"
 
@@ -379,20 +542,62 @@ function get-sshfp-from-public-key-directory {
     done
 }
 function get-ssh-keys-from-remote {
+    if [ ! -n "$1" ]; then
+        cat << EOF
+Function to fetch ssh public keys from a remote system.
+
+Requirements:
+- nmap
+
+Usage: $(echo $funcstack[-1]) hostname [port]
+
+hostname    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is "$(hostname -s)".
+port        the port number, default is "22".
+
+Examples:
+$(echo $funcstack[-1]) hostname.domain.tld
+$(echo $funcstack[-1]) hostname.domain.tld 2222
+EOF
+        return 1
+    fi
+
     local hostname="$1"
     local port="$2"
+
+    if [ ! -n "$2" ]; then
+        port="22"
+    fi
 
     nmap "$hostname" -Pn -p "$port" --script +ssh-hostkey --script-args ssh_hostkey=all
 }
 function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' }
 function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
-# Create a data URL from a file
 function get-dataurl {
+    if [ ! -n "$1" ]; then
+        cat << EOF
+Function to generate a data URL from a file.
+
+Requirements:
+- openssl
+- tr
+
+Usage: $(echo $funcstack[-1]) file
+
+file        path to a file
+
+Example:
+$(echo $funcstack[-1]) ./some.jpg
+EOF
+        return 1
+    fi
+
     local mimeType
     mimeType=$(file -b --mime-type "$1")
     if [[ $mimeType == text/* ]]; then
         mimeType="${mimeType};charset=utf-8"
     fi
+
     echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern line)'
@@ -469,6 +674,24 @@ alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=76
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'
 alias test-mail-mutt='mutt -s "test" '
 function send-mail {
+    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+        cat << EOF
+Function to send a test e-mail using sendmail.
+
+Requirements:
+- sendmail
+
+Usage: $(echo $funcstack[-1]) recipient subject
+
+recipient   recipient e-mail address
+subject     the subject of the message
+
+Example:
+echo "Test message body" | $(echo $funcstack[-1]) person@domain.tld "Test Subject"
+EOF
+        return 1
+    fi
+
     local to="$1"
 
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "" ]]; then
@@ -496,6 +719,26 @@ function nginx-configtest { sudo nginx -t }
 function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
 function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
 function view-logfile {
+    if [ ! -n "$1" ]; then
+        cat << EOF
+Function to view a log file, with log syntax highlighting.
+
+Requirements:
+- cat
+- ccze
+- less
+- sudo
+
+Usage: $(echo $funcstack[-1]) file
+
+file        path to a file
+
+Example:
+$(echo $funcstack[-1]) /var/log/messages.log
+EOF
+        return 1
+    fi
+
     file="$1"
     sudo cat "${file}" | ccze -A | less -R
 }
@@ -520,13 +763,25 @@ alias remove-history='echo >$HOME/.history; history -p'
 
 function insert-datetime {
     if [ -n "$1" ]; then
-        echo "Usage:"
-        echo "echo fooo 2>&1 1>/dev/null | insert-datetime | tee /tmp/test.log"
-        echo
-        echo "Result:"
-        echo "[2021-03-30 19:03:02 CEST]: fooo"
-        return
+        cat << EOF
+Function to insert a timestamp at the beginning of each line passed into stdin.
+
+Requirements:
+- awk
+
+Usage: $(echo $funcstack[-1])
+
+file        path to a file
+
+Example:
+echo fooo 2>&1 1>/dev/null | $(echo $funcstack[-1]) | tee /tmp/test.log
+
+Result:
+[2021-03-30 19:03:02 CEST]: fooo
+EOF
+        return 1
     fi
+
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
 }
 

@@ -517,10 +517,14 @@ alias get-hostname-domain='hostname -d'
 alias view-kernel-log='dmesg -H'
 
 function insert-datetime {
-    # Example:
-    # echo fooo 2>&1 1>/dev/null | insert-datetime | tee /tmp/test.log
-    # Result:
-    # [2021-03-30 19:03:02 CEST]: fooo
+    if [ -n "$1" ]; then
+        echo "Usage:"
+        echo "echo fooo 2>&1 1>/dev/null | insert-datetime | tee /tmp/test.log"
+        echo
+        echo "Result:"
+        echo "[2021-03-30 19:03:02 CEST]: fooo"
+        return
+    fi
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
 }
 

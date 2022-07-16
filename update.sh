@@ -3,9 +3,6 @@
 
 spaceship_prompt_version=a5d55898822e75cb34ee1c3cefe52822c820c220
 
-echo "pull dotfiles from remote"
-git pull --all || exit $?
-
 if [ -f "$HOME/dotfiles/config.yml" ]; then
     echo "Migrate dotfiles config file from \"$HOME/dotfiles/config.yml\" to \"$HOME/.config/dotfiles/compilenix/config.yml\""
     mkdir -pv "$HOME/.config/dotfiles/compilenix"

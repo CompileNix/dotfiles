@@ -432,8 +432,6 @@ function update-debian {
     sudo apt autoclean
     set +x
     set +e
-    unset -f ask_yn_y_callback
-    unset -f ask_yn_n_callback
 }
 alias update-yum='sudo yum update'
 alias update-fedora='sudo dnf update'
@@ -448,6 +446,8 @@ function reset-git {
 function update-dotfiles-non-interactive {
     reset-git ~/dotfiles
     pushd ~/dotfiles >/dev/null
+        echo -n "fetching dotfiles from remote"
+        git pull --all
         ./update.sh
     popd >/dev/null
 }
@@ -464,8 +464,6 @@ function update-dotfiles {
         echo -n ""
     }
     ask_yn
-    unset -f ask_yn_y_callback
-    unset -f ask_yn_n_callback
 }
 alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=760866" -O /tmp/code-insiders.rpm && sudo yum install -y /tmp/code-insiders.rpm && rm /tmp/code-insiders.rpm'
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'

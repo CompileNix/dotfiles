@@ -113,7 +113,8 @@ popd >/dev/null
 
 # Test / Build / Dev
 - Comment out git clone in install.sh
-- Comment out git pull in update.sh
+- Comment out git reset --hard in home/.zshrc
+- Comment out git pull in home/.zshrc
 
 ```bash
 docker build -t local/dotfiles:ubuntu -f ubuntu.Dockerfile .

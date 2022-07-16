@@ -515,6 +515,8 @@ alias get-hostname='hostname -s'
 alias get-hostname-fqdn='hostname -f'
 alias get-hostname-domain='hostname -d'
 alias view-kernel-log='dmesg -H'
+alias view-history='history | sort --reverse | less'
+alias remove-history='echo >$HOME/.history; history -p'
 
 function insert-datetime {
     if [ -n "$1" ]; then

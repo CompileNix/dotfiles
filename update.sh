@@ -29,6 +29,9 @@ fi
 if [ -f "$HOME/.tmux.conf_configured" ]; then
     rm -v "$HOME/.tmux.conf_configured"
 fi
+if [ -f "$HOME/bin/tmux-mem-cpu-load" ]; then
+    rm -v "$HOME/bin/tmux-mem-cpu-load"
+fi
 
 echo "Remove Symlinks from from files of most recent version"
 if [ -f "$HOME/.Xresources" ]; then

@@ -651,7 +651,6 @@ function reset-git {
 function update-dotfiles-non-interactive {
     reset-git ~/dotfiles
     pushd ~/dotfiles >/dev/null
-        echo -n "fetching dotfiles from remote"
         git pull --all
         ./update.sh
     popd >/dev/null

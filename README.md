@@ -6,11 +6,11 @@ My personal configuration files. feel free to steal whatever you like.
 __Keep always an existing terminal open, in case of failures!__
 
 ## Minimum Requirements
-- python 3.8+
 - git
-- zsh
-- tee
+- python 3.8+
 - tar
+- tee
+- zsh
 - zstd
 
 ## Recommended
@@ -117,9 +117,9 @@ popd >/dev/null
 ```
 
 # Test / Build / Dev
-- Comment out git clone in install.sh
-- Comment out git reset --hard in home/.zshrc
-- Comment out git pull in home/.zshrc
+- Comment out "git clone" in install.sh
+- Comment out "git reset --hard" in home/.zshrc
+- Comment out "git pull" in home/.zshrc
 
 ```bash
 docker build -t local/dotfiles:ubuntu -f ubuntu.Dockerfile .

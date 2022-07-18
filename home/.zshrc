@@ -186,7 +186,7 @@ alias get-date-iso-8601-ns='date --iso-8601=ns'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
 alias get-cert-info-stdin='echo "paste pem cert and hit Control+D: ";cert=$(cat); echo $cert | openssl x509 -text -noout'
 function get-cert-remote-raw {
-    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
         cat << EOF
 Function to receive X509 pem encoded certificate from a remote system.
 
@@ -199,12 +199,13 @@ Example: $(echo $funcstack[-1]) google.com 443
 EOF
         return 1
     fi
+
     hostName=$1
     portNumber=$2
     echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509 -text
 }
 function get-cert-remote {
-    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
         cat << EOF
 Function to make a full tls connect, printing various useful info, including
 all X509 certificates (pem encoded) the remote systems has sent.
@@ -223,7 +224,7 @@ EOF
     echo | openssl s_client -showcerts -x509_strict -connect ${hostName}:${portNumber} -servername ${hostName}
 }
 function get-cert-file {
-    if [ ! -n "$1" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
 Function to receive X509 pem encoded certificate from a local file.
 
@@ -405,7 +406,7 @@ alias get-ssh-pubkey='if [ -f ~/.ssh/id_ed25519.pub ]; then cat ~/.ssh/id_ed2551
 alias get-ssh-privkey='if [ -f ~/.ssh/id_ed25519 ]; then cat ~/.ssh/id_ed25519; elif [ -f ~/.ssh/id_ed25519 ]; then content=$(cat ~/.ssh/id_ed25519_pub); fi; echo $content'
 alias get-ssh-pubkeys-host='(for file in /etc/ssh/*_key.pub; do echo "$file"; ssh-keygen -l -E md5 -f $file; ssh-keygen -l -E sha256 -f "$file"; echo; done)'
 function get-sshfp-from-public-key {
-    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
         cat << EOF
 Function to generate SSHFP (SSH Fingerprint) DNS RR from a given base64
 encoded ssh public key file.
@@ -510,7 +511,7 @@ EOF
     get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"
 }
 function get-sshfp-from-public-key-directory {
-    if [ ! -n "$1" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
 Function to generate SSHFP (SSH Fingerprint) DNS RR from a directory
 which contains one or more ssh public key files named "ssh_host_*_key.pub".
@@ -542,7 +543,7 @@ EOF
     done
 }
 function get-ssh-keys-from-remote {
-    if [ ! -n "$1" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
 Function to fetch ssh public keys from a remote system.
 
@@ -574,7 +575,7 @@ EOF
 function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' }
 function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
 function get-dataurl {
-    if [ ! -n "$1" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
 Function to generate a data URL from a file.
 
@@ -673,7 +674,7 @@ alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=76
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'
 alias test-mail-mutt='mutt -s "test" '
 function send-mail {
-    if [ ! -n "$1" ] || [ ! -n "$2" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
         cat << EOF
 Function to send a test e-mail using sendmail.
 
@@ -692,11 +693,6 @@ EOF
     fi
 
     local to="$1"
-
-    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "" ]]; then
-        echo "Usage: echo \"message\" | send-mail \"to-address\" \"subject\""
-        return 1
-    fi
 
     local subject="$2"
     local body="$(< /dev/stdin)"
@@ -718,7 +714,7 @@ function nginx-configtest { sudo nginx -t }
 function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
 function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
 function view-logfile {
-    if [ ! -n "$1" ]; then
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
 Function to view a log file, with log syntax highlighting.
 

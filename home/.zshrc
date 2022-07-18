@@ -150,10 +150,40 @@ alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused me
 alias ceph-watch-status='watch -n 1 ceph -s'
 alias reset-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
-function get-ip4-routes { ip -4 route $* | column -t }
-function get-ip6-routes { ip -6 route $* | column -t }
 alias get-ip-local='ip address show scope global'
 alias get-ip-internet='curl https://ip.compilenix.org 2>/dev/null | xargs'
+function get-ip4-routes {
+    if [ -n "$1" ]; then
+        cat << EOF
+List IPv4 routes.
+
+Requirements:
+- column
+- ip
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    ip -4 route $* | column -t
+}
+function get-ip6-routes {
+    if [ -n "$1" ]; then
+        cat << EOF
+List IPv4 routes.
+
+Requirements:
+- column
+- ip
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    ip -6 route $* | column -t
+}
 alias get-network-listening-netstat='sudo netstat -tunpl'
 alias get-network-listening='sudo ss --numeric --listening --processes --tcp --udp'
 alias get-network-active-connections-netstat='sudo netstat -tun'
@@ -339,16 +369,52 @@ EOF
     ls -l privkey.pem cert.pem
 }
 function set-dns-query-stats-enable {
+    if [ -n "$1" ]; then
+        cat << EOF
+Add "+stats" for "get-dns" function invocations.
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     export dns_query_stats='+stats'
 }
 function set-dns-query-stats-disable {
+    if [ -n "$1" ]; then
+        cat << EOF
+Remove "+stats" for "get-dns" function invcations.
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     export dns_query_stats=''
 }
 
 function set-dns-query-additional-enable {
+    if [ -n "$1" ]; then
+        cat << EOF
+Add "+additional" for "get-dns" function invocations.
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     export dns_query_additional='+additional'
 }
 function set-dns-query-additional-disable {
+    if [ -n "$1" ]; then
+        cat << EOF
+Remove "+additional" for "get-dns" function invocations.
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     export dns_query_additional=''
 }
 set-dns-query-stats-enable
@@ -572,8 +638,64 @@ EOF
 
     nmap "$hostname" -Pn -p "$port" --script +ssh-hostkey --script-args ssh_hostkey=all
 }
-function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' }
-function get-debian-package-updates { apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; }
+function get-debian-package-description {
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        cat << EOF
+Get the description of a debian package.
+
+Requirements:
+- awk
+- dpkg
+- grep
+- sed
+
+Usage: $(echo $funcstack[-1]) package_name
+
+Example: $(echo $funcstack[-1]) apt
+EOF
+        return 1
+    fi
+
+    dpkg -l "$1" | grep --color " $1 " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//'
+}
+function get-debian-package-description-pipe {
+    if [ -n "$1" ]; then
+        cat << EOF
+Get the description of a debian package, via piping.
+
+Requirements:
+- awk
+- dpkg
+- grep
+- sed
+
+Usage: $(echo $funcstack[-1])
+
+Example: echo apt | $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    local input
+    read input
+    get-debian-package-description "$input"
+}
+function get-debian-package-updates {
+    if [ -n "$1" ]; then
+        cat << EOF
+List all avaliable debian package updates.
+
+Requirements:
+- apt
+- perl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    apt --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'
+}
 function get-dataurl {
     if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
@@ -619,7 +741,24 @@ alias update-archlinux-pacman='sudo pacman -Syu'
 alias update-archlinux-yaourt='sudo yaourt -Syu'
 alias update-archlinux-yaourt-aur='sudo yaourt -Syu --aur'
 function update-debian {
-    set -e
+    if [ -n "$1" ]; then
+        cat << EOF
+Install all Debian package updates:
+- apt update
+- apt autoremove
+- apt upgrade
+- apt autoremove
+- apt autoclean
+
+Requirements:
+- apt
+- sudo
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     echo "do an \"apt update\"?"
     function ask_yn_y_callback {
         set -x
@@ -637,19 +776,62 @@ function update-debian {
     sudo apt autoremove
     sudo apt autoclean
     set +x
-    set +e
 }
 alias update-yum='sudo yum update'
 alias update-fedora='sudo dnf update'
 function reset-git {
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        cat << EOF
+Invoke "git reset --hard" for all parameter directories.
+
+Requirements:
+- git
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     for i in $*; do
-        echo -e "\033[0;36m$i\033[0;0m"
+        if [ ! -d "$i" ]; then
+            echo "$(echo $funcstack[-1]): Not a directory: $i"
+            continue
+        fi
+        if [ ! -d "$i/.git" ]; then
+            echo "$(echo $funcstack[-1]): Not a git directory: $i"
+            continue
+        fi
+
+        echo -e "$(echo $funcstack[-1]): \033[0;36mgit reset --hard $i\033[0;0m"
         pushd "$i" >/dev/null
             git reset --hard
         popd >/dev/null
     done
 }
 function update-dotfiles-non-interactive {
+    if [ -n "$1" ]; then
+        cat << EOF
+Update dotfiles.
+
+Requirements:
+- cat
+- chmod
+- chown
+- git
+- ln
+- mkdir
+- mv
+- python 3.8+
+- tar
+- touch
+- unlink
+- zstd
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     reset-git ~/dotfiles
     pushd ~/dotfiles >/dev/null
         git pull --all
@@ -657,6 +839,29 @@ function update-dotfiles-non-interactive {
     popd >/dev/null
 }
 function update-dotfiles {
+    if [ -n "$1" ]; then
+        cat << EOF
+Update dotfiles.
+
+Requirements:
+- cat
+- chmod
+- chown
+- git
+- ln
+- mkdir
+- mv
+- python 3.8+
+- tar
+- touch
+- unlink
+- zstd
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     pushd ~/dotfiles >/dev/null
         git status
     popd >/dev/null
@@ -706,13 +911,122 @@ $body
 
 EOF
 }
-function apache-configtest { sudo apache2ctl -t }
-function apache-reload { apache-configtest && { sudo systemctl reload apache2 || sudo systemctl status apache2 } }
-function apache-restart { apache-configtest && { sudo systemctl restart apache2 || sudo systemctl status apache2 } }
-function nginx-status { sudo systemctl status nginx }
-function nginx-configtest { sudo nginx -t }
-function nginx-reload { nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx } }
-function nginx-restart { nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx } }
+function apache-configtest {
+    if [ -n "$1" ]; then
+        cat << EOF
+Test apache configuration.
+
+Requirements:
+- apache2ctl
+- sudo
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    sudo apache2ctl -t
+}
+function apache-reload {
+    if [ -n "$1" ]; then
+        cat << EOF
+Test apache configuration and invoke configuration reload.
+
+Requirements:
+- apache2ctl
+- sudo
+- systemctl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    apache-configtest && { sudo systemctl reload apache2 || sudo systemctl status apache2 }
+}
+function apache-restart {
+    if [ -n "$1" ]; then
+        cat << EOF
+Test apache configuration and invoke a service restart.
+
+Requirements:
+- apache2ctl
+- sudo
+- systemctl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    apache-configtest && { sudo systemctl restart apache2 || sudo systemctl status apache2 }
+}
+function nginx-status {
+    if [ -n "$1" ]; then
+        cat << EOF
+Show current nginx service status.
+
+Requirements:
+- sudo
+- systemctl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    sudo systemctl status nginx
+}
+function nginx-configtest {
+    if [ -n "$1" ]; then
+        cat << EOF
+Test nginx configuration.
+
+Requirements:
+- nginx
+- sudo
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    sudo nginx -t
+}
+function nginx-reload {
+    if [ -n "$1" ]; then
+        cat << EOF
+Test nginx configuration and invoke configuration reload.
+
+Requirements:
+- nginx
+- sudo
+- systemctl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    nginx-configtest && { sudo systemctl reload nginx || sudo systemctl status nginx }
+}
+function nginx-restart {
+    if [ -n "$1" ]; then
+        cat << EOF
+Test nginx configuration and invoke a service restart.
+
+Requirements:
+- nginx
+- sudo
+- systemctl
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    nginx-configtest && { sudo systemctl restart nginx || sudo systemctl status nginx }
+}
 function view-logfile {
     if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF
@@ -757,10 +1071,37 @@ alias view-history='history | sort --reverse | less'
 alias remove-history='echo >$HOME/.history; history -p'
 
 function get-aliases {
-    grep 'alias ' ~/.zshrc | sed 's/^[ ]*//' | grep -vE '^unalias|^echo' | sort
+    if [ -n "$1" ]; then
+        cat << EOF
+Get list of all zsh aliases defined by dotfiles.
+
+Requirements:
+- grep
+- sort
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    grep -E '^alias ' ~/.zshrc | sort
 }
 function get-functions {
-    grep -E '^function ' ~/.zshrc | sed 's/^[ ]*//' | grep -vE '^(ask_yn_y_callback|ask_yn_n_callback)' | awk '{ print $2 }' | sort
+    if [ -n "$1" ]; then
+        cat << EOF
+Get list of all zsh functions defined by dotfiles.
+
+Requirements:
+- awk
+- grep
+- sort
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    grep -E '^function ' ~/.zshrc | awk '{ print $2 }' | sort
 }
 
 function insert-datetime {
@@ -819,6 +1160,21 @@ if [[ $distro == "Arch" ]]; then
 fi
 
 function install-podman-fedora {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to remove docker, if it's installed, and install podman on a fedora
+system.
+
+Requirements:
+- dnf
+- sudo
+- wget
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     sudo dnf remove docker
     sudo dnf install podman
     sudo dnf update container-selinux
@@ -829,6 +1185,20 @@ function install-podman-fedora {
     exec zsh
 }
 function remove-podman-fedora {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to remove podman on a fedora system.
+
+Requirements:
+- dnf
+- rm
+- sudo
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     sudo dnf remove podman
     sudo dnf update container-selinux
     rm -v ~/.zsh/completion/_podman 2>/dev/null
@@ -995,8 +1365,18 @@ hosts=(
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
-# fast node manager (https://github.com/Schniz/fnm)
 function enable-fnm {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to enable fnm.
+
+fast node manager (https://github.com/Schniz/fnm)
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     if [[ -f "$HOME/.fnm/fnm" ]]
     then
         export PATH="$HOME/.fnm:$PATH"
@@ -1005,10 +1385,33 @@ function enable-fnm {
 }
 
 function use-fnm {
+    if [ -n "$1" ]; then
+        cat << EOF
+Run "fnm use" and if it fails run "fnm install && fnm use".
+
+fast node manager (https://github.com/Schniz/fnm)
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
     fnm use 2>/dev/null || { fnm install && fnm use }
 }
 
 function my-chpwd {
+    if [ -n "$1" ]; then
+        cat << EOF
+This function is invoked every time you switch toa new directory.
+
+The following things do run here (in that order):
+- if file "./.nvmrc" exists run "use-fnm"
+
+Usage: none
+EOF
+        return 1
+    fi
+
     if [[ -f .nvmrc ]]
     then
         if [[ -f "$HOME/.fnm/fnm" ]]

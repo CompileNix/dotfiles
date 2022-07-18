@@ -3,6 +3,18 @@
 
 spaceship_prompt_version=a5d55898822e75cb34ee1c3cefe52822c820c220
 
+current_git_branch_name=$(git branch --show-current)
+if [[ "$current_git_branch_name" = "master" ]]; then
+    remote_git_repo_main_branch="$(git branch --remotes | awk '{ print $1 }' | grep 'origin/main' --color=never)"
+    if [[ "$remote_git_repo_main_branch" = "origin/main" ]]; then
+        echo 'Migrate dotfiles git branch from "master" to "main".'
+        set -e
+        git checkout main
+        set +e
+        git branch -D master
+    fi
+fi
+
 if [ -f "$HOME/dotfiles/config.yml" ]; then
     echo "Migrate dotfiles config file from \"$HOME/dotfiles/config.yml\" to \"$HOME/.config/dotfiles/compilenix/config.yml\""
     mkdir -pv "$HOME/.config/dotfiles/compilenix"
@@ -340,7 +352,6 @@ if [ -d "$HOME/.fonts/Vollkorn" ]; then
         fi
     fi
 fi
-
 
 echo "remove ZSH cache"
 rm -fv "$HOME/.zcompdump" 2>/dev/null

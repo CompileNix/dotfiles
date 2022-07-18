@@ -760,6 +760,13 @@ alias view-kernel-log='dmesg -H'
 alias view-history='history | sort --reverse | less'
 alias remove-history='echo >$HOME/.history; history -p'
 
+function get-aliases {
+    grep 'alias ' ~/.zshrc | sed 's/^[ ]*//' | grep -vE '^unalias|^echo' | sort
+}
+function get-functions {
+    grep -E '^function ' ~/.zshrc | sed 's/^[ ]*//' | grep -vE '^(ask_yn_y_callback|ask_yn_n_callback)' | awk '{ print $2 }' | sort
+}
+
 function insert-datetime {
     if [ -n "$1" ]; then
         cat << EOF

@@ -1069,6 +1069,41 @@ alias get-hostname-domain='hostname -d'
 alias view-kernel-log='dmesg -H'
 alias view-history='history | sort --reverse | less'
 alias remove-history='echo >$HOME/.history; history -p'
+function get-time-chrony-status {
+    if [ -n "$1" ]; then
+        cat << EOF
+Get the current state of connected ntp upstream sources.
+
+Requirements:
+- chronyc
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    local fn_name=$(echo $funcstack[-1])
+    echo "+$fn_name> systemctl status chronyd.service"
+    systemctl status chronyd.service
+    echo
+    echo "+$fn_name> chronyc -n activity # Check how many NTP sources are online/offline"
+    chronyc -n activity
+    echo
+    echo "+$fn_name> chronyc -n tracking # Display system time information"
+    chronyc -n tracking
+    echo
+    echo "+$fn_name> chronyc -n ntpdata # Display information about last valid measurement"
+    chronyc -n ntpdata
+    echo
+    echo "+$fn_name> chronyc -n selectdata # Display information about source selection"
+    chronyc -n selectdata
+    echo
+    echo "+$fn_name> chronyc -n sources # Display information about current sources"
+    chronyc -n sources
+    echo
+    echo "+$fn_name> chronyc -n sourcestats # Display statistics about collected measurements"
+    chronyc -n sourcestats
+}
 
 function get-aliases {
     if [ -n "$1" ]; then

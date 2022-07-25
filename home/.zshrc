@@ -1415,7 +1415,7 @@ EOF
     if [[ -f "$HOME/.fnm/fnm" ]]
     then
         export PATH="$HOME/.fnm:$PATH"
-        eval `fnm env --multi`
+        eval `fnm env`
     fi
 }
 

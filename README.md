@@ -23,14 +23,14 @@ ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
 
 apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python3 rsync sudo sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-yaml
 
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
 ```
 
 ## Fedora
 ```sh
 dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate plocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich
 
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
 ```
 
 ## MacOS
@@ -44,7 +44,7 @@ brew install acl2 brotli coreutils curl git gzip htop iftop ncdu neovim net-tool
 # Install python modules required to install dotfiles
 pip3 install rich pyyaml neovim
 
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
 ```
 
 ## Sway Requirements
@@ -95,7 +95,7 @@ __Keep always a additional terminal open, in case of any issues!__
 
 ```sh
 rm -rf ~/dotfiles 2>/dev/null
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
 exit
 zsh
 ```

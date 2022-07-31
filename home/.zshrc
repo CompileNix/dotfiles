@@ -1138,7 +1138,6 @@ EOF
 
     grep -E '^function ' ~/.zshrc | awk '{ print $2 }' | sort
 }
-
 function insert-datetime {
     if [ -n "$1" ]; then
         cat << EOF
@@ -1162,6 +1161,27 @@ EOF
 
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
 }
+function remove-docker-image-untagged {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to remove all docker images which dont have a tag.
+
+Requirements:
+- docker
+- grep
+- awk
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    local image
+    for image in $(docker image ls | grep '<none>' | awk '{ print $3 }'); do
+        docker image rm $image
+    done
+}
+
 
 if [[ $distro == "Ubuntu" ]]; then
     alias install='sudo apt install --no-install-recommends '

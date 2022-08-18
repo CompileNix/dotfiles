@@ -1180,6 +1180,7 @@ EOF
         docker image rm $image
     done
 }
+alias virtualenv='python3 -m venv'
 
 
 if [[ $distro == "Ubuntu" ]]; then

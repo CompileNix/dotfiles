@@ -1457,7 +1457,7 @@ EOF
 function my-chpwd {
     if [ -n "$1" ]; then
         cat << EOF
-This function is invoked every time you switch toa new directory.
+This function is invoked every time you switch to a new directory.
 
 The following things do run here (in that order):
 - if file "./.nvmrc" exists run "use-fnm"
@@ -1467,13 +1467,16 @@ EOF
         return 1
     fi
 
-    if [[ -f .nvmrc ]]
-    then
-        if [[ -f "$HOME/.fnm/fnm" ]]
-        then
-            use-fnm
-            return
-        fi
+    if [[ -f ".nvmrc" ]] && [[ -f "$HOME/.fnm/fnm" ]]; then
+        echo "./.nvmrc is present and fnm is installed. Loading node version..."
+        enable-fnm
+        use-fnm
+    fi
+
+    if [[ -f ".env" ]]; then
+        function ask_yn_y_callback { source .env }
+        function ask_yn_n_callback { echo }
+        echo -e "./.env is present. Do you want to source it?"; ask_yn
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")

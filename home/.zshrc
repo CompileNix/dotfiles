@@ -614,7 +614,7 @@ function get-ssh-keys-from-remote {
 Function to fetch ssh public keys from a remote system.
 
 Requirements:
-- nmap
+- ssh-keyscan
 
 Usage: $(echo $funcstack[-1]) hostname [port]
 
@@ -636,7 +636,7 @@ EOF
         port="22"
     fi
 
-    nmap "$hostname" -Pn -p "$port" --script +ssh-hostkey --script-args ssh_hostkey=all
+    ssh-keyscan -p $port "$hostname"
 }
 function get-debian-package-description {
     if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then

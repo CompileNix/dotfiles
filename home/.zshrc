@@ -779,6 +779,7 @@ EOF
 }
 alias update-yum='sudo yum update'
 alias update-fedora='sudo dnf update'
+alias gitg='git gui'
 function reset-git {
     if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
         cat << EOF

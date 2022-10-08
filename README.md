@@ -110,10 +110,12 @@ git clone https://github.com/spaceship-prompt/spaceship-prompt.git --depth=1 git
 cd git_repo
 commit_id=$(git rev-parse HEAD)
 echo "commit id: $commit_id"
+rm -rf .git tests .github docs
 tar --create --file "../${commit_id}.tar.zstd" --preserve-permissions --zstd .
 cp -v "../${commit_id}.tar.zstd" ~/dotfiles/zsh-plugins/spaceship-prompt/
 popd >/dev/null
 popd >/dev/null
+rm -rf "$temp_dir"
 ```
 
 # Test / Build / Dev

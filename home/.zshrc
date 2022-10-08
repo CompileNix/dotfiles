@@ -1301,7 +1301,7 @@ if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     SPACESHIP_PROMPT_ADD_NEWLINE=false
     SPACESHIP_PROMPT_SEPARATE_LINE=false
     SPACESHIP_TIME_SHOW=true
-    SPACESHIP_USER_SHOW=true
+    SPACESHIP_USER_SHOW=always
     SPACESHIP_HOST_SHOW=true
     SPACESHIP_HOST_SHOW_FULL=true
     SPACESHIP_BATTERY_THRESHOLD=25
@@ -1321,10 +1321,11 @@ if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     SPACESHIP_HASKELL_SHOW=false
     SPACESHIP_JULIA_SHOW=false
     SPACESHIP_DOCKER_SHOW=false
-    SPACESHIP_PYENV_SHOW=false
+    SPACESHIP_PYTHON_SHOW=false
     SPACESHIP_DOTNET_SHOW=false
     SPACESHIP_EMBER_SHOW=false
     SPACESHIP_PACKAGE_SHOW=false
+    SPACESHIP_ASYNC_SYMBOL=""
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then
@@ -1639,7 +1640,7 @@ autoload -U promptinit && promptinit
 
 if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     prompt spaceship
-    spaceship_vi_mode_disable || bindkey -e
+    # spaceship_vi_mode_disable || bindkey -e
 fi
 
 if [[ $ENABLE_ZSH_SYNTAX_HIGHLIGHTING == "true" ]]; then

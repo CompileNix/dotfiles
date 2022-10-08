@@ -487,9 +487,12 @@ export HISTFILE="$HOME/.history"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export FT2_SUBPIXEL_HINTING=1
 
-if [ -z "\$SSH_AUTH_SOCK" ] ; then
+# export SPACESHIP_EXIT_CODE_SUFFIX=" (╯°□°）╯︵ ┻━┻ "
+
+if [ -z "\$SSH_AUTH_SOCK" ]; then
     eval \`ssh-agent -s\` >/dev/null
 fi
+
 
 EOF
 fi
@@ -529,4 +532,16 @@ if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
     chmod 0700 "$HOME/.gnupg"
     touch "$HOME/.gnupg/gpg-agent.env"
 fi
+
+if [ ! -f "$HOME/.zlogout_include" ]; then
+echo "create default ~/.zlogout_include"
+cat << EOF | tee $HOME/.zlogout_include >/dev/null
+# vim: sw=4 et
+
+# A place for logout tasks & actions
+
+EOF
+fi
+touch "$HOME/.zlogout_include"
+chmod +x "$HOME/.zlogout_include"
 

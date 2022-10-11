@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: sw=4 et
 
-spaceship_prompt_version=aee748b249b1dd6502116a00290f593bfc2aedca
+spaceship_prompt_version=a5d55898822e75cb34ee1c3cefe52822c820c220
 
 current_git_branch_name=$(git branch --show-current)
 if [[ "$current_git_branch_name" = "master" ]]; then

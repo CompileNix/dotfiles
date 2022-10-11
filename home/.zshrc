@@ -1325,6 +1325,7 @@ if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     SPACESHIP_DOTNET_SHOW=false
     SPACESHIP_EMBER_SHOW=false
     SPACESHIP_PACKAGE_SHOW=false
+    SPACESHIP_GIT_SHOW=false
     SPACESHIP_ASYNC_SYMBOL=""
 fi
 
@@ -1640,7 +1641,11 @@ autoload -U promptinit && promptinit
 
 if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     prompt spaceship
-    # spaceship_vi_mode_disable || bindkey -e
+    if typeset -f spaceship_vi_mode_disable >/dev/null; then
+        spaceship_vi_mode_disable
+    else
+        bindkey -e
+    fi
 fi
 
 if [[ $ENABLE_ZSH_SYNTAX_HIGHLIGHTING == "true" ]]; then

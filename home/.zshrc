@@ -1476,10 +1476,10 @@ EOF
         use-fnm
     fi
 
-    if [[ -f ".env" ]]; then
-        function ask_yn_y_callback { source .env }
-        function ask_yn_n_callback { echo }
-        echo -e "./.env is present. Do you want to source it?"; ask_yn
+    if [[ "$ENABLE_ZSH_ENV_FILE_SOURCE" = "true" ]] && [[ -f ".env" ]]; then
+        echo -e "ENABLE_ZSH_ENV_FILE_SOURCE is set to \"true\". running \"source .env\""
+        source .env
+        echo -e "\"source .env\" complete"
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")

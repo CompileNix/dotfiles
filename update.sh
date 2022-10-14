@@ -407,6 +407,9 @@ ENABLE_ZSH_AUTOSUGGEST=true
 ENABLE_ZSH_SPACESHIP_PROMPT=true
 ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
 
+# automatically source .env file in cwd
+ENABLE_ZSH_ENV_FILE_SOURCE=false
+
 EOF
 fi
 

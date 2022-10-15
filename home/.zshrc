@@ -1657,12 +1657,19 @@ if [[ $ENABLE_ZSH_SYNTAX_HIGHLIGHTING == "true" ]]; then
         source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
     fi
-    if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    if [[ $ZSH_SYNTAX_HIGHLIGHTING_ENABLED == "false" ]] && [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
         source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
     fi
+    if [[ $ZSH_SYNTAX_HIGHLIGHTING_ENABLED == "false" ]] && [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
+        source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+        ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
+    fi
     if [[ $ZSH_SYNTAX_HIGHLIGHTING_ENABLED == "false" ]]; then
-        echo "Warning: you requested to enable the ZSH Syntax Highlighting plugin, but it could not be found at the following expected location: /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+        echo "Warning: you requested to enable the ZSH Syntax Highlighting plugin via ENABLE_ZSH_SYNTAX_HIGHLIGHTING, but it could not be found at one of the following expected locations:"
+        echo " - /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+        echo " - /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+        echo " - /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh"
     fi
 fi
 

@@ -1662,6 +1662,7 @@ if [[ $ENABLE_ZSH_SYNTAX_HIGHLIGHTING == "true" ]]; then
         ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
     fi
     if [[ $ZSH_SYNTAX_HIGHLIGHTING_ENABLED == "false" ]] && [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
+        # usually observed on gentoo
         source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
         ZSH_SYNTAX_HIGHLIGHTING_ENABLED="true"
     fi

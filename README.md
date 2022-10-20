@@ -1,36 +1,102 @@
-# Description
+# My Dotfiles
 
-My personal configuration files. feel free to steal whatever you like.
+![parrot home office](https://compilenix.org/parrot%20home%20office.gif "parrot home office")
 
 # Install
-__Keep always an existing terminal open, in case of failures!__
+__Keep always an existing terminal open, just in case__
 
-## Minimum Requirements
-- git
-- python 3.8+
-- tar
-- tee
-- zsh
-- zstd
-
-## Recommended
-- [powerline-fonts](https://github.com/powerline/fonts/releases)
+```sh
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
+  && /bin/bash ./tmp/install.sh \
+  && rm -f /tmp/install.sh
+```
 
 ## Debian / Ubuntu
 ```sh
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
 ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
+```
 
-apt update && apt install acl bind9utils brotli coreutils curl git gzip htop iftop iotop logrotate lsb-release mlocate ncdu neovim net-tools python3 rsync sudo sqlite systemd-coredump tmux unzip vim vim-airline wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-yaml
+### Required Packages
+```sh
+apt install \
+  bash \
+  coreutils \
+  curl \
+  git \
+  lsb-release \
+  python3 \
+  python3-yaml \
+  zsh \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting \
+  zstd
+```
 
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+### Optional Packages
+```sh
+apt install \
+  acl \
+  bind9utils \
+  brotli \
+  gzip \
+  htop \
+  iftop \
+  iotop \
+  logrotate \
+  mlocate \
+  ncdu \
+  neovim \
+  net-tools \
+  rsync \
+  sqlite \
+  sudo \
+  systemd-coredump \
+  tmux \
+  unzip \
+  wget \
+  zip
 ```
 
 ## Fedora
+### Required Packages
 ```sh
-dnf install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate plocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich
+dnf install \
+  coreutils \
+  curl \
+  git \
+  python3 \
+  python3-pyyaml \
+  redhat-lsb-core \
+  which \
+  zsh \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting \
+  zstd
+```
 
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+### Optional Packages
+```sh
+dnf install \
+  NetworkManager-tui \
+  acl \
+  bind-utils \
+  findutils \
+  htop \
+  iftop \
+  iotop \
+  iptables \
+  logrotate \
+  ncdu \
+  neovim \
+  plocate \
+  python3-rich \
+  rsync \
+  sqlite \
+  sudo \
+  tmux \
+  util-linux-user \
+  wget
 ```
 
 ## MacOS
@@ -39,15 +105,64 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chm
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install software & tools
-brew install acl2 brotli coreutils curl git gzip htop iftop ncdu neovim net-tools python3 rsync sqlite tmux unzip vim wget zip zsh zsh-autosuggestions zsh-syntax-highlighting zstd
+brew install \
+  acl2 \
+  brotli \
+  coreutils \
+  curl \
+  git \
+  gzip \
+  htop \
+  iftop \
+  ncdu \
+  neovim \
+  net-tools \
+  python3 \
+  rsync \
+  sqlite \
+  tmux \
+  unzip \
+  vim \
+  wget \
+  zip \
+  zsh \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting \
+  zstd
 
 # Install python modules required to install dotfiles
 pip3 install rich pyyaml neovim
 
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
+  && chmod +x install.sh \
+  && ./install.sh \
+  && rm -f install.sh
 ```
 
-## Sway Requirements
+# Additional Tools
+| Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
+|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| [powerline-fonts](https://github.com/powerline/fonts)           | Patched fonts for [Powerline](https://github.com/powerline/powerline) users                                          | cli, font, statusline, vim, neovim, python, zsh, bash, fish, tmux, IPython, Awesome, i3, Qtile |
+| [httpstat](https://github.com/reorx/httpstat)                   | httpstat visualizes curl(1) statistics in a way of beauty and clarity.                                               | visualization, python, cli, http, curl                                                         |
+| [curlconverter](https://curlconverter.com/)                     | Convert cURL commands to Python, JavaScript, PHP, R, Go, Ruby, Rust, Elixir, Java, MATLAB, C#, Dart and more         | website                                                                                        |
+| [bat](https://github.com/astaxie/bat)                           | Go implement CLI, cURL-like tool for humans                                                                          | cli, http                                                                                      |
+| [jq](https://github.com/stedolan/jq)                            | Command-line JSON processor                                                                                          | cli                                                                                            |
+| [rewrk](https://github.com/lnx-search/rewrk)                    | A more modern http framework benchmarker supporting HTTP/1 and HTTP/2 benchmarks.                                    | cli, rust                                                                                      |
+| [ssh-audit](https://github.com/jtesta/ssh-audit)                | SSH server & client auditing (banner, key exchange, encryption, mac, compression, compatibility, security, etc)      | cli, ssh, audit, python, security                                                              |
+| [XCA](https://github.com/chris2511/xca)                         | X Certificate and Key management                                                                                     | gui, X509, certificate, management, pkcs7, crl, ec, pkcs11, pkcs12, dsa, pkcs8                 |
+| [dog](https://github.com/ogham/dog)                             | A command-line DNS client.                                                                                           | cli, rust                                                                                      |
+| [trust-dns](https://github.com/bluejekyll/trust-dns)            | A Rust based DNS client, server, and resolver                                                                        | cli                                                                                            |
+| [rich](https://github.com/Textualize/rich)                      | Rich is a Python library for rich text and beautiful formatting in the terminal.                                     | lib                                                                                            |
+| [dive](https://github.com/wagoodman/dive)                       | A tool for exploring each layer in a docker image                                                                    | cli, container, image                                                                          |
+| [pci](https://github.com/michoo/pci)                            | Packet communication investigator                                                                                    | cli, gui, security, pcap, wireshark, network, analyzer, tshark, graph, python                  |
+| [fnm](https://github.com/Schniz/fnm)                            | 🚀 Fast and simple Node.js version manager, built in Rust                                                            | cli, nodejs                                                                                    |
+| [regexr](http://regexr.com/)                                    | RegExr is a HTML/JS based tool for creating, testing, and learning about Regular Expressions.                        | website                                                                                        |
+| [Grok Debugger](https://grokdebugger.com/)                      | Debug your Grok patterns                                                                                             | website                                                                                        |
+| [Security Headers](https://securityheaders.com)                 | Scan a public websites HTTP security related headers                                                                 | website                                                                                        |
+| [Qualys SSL Labs](https://www.ssllabs.com/ssltest/analyze.html) | This free online service performs a deep analysis of the configuration of any SSL web server on the public Internet. | website, X509, certificate                                                                     |
+| [TableConvert](https://tableconvert.com/)                       | This converter is used to convert Excel (or other spreadsheets) into Markdown Table.                                 | website                                                                                        |
+
+# SwayWM
 - sway
 - waybar
 - wl-clipboard
@@ -64,7 +179,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chm
 - gimp
 - thunar (filemanager)
 
-## X11 .xinitrc Requirements
+# X11 .xinitrc
 - i3
 - xrdb
 - xinput
@@ -95,7 +210,10 @@ __Keep always a additional terminal open, in case of any issues!__
 
 ```sh
 rm -rf ~/dotfiles 2>/dev/null
-wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh; chmod +x install.sh; ./install.sh; rm -f install.sh
+wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
+  && chmod +x install.sh \
+  && ./install.sh \
+  && rm -f install.sh
 exit
 zsh
 ```
@@ -211,10 +329,12 @@ ln -s left_ptr ur_angle
 ```
 
 # Windows
+
+![windows meme](https://compilenix.org/windows%20meme.jpg "windows meme")
 ## Tools / Software
+- [VeraCrypt](https://veracrypt.fr/): Free open source disk encryption software for Windows, Mac OSX and Linux
 - [7-ZIP](https://www.7-zip.org/): archive file management
 - [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer): more advanced Task Manager
 - [TeraCopy](https://www.codesector.com/teracopy): better file copy & move
-- [Visual Studio Code](https://code.visualstudio.com/download): text editor
 - [NetLimiter](https://www.netlimiter.com/): alternative firewall (not based on Windows Firewall)
 

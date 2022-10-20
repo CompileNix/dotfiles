@@ -29,7 +29,8 @@ if [[ ${condition_for_install} -eq 0 ]]; then
         fi
     popd >/dev/null
 else
-    echo "one or more of the following dependencies are not installed: git, zsh, python"
+    echo "one or more of the following dependencies are not installed: git, zsh, python3"
+    exit 1
 fi
 
 set +e

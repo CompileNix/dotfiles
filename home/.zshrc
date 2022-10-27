@@ -150,7 +150,7 @@ alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused me
 alias ceph-watch-status='watch -n 1 ceph -s'
 alias reset-swap='sudo swapoff -a; sudo swapon -a'
 alias reset-fscache='sync; sudo echo 3 > /proc/sys/vm/drop_caches'
-alias get-ip-local='ip address show scope global'
+alias get-ip-local='hostname -I'
 alias get-ip-internet='curl https://ip.compilenix.org 2>/dev/null | xargs'
 function get-ip4-routes {
     if [ -n "$1" ]; then

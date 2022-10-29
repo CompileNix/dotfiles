@@ -1069,6 +1069,11 @@ alias get-hostname-domain='hostname -d'
 alias view-kernel-log='dmesg -H'
 alias view-history='history | sort --reverse | less'
 alias remove-history='echo >$HOME/.history; history -p'
+alias get-systemd-units='systemctl list-units'
+alias get-systemd-units-service='systemctl list-units --type service'
+alias get-systemd-units-failed='systemctl list-units --state failed'
+alias get-systemd-units-timer='systemctl list-timers'
+alias reload-systemd-units='systemctl daemon-reload'
 function get-time-chrony-status {
     if [ -n "$1" ]; then
         cat << EOF

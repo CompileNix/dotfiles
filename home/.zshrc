@@ -911,6 +911,9 @@ EOF
         git pull --all
         ./update.sh
     popd >/dev/null
+    if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
+        rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep"
+    fi
 }
 function update-dotfiles {
     if [ -n "$1" ]; then

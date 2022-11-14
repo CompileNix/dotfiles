@@ -162,6 +162,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 | [Qualys SSL Labs](https://www.ssllabs.com/ssltest/analyze.html) | This free online service performs a deep analysis of the configuration of any SSL web server on the public Internet. | website, X509, certificate                                                                     |
 | [TableConvert](https://tableconvert.com/)                       | This converter is used to convert Excel (or other spreadsheets) into Markdown Table.                                 | website                                                                                        |
 | [Compiler Explorer](https://godbolt.org/)                       | Run compilers interactively from your web browser and interact with the assembly                                     | website                                                                                        |
+| [hyperfine](https://github.com/sharkdp/hyperfine)               | A command-line benchmarking tool                                                                                     | cli, rust                                                                                      |
 
 # SwayWM
 - sway

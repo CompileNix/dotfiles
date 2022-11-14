@@ -1779,7 +1779,7 @@ if [[ "$ENABLE_ZSH_ASYNC_UPDATE_CHECK" = "true" ]]; then
         touch "/tmp/$USER-zsh-dotfiles-async-update-check.lock"
 
         cd "$HOME/dotfiles"
-        command git fetch --all >/dev/null
+        command git fetch --all >/dev/null 2>&1
         local remote_name=$(command git remote)
         local current_branch=$(command git branch --show-current)
         local behind_ref_count=$(command git rev-list --count "HEAD..$remote_name/$current_branch")

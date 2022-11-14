@@ -1,5 +1,7 @@
 # vim: sw=4 et
 
+[ -z "$ZPROF" ] || zmodload zsh/zprof
+
 # Reset Colors
 Color_Reset='\033[0m'
 
@@ -1718,9 +1720,11 @@ if [[ $COMPLETION_WAITING_DOTS = true ]]; then
   bindkey -M vicmd "^I" expand-or-complete-with-dots
 fi
 
-autoload -U +X bashcompinit && bashcompinit
-autoload -U compinit && compinit -u
-autoload -U promptinit && promptinit
+# https://stackoverflow.com/a/67161186
+autoload -Uz compinit bashcompinit promptinit
+compinit
+bashcompinit
+promptinit
 
 if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     prompt spaceship
@@ -1822,4 +1826,6 @@ if [ -f "$XDG_CONFIG_HOME/git/credentials" ]; then
 fi
 
 echo "here is a shell alias you might not known about (get-random-alias):\n    $(get-random-alias)"
+
+[ -z "$ZPROF" ] || zprof
 

@@ -1803,7 +1803,7 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         echo "You can temporarily disable this prompt by running: ${Green}disable-dotfiles-update-prompt-temp${Color_Reset}"
         echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ENV_FILE_SOURCE${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
         echo
-        (update-dotfiles && exec zsh)
+        (update-dotfiles && echo "exec zsh" && exec zsh)
     fi
 fi
 

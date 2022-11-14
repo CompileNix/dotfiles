@@ -1,5 +1,78 @@
 # vim: sw=4 et
 
+# Reset Colors
+Color_Reset='\033[0m'
+
+# Regular Colors
+Black='\033[0;30m'
+Red='\033[0;31m'
+Green='\033[0;32m'
+Yellow='\033[0;33m'
+Blue='\033[0;34m'
+Purple='\033[0;35m'
+Cyan='\033[0;36m'
+White='\033[0;37m'
+
+# Bold
+Bold_Black='\033[1;30m'
+Bold_Red='\033[1;31m'
+Bold_Green='\033[1;32m'
+Bold_Yellow='\033[1;33m'
+Bold_Blue='\033[1;34m'
+Bold_Purple='\033[1;35m'
+Bold_Cyan='\033[1;36m'
+Bold_White='\033[1;37m'
+
+# Underline
+Underline_Black='\033[4;30m'
+Underline_Red='\033[4;31m'
+Underline_Green='\033[4;32m'
+Underline_Yellow='\033[4;33m'
+Underline_Blue='\033[4;34m'
+Underline_Purple='\033[4;35m'
+Underline_Cyan='\033[4;36m'
+Underline_White='\033[4;37m'
+
+# Background
+On_Black='\033[40m'
+On_Red='\033[41m'
+On_Green='\033[42m'
+On_Yellow='\033[43m'
+On_Blue='\033[44m'
+On_Purple='\033[45m'
+On_Cyan='\033[46m'
+On_White='\033[47m'
+
+# High Intensity
+Intense_Black='\033[0;90m'
+Intense_Red='\033[0;91m'
+Intense_Green='\033[0;92m'
+Intense_Yellow='\033[0;93m'
+Intense_Blue='\033[0;94m'
+Intense_Purple='\033[0;95m'
+Intense_Cyan='\033[0;96m'
+Intense_White='\033[0;97m'
+
+# Bold High Intensity
+Bold_Intense_Black='\033[1;90m'
+Bold_Intense_Red='\033[1;91m'
+Bold_Intense_Green='\033[1;92m'
+Bold_Intense_Yellow='\033[1;93m'
+Bold_Intense_Blue='\033[1;94m'
+Bold_Intense_Purple='\033[1;95m'
+Bold_Intense_Cyan='\033[1;96m'
+Bold_Intense_White='\033[1;97m'
+
+# High Intensity backgrounds
+On_Intense_Black='\033[0;100m'
+On_Intense_Red='\033[0;101m'
+On_Intense_Green='\033[0;102m'
+On_Intense_Yellow='\033[0;103m'
+On_Intense_Blue='\033[0;104m'
+On_Intense_Purple='\033[0;105m'
+On_Intense_Cyan='\033[0;106m'
+On_Intense_White='\033[0;107m'
+
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"
@@ -876,6 +949,7 @@ EOF
     }
     ask_yn
 }
+alias disable-dotfiles-update-prompt-temp='touch "/tmp/$USER-zsh-dotfiles-async-update-check.disabled"'
 alias update-code-insiders-rpm='wget "https://go.microsoft.com/fwlink/?LinkID=760866" -O /tmp/code-insiders.rpm && sudo yum install -y /tmp/code-insiders.rpm && rm /tmp/code-insiders.rpm'
 alias test-mail-sendmail='echo -n "To: "; read mail_to_addr; echo -e "From: ${USER}@$(hostname -f)\nTo: ${mail_to_addr}\nSubject: test subject\n\ntest body" | sendmail -v "${mail_to_addr}"'
 alias test-mail-mutt='mutt -s "test" '
@@ -1687,9 +1761,52 @@ if [[ $operatingSystem == "Linux" ]]; then
 fi
 unset n
 
+# check for new git commits on remote and if so, create a file in /tmp as an indicator
+if [[ "$ENABLE_ZSH_ASYNC_UPDATE_CHECK" = "true" ]]; then
+    test-dotfiles-updates() {
+        if [ -f "/tmp/$USER-zsh-dotfiles-async-update-check.lock" ]; then
+            # another process execting this function is already present
+            return
+        fi
+        if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
+            # we already know that an update exists
+            return
+        fi
+        if [ -f "/tmp/$USER-zsh-dotfiles-async-update-check.disabled" ]; then
+            # the user requested to temporarily not check for updates
+            return
+        fi
+        touch "/tmp/$USER-zsh-dotfiles-async-update-check.lock"
+
+        cd "$HOME/dotfiles"
+        command git fetch --all >/dev/null
+        local remote_name=$(command git remote)
+        local current_branch=$(command git branch --show-current)
+        local behind_ref_count=$(command git rev-list --count "HEAD..$remote_name/$current_branch")
+        if (( $behind_ref_count )); then
+            touch "/tmp/$USER-zsh-dotfiles-async-update-exists.yep"
+        fi
+        rm "/tmp/$USER-zsh-dotfiles-async-update-check.lock"
+     }
+
+     # run function as background job and in a subshell to discard it's job creation message
+     (test-dotfiles-updates &)
+fi
+
+# check if an indicator for dotfiles updates exists and if so, prompt the user
+if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
+    if [ ! -f "/tmp/$USER-zsh-dotfiles-async-update-check.disabled" ]; then
+        echo "🎉 There are dotfiles updates availabe 🎉"
+        echo "You can temporarily disable this prompt by running: ${Green}disable-dotfiles-update-prompt-temp${Color_Reset}"
+        echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ENV_FILE_SOURCE${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
+        echo
+        update-dotfiles
+    fi
+fi
+
 # Rust
-if [ -f $HOME/.cargo/env ]; then
-    source $HOME/.cargo/env
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
 fi
 
 if [ -f "$HOME/.git-credentials" ]; then

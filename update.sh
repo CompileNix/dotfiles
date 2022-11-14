@@ -406,6 +406,7 @@ cat << EOF | tee $HOME/.zshrc.env >/dev/null
 ENABLE_ZSH_AUTOSUGGEST=true
 ENABLE_ZSH_SPACESHIP_PROMPT=true
 ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
+ENABLE_ZSH_ASYNC_UPDATE_CHECK=false
 
 # automatically source .env file in cwd
 ENABLE_ZSH_ENV_FILE_SOURCE=false

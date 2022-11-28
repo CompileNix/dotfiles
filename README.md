@@ -141,7 +141,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 
 # Additional Tools
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
-|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | [powerline-fonts](https://github.com/powerline/fonts)           | Patched fonts for [Powerline](https://github.com/powerline/powerline) users                                          | cli, font, statusline, vim, neovim, python, zsh, bash, fish, tmux, IPython, Awesome, i3, Qtile |
 | [httpstat](https://github.com/reorx/httpstat)                   | httpstat visualizes curl(1) statistics in a way of beauty and clarity.                                               | visualization, python, cli, http, curl                                                         |
 | [curlconverter](https://curlconverter.com/)                     | Convert cURL commands to Python, JavaScript, PHP, R, Go, Ruby, Rust, Elixir, Java, MATLAB, C#, Dart and more         | website                                                                                        |
@@ -163,6 +163,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 | [TableConvert](https://tableconvert.com/)                       | This converter is used to convert Excel (or other spreadsheets) into Markdown Table.                                 | website                                                                                        |
 | [Compiler Explorer](https://godbolt.org/)                       | Run compilers interactively from your web browser and interact with the assembly                                     | website                                                                                        |
 | [hyperfine](https://github.com/sharkdp/hyperfine)               | A command-line benchmarking tool                                                                                     | cli, rust                                                                                      |
+| [ctop](https://github.com/bcicen/ctop)                          | Top-like interface for container metrics                                                                             | cli, go, docker, htop,                                                                         |
 
 # SwayWM
 - sway

@@ -1815,7 +1815,9 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         command git log --oneline --graph --decorate --all "HEAD..$remote_name/$current_branch"
         popd >/dev/null
         echo
-        update-dotfiles && rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" && echo "running \"exec zsh\"" && exec zsh
+        update-dotfiles && rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" 2>/dev/null
+        echo "running \"exec zsh\""
+        exec zsh
     fi
 fi
 

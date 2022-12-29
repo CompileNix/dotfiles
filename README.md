@@ -44,6 +44,7 @@ apt install \
   htop \
   iftop \
   iotop \
+  jq \
   logrotate \
   mlocate \
   ncdu \
@@ -89,6 +90,7 @@ dnf install \
   iftop \
   iotop \
   iptables \
+  jq \
   logrotate \
   ncdu \
   neovim \

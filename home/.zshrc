@@ -103,6 +103,9 @@ else
     alias ls='ls -h --color --group-directories-first'
     alias make="make -j\$(nproc)"
 fi
+if which exa &>/dev/null; then
+    alias ls='exa --group-directories-first --header --git --classify'
+fi
 
 # ixon: enable XON/XOFF flow control
 # ixoff: enable sending of start/stop characters
@@ -1812,7 +1815,7 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         local current_branch=$(command git branch --show-current)
         local behind_ref_count=$(command git rev-list --count "HEAD..$remote_name/$current_branch")
         echo "This is the git commit log:"
-        command git log --oneline --graph --decorate --all "HEAD..$remote_name/$current_branch"
+        command git log --graph --decorate --all "HEAD..$remote_name/$current_branch"
         popd >/dev/null
         echo
         update-dotfiles && rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" 2>/dev/null

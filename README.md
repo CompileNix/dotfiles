@@ -39,6 +39,7 @@ apt install \
   acl \
   bind9utils \
   brotli \
+  exa \
   gzip \
   htop \
   iftop \
@@ -81,6 +82,8 @@ dnf install \
   NetworkManager-tui \
   acl \
   bind-utils \
+  dua-cli \
+  exa \
   findutils \
   htop \
   iftop \
@@ -163,7 +166,8 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 | [TableConvert](https://tableconvert.com/)                       | This converter is used to convert Excel (or other spreadsheets) into Markdown Table.                                 | website                                                                                        |
 | [Compiler Explorer](https://godbolt.org/)                       | Run compilers interactively from your web browser and interact with the assembly                                     | website                                                                                        |
 | [hyperfine](https://github.com/sharkdp/hyperfine)               | A command-line benchmarking tool                                                                                     | cli, rust                                                                                      |
-| [ctop](https://github.com/bcicen/ctop)                          | Top-like interface for container metrics                                                                             | cli, go, docker, htop,                                                                         |
+| [ctop](https://github.com/bcicen/ctop)                          | Top-like interface for container metrics                                                                             | cli, go, docker, htop                                                                          |
+| [tldr++](https://github.com/isacikgoz/tldr)                     | fast and interactive tldr client written with go                                                                     | cli, man-page, help                                                                            |
 
 # SwayWM
 - sway

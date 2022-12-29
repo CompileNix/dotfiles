@@ -856,7 +856,27 @@ EOF
     set +x
 }
 alias update-yum='sudo yum update --refresh'
-alias update-fedora='sudo dnf update --refresh'
+function update-fedora {
+    if [ -n "$1" ]; then
+        cat << EOF
+Install all Debian package updates:
+- dnf update
+- dnf autoremove
+
+Requirements:
+- dnf
+- sudo
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    set -x
+    sudo dnf update --refresh
+    sudo dnf autoremove
+    set +x
+}
 alias gitg='git gui'
 function reset-git {
     if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then

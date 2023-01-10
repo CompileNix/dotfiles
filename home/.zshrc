@@ -75,6 +75,7 @@ On_Intense_Purple='\033[0;105m'
 On_Intense_Cyan='\033[0;106m'
 On_Intense_White='\033[0;107m'
 
+export ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"

@@ -75,8 +75,12 @@ On_Intense_Purple='\033[0;105m'
 On_Intense_Cyan='\033[0;106m'
 On_Intense_White='\033[0;107m'
 
+export ENABLE_ZSH_AUTOSUGGEST=true
+export ENABLE_ZSH_SPACESHIP_PROMPT=true
+export ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
 export ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
 export ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
+export ENABLE_ZSH_ENV_FILE_SOURCE=true
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"

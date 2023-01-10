@@ -76,6 +76,7 @@ On_Intense_Cyan='\033[0;106m'
 On_Intense_White='\033[0;107m'
 
 export ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
+export ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"
@@ -1860,7 +1861,9 @@ if [ -f "$XDG_CONFIG_HOME/git/credentials" ]; then
     rm -v "$XDG_CONFIG_HOME/git/credentials"
 fi
 
-echo "here is a shell alias you might not known about (get-random-alias):\n    $(get-random-alias)"
+if [[ $ENABLE_ZSH_RANDOM_ALIAS_ON_START == "true" ]]; then
+    echo "here is a shell alias you might not known about (get-random-alias):\n    $(get-random-alias)"
+fi
 
 [ -z "$ZPROF" ] || zprof
 

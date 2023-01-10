@@ -1810,10 +1810,10 @@ if [[ "$ENABLE_ZSH_ASYNC_UPDATE_CHECK" = "true" ]]; then
         touch "/tmp/$USER-zsh-dotfiles-async-update-check.lock"
 
         cd "$HOME/dotfiles"
-        command git fetch --all >/dev/null 2>&1
-        local remote_name=$(command git remote)
-        local current_branch=$(command git branch --show-current)
-        local behind_ref_count=$(command git rev-list --count "HEAD..$remote_name/$current_branch")
+        git fetch --all >/dev/null 2>&1
+        local remote_name=$(git remote)
+        local current_branch=$(git branch --show-current)
+        local behind_ref_count=$(git rev-list --count "HEAD..$remote_name/$current_branch")
         if (( $behind_ref_count )); then
             touch "/tmp/$USER-zsh-dotfiles-async-update-exists.yep"
         fi
@@ -1832,11 +1832,11 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ENV_FILE_SOURCE${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
         echo
         cd "$HOME/dotfiles"
-        local remote_name=$(command git remote)
-        local current_branch=$(command git branch --show-current)
-        local behind_ref_count=$(command git rev-list --count "HEAD..$remote_name/$current_branch")
+        local remote_name=$(git remote)
+        local current_branch=$(git branch --show-current)
+        local behind_ref_count=$(git rev-list --count "HEAD..$remote_name/$current_branch")
         echo "This is the git commit log:"
-        command git log --graph --decorate --all "HEAD..$remote_name/$current_branch"
+        git log --graph --decorate --all "HEAD..$remote_name/$current_branch"
         popd >/dev/null
         echo
         update-dotfiles \

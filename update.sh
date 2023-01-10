@@ -354,8 +354,10 @@ if [ -d "$HOME/.fonts/Vollkorn" ]; then
 fi
 
 echo "remove ZSH cache"
+rm -fv "$HOME/.zcache" 2>/dev/null
+rm -fv "$HOME/.zcompcache" 2>/dev/null
+rm -fv "$HOME/.cache/zsh" 2>/dev/null
 rm -fv "$HOME/.zcompdump" 2>/dev/null
-rm -fv "$HOME/.zshrc.zwc" 2>/dev/null
 
 echo "link new files"
 python3 ./install.py

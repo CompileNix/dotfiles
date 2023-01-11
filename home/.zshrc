@@ -1912,7 +1912,7 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
     if [ ! -f "/tmp/$USER-zsh-dotfiles-async-update-check.disabled" ]; then
         echo "🎉 There are dotfiles updates availabe 🎉"
         echo "You can temporarily disable this prompt by running: ${Green}disable-dotfiles-update-prompt-temp${Color_Reset}"
-        echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ENV_FILE_SOURCE${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
+        echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ASYNC_UPDATE_CHECK${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
         echo
         cd "$HOME/dotfiles"
         local remote_name=$(git remote)

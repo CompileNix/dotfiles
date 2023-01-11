@@ -110,7 +110,11 @@ else
     alias make="make -j\$(nproc)"
 fi
 if which exa &>/dev/null; then
-    alias ls='exa --group-directories-first --header --git --classify'
+    if exa --version | grep -E '\+git' &>/dev/null; then
+        alias ls='exa --group-directories-first --header --classify --git'
+    else
+        alias ls='exa --group-directories-first --header --classify'
+    fi
 fi
 
 # ixon: enable XON/XOFF flow control

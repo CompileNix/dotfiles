@@ -212,9 +212,9 @@ EOF
 }
 
 alias sudo='sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK'
-alias sudosu='sudo su -'
+alias sudosu='sudo su --whitelist-environment=SSH_AUTH_SOCK -l'
 alias pls='sudo'
-alias root='sudo su -l root'
+alias root='sudosu root'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'

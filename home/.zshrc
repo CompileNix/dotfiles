@@ -1919,7 +1919,7 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         local current_branch=$(git branch --show-current)
         local behind_ref_count=$(git rev-list --count "HEAD..$remote_name/$current_branch")
         echo "This is the git commit log:"
-        PAGER= git log --graph --decorate --all "HEAD..$remote_name/$current_branch" | cat
+        PAGER= git log --graph --decorate --all "HEAD..$remote_name/$current_branch"
         popd >/dev/null
         echo
         update-dotfiles \

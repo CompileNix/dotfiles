@@ -945,7 +945,7 @@ EOF
     pushd ~/dotfiles >/dev/null
         git pull --all
         ./update.sh
-    popd >/dev/null
+    popd >/dev/null 2>&1
     if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep"
     fi
@@ -976,7 +976,7 @@ EOF
 
     pushd ~/dotfiles >/dev/null
         git status
-    popd >/dev/null
+    popd >/dev/null 2>&1
     echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/dotfiles && git status\""
     echo "Do you want proceed with the update?"
     function ask_yn_y_callback {
@@ -1920,7 +1920,7 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         local behind_ref_count=$(git rev-list --count "HEAD..$remote_name/$current_branch")
         echo "This is the git commit log:"
         PAGER= git log --graph --decorate --all "HEAD..$remote_name/$current_branch"
-        popd >/dev/null
+        popd >/dev/null 2>&1
         echo
         update-dotfiles \
             && echo "running \"exec zsh\"" \

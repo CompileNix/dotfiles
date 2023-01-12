@@ -1923,7 +1923,6 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         popd >/dev/null
         echo
         update-dotfiles \
-            && rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" 2>/dev/null \
             && echo "running \"exec zsh\"" \
             && exec zsh
     fi

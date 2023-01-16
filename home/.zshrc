@@ -1915,6 +1915,7 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ASYNC_UPDATE_CHECK${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
         echo
         cd "$HOME/dotfiles"
+        echo "Downloading updates..."
         git fetch --all
         local remote_name=$(git remote)
         local current_branch=$(git branch --show-current)

@@ -983,7 +983,10 @@ EOF
         update-dotfiles-non-interactive
     }
     function ask_yn_n_callback {
-        echo -n ""
+        # remove avaliable update indcator
+        if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
+            rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" 2>/dev/null
+        fi
     }
     ask_yn
 }

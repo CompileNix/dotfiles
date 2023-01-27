@@ -1282,25 +1282,61 @@ EOF
 
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
 }
-function remove-docker-image-untagged {
+function get-docker-image-dangling {
     if [ -n "$1" ]; then
         cat << EOF
-Function to remove all docker images which dont have a tag.
+Function to list all dangling docker images.
+
+Dangling images are images that are not referenced by any other tagged image
+or in use by any created (running or stopped) container.
 
 Requirements:
 - docker
-- grep
-- awk
 
 Usage: $(echo $funcstack[-1])
 EOF
         return 1
     fi
 
-    local image
-    for image in $(docker image ls | grep '<none>' | awk '{ print $3 }'); do
-        docker image rm $image
-    done
+    docker images -f "dangling=true"
+}
+function get-docker-image-dangling-size-total {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to calculate the size on disk of all dangling docker images, in MiB.
+
+Dangling images are images that are not referenced by any other tagged image
+or in use by any created (running or stopped) container.
+
+Requirements:
+- awk
+- docker
+- xargs
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    docker images -f "dangling=true" -q | xargs docker inspect --format='{{.Id}}: {{.Size}}' | awk '{s+=$2} END {print s/1024^2 "MiB"}'
+}
+function remove-docker-image-dangling {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to remove all dangling docker images.
+
+Dangling images are images that are not referenced by any other tagged image
+or in use by any created (running or stopped) container.
+
+Requirements:
+- docker
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    docker rmi $(docker images -f "dangling=true" -q)
 }
 alias virtualenv='python3 -m venv'
 

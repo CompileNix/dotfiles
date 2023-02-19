@@ -7,7 +7,7 @@ __Keep always an existing terminal open, just in case__
 
 ```sh
 curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
-  && /bin/bash ./tmp/install.sh \
+  && /bin/bash /tmp/install.sh \
   && rm -f /tmp/install.sh
 ```
 

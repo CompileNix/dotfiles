@@ -1339,6 +1339,72 @@ EOF
     docker rmi $(docker images -f "dangling=true" -q)
 }
 alias virtualenv='python3 -m venv'
+function format-text-lines-tabbed-into-table {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to format multilined text into a table, separated by tabs.
+
+Can be used in a pipe.
+
+Requirements:
+- cat
+- column
+- printf
+- tr
+
+Example:
+\`\`\`test.txt
+col1	col2	col3	col4	col5
+value1	value2value2value2	value3	value4	value5
+value1			value2	value3value3	value4	value5
+value1	value2	value3				value4	value5
+value1	value2	value3	value4				value5value5value5
+\`\`\`
+
+\`\`\`sh
+cat test.txt | format-text-lines-tabbed-into-table
+\`\`\`
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    cat | tr -s '\t' | column -t -s"$(printf '\t')"
+}
+function format-text-lines-spaced-into-table {
+    if [ -n "$1" ]; then
+        cat << EOF
+Function to format multilined text into a table, separated by spaces.
+
+Can be used in a pipe.
+
+Requirements:
+- cat
+- column
+- printf
+- tr
+
+Example:
+\`\`\`test.txt
+col1 col2 col3 col4 col5
+value1 value2value2value2 value3 value4 value5
+value1   value2 value3value3 value4 value5
+value1 value2 value3    value4 value5
+value1 value2 value3 value4    value5value5value5
+\`\`\`
+
+\`\`\`sh
+cat test.txt | format-text-lines-spaced-into-table
+\`\`\`
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+
+    cat | tr -s ' '  | column -t -s"$(printf ' ')"
+}
 
 
 if [[ $distro == "Ubuntu" ]]; then

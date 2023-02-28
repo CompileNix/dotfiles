@@ -170,6 +170,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 | [hyperfine](https://github.com/sharkdp/hyperfine)               | A command-line benchmarking tool                                                                                     | cli, rust                                                                                      |
 | [ctop](https://github.com/bcicen/ctop)                          | Top-like interface for container metrics                                                                             | cli, go, docker, htop                                                                          |
 | [tldr++](https://github.com/isacikgoz/tldr)                     | fast and interactive tldr client written with go                                                                     | cli, man-page, help                                                                            |
+| [Photopea](https://www.photopea.com)                            | web-based photo and graphics editor supporting Photoshop's PSD as well as JPEG, PNG, DNG, GIF, SVG, PDF and others   | website                                                                                        |
 
 # SwayWM
 - sway

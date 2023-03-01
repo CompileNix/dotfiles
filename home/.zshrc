@@ -1484,6 +1484,79 @@ EOF
     unalias docker 2>/dev/null
     exec zsh
 }
+function cargo-optimized-install {
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        cat << EOF
+Function to run an auditable optimized cargo install command.
+
+Requirements:
+- Rust (cargo, rustc, etc.) nightly toolchain
+
+Installing Rust:
+\`\`\`zsh
+# install rust
+curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
+
+# install nightly toolchain
+rustup toolchain install nightly
+
+# install rust source code
+rustup component add rust-src --toolchain nightly
+
+# install cargo-auditable and cargo-audit
+# see also: https://github.com/rust-secure-code/cargo-auditable
+cargo install cargo-auditable cargo-audit
+\`\`\`
+
+Usage: $(echo $funcstack[-1]) package opt_level
+EOF
+        return 1
+    fi
+
+    package="$1"
+    opt_level="$2"
+    shift 2 # remove first two args
+
+    set -x
+    RUSTFLAGS="-C target-cpu=native -C strip=symbols" CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1 CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_OPT_LEVEL="$opt_level" CARGO_PROFILE_RELEASE_PANIC=abort cargo +nightly auditable install "$package" -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu $*
+    set +x
+}
+function cargo-optimized-build {
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        cat << EOF
+Function to run an auditable optimized cargo build command.
+
+Requirements:
+- Rust (cargo, rustc, etc.) nightly toolchain
+
+Installing Rust:
+\`\`\`zsh
+# install rust
+curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
+
+# install nightly toolchain
+rustup toolchain install nightly
+
+# install rust source code
+rustup component add rust-src --toolchain nightly
+
+# install cargo-auditable and cargo-audit
+# see also: https://github.com/rust-secure-code/cargo-auditable
+cargo install cargo-auditable cargo-audit
+\`\`\`
+
+Usage: $(echo $funcstack[-1]) opt_level
+EOF
+        return 1
+    fi
+
+    opt_level="$1"
+    shift 1 # remove first two args
+
+    set -x
+    RUSTFLAGS="-C target-cpu=native -C strip=symbols" CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1 CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_OPT_LEVEL="$opt_level" CARGO_PROFILE_RELEASE_PANIC=abort cargo +nightly auditable build -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu --release $*
+    set +x
+}
 
 export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/dotfiles/home/dotfiles_bin:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
 unalias vim 2>/dev/null

@@ -1508,17 +1508,17 @@ rustup component add rust-src --toolchain nightly
 cargo install cargo-auditable cargo-audit
 \`\`\`
 
-Usage: $(echo $funcstack[-1]) package opt_level
+Usage: $(echo $funcstack[-1]) opt_level crate [additional_argo_args]
 EOF
         return 1
     fi
 
-    package="$1"
-    opt_level="$2"
+    opt_level="$1"
+    crate="$2"
     shift 2 # remove first two args
 
     set -x
-    RUSTFLAGS="-C target-cpu=native -C strip=symbols" CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1 CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_OPT_LEVEL="$opt_level" CARGO_PROFILE_RELEASE_PANIC=abort cargo +nightly auditable install "$package" -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu $*
+    RUSTFLAGS="-C target-cpu=native -C strip=symbols" CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1 CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_OPT_LEVEL="$opt_level" CARGO_PROFILE_RELEASE_PANIC=abort cargo +nightly auditable install "$crate" -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu $*
     set +x
 }
 function cargo-optimized-build {
@@ -1545,7 +1545,7 @@ rustup component add rust-src --toolchain nightly
 cargo install cargo-auditable cargo-audit
 \`\`\`
 
-Usage: $(echo $funcstack[-1]) opt_level
+Usage: $(echo $funcstack[-1]) opt_level [additional_argo_args]
 EOF
         return 1
     fi

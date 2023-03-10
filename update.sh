@@ -414,6 +414,8 @@ ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
 # automatically source .env file in cwd
 ENABLE_ZSH_ENV_FILE_SOURCE=true
 
+CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+
 EOF
 fi
 

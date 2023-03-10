@@ -81,6 +81,7 @@ export ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
 export ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
 export ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
 export ENABLE_ZSH_ENV_FILE_SOURCE=true
+export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"

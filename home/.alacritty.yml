@@ -1,0 +1,43 @@
+window:
+  dimensions:
+    columns: 255
+    lines: 60
+  decorations: none
+  opacity: 1.0
+  startup_mode: Windowed
+  dynamic_title: true
+  class:
+    instance: Alacritty
+    general: Alacritty
+
+font:
+  normal:
+    family: Source Code Pro
+  size: 12
+
+draw_bold_text_with_bright_colors: true
+
+# xterm with better visible blue color
+colors:
+  primary:
+    background: '0x000000'
+    foreground: '0xffffff'
+  normal:
+    black:   '0x000000'
+    red:     '0xcd0000'
+    green:   '0x00cd00'
+    yellow:  '0xcdcd00'
+    blue:    '0x2a7bde'
+    magenta: '0xcd00cd'
+    cyan:    '0x00cdcd'
+    white:   '0xe5e5e5'
+  bright:
+    black:   '0x7f7f7f'
+    red:     '0xff0000'
+    green:   '0x00ff00'
+    yellow:  '0xffff00'
+    blue:    '0x82baff'
+    magenta: '0xff00ff'
+    cyan:    '0x00ffff'
+    white:   '0xffffff'
+

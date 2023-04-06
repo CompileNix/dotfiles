@@ -2127,5 +2127,14 @@ if [[ $ENABLE_ZSH_RANDOM_ALIAS_ON_START == "true" ]]; then
     echo "here is a shell alias you might not known about (get-random-alias):\n    $(get-random-alias)"
 fi
 
+if atuin_loc="$(type -p "atuin")" || [[ -z $atuin_loc ]]; then
+    unset atuin_loc
+
+    if [ ! -f "$HOME/.local/share/atuin/history.db" ]; then
+        atuin import auto
+    fi
+    eval "$(atuin init zsh)"
+fi
+
 [ -z "$ZPROF" ] || zprof
 

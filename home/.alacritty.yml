@@ -15,6 +15,11 @@ font:
     family: Source Code Pro
   size: 12
 
+# debug:
+#   render_timer: true
+#   persistent_logging: false
+#   log_level: Debug
+
 env:
   TERM: xterm-256color
 

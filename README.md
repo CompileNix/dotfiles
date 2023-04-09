@@ -1,15 +1,10 @@
 # My Dotfiles
 
-![parrot home office](https://compilenix.org/parrot%20home%20office.gif "parrot home office")
-
 # Install
 __Keep always an existing terminal open, just in case__
 
-```sh
-curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
-  && /bin/bash /tmp/install.sh \
-  && rm -f /tmp/install.sh
-```
+<details>
+<summary>Debian / Ubuntu</summary>
 
 ## Debian / Ubuntu
 ```sh
@@ -60,6 +55,18 @@ apt install \
   zip
 ```
 
+
+**Install**
+```sh
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
+  && /bin/bash /tmp/install.sh \
+  && rm -f /tmp/install.sh
+```
+</details>
+
+<details>
+<summary>Fedora</summary>
+
 ## Fedora
 ### Required Packages
 ```sh
@@ -104,6 +111,17 @@ dnf install \
   wget
 ```
 
+**Install**
+```sh
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
+  && /bin/bash /tmp/install.sh \
+  && rm -f /tmp/install.sh
+```
+</details>
+
+<details>
+<summary>MacOS</summary>
+
 ## MacOS
 ```sh
 # Install Brew
@@ -143,6 +161,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
   && ./install.sh \
   && rm -f install.sh
 ```
+</details>
 
 # Tools
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |

@@ -13,7 +13,7 @@ def print_with_prefix(string):
     print(f'{subprocess_call_echo_prefix} {string}')
 
 # check arg length, else print help
-if len(sys.argv) < 2 or (len(sys.argv) == 2 and re.match(r'\-*h(elp)?', sys.argv[1])):
+if len(sys.argv) < 2 or (len(sys.argv) == 2 and re.match(r'^\-*h(elp)?', sys.argv[1])):
     print(re.sub(r'^ +', '', f"""\
     Do a git clone into `~/code/nginx/njs`.
     Additional args after the url are passed to the git clone command.

@@ -1562,7 +1562,7 @@ EOF
     set +x
 }
 
-export PATH=".cargo/bin:./node_modules/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/dotfiles/home/dotfiles_bin:/usr/lib/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH"
+export PATH="./node_modules/.bin:$HOME/bin:$HOME/dotfiles_bin:$HOME/.cargo/bin:$HOME/.dotnet/tools:$HOME/.local/bin:/usr/lib/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 unalias vim 2>/dev/null
 alias vim='nvim'
 export EDITOR='nvim'

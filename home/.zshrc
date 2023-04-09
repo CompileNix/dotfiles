@@ -2136,7 +2136,7 @@ if atuin_loc="$(type -p "atuin")" || [[ -z $atuin_loc ]]; then
     if [ ! -f "$HOME/.local/share/atuin/history.db" ]; then
         atuin import auto
     fi
-    eval "$(atuin init zsh)"
+    eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
 [ -z "$ZPROF" ] || zprof

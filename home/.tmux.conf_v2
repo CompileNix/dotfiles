@@ -1,15 +1,14 @@
 # vim: sw=4 et
 
-set -g default-terminal "screen-256color"
+set -g default-terminal "${TERM}"
 set -g history-limit 100000
-set -g status-bg '#4e4e4e'
-set -g status-fg '#ffffff'
+set -g status-style 'fg=white bg=#4e4e4e'
 set -g set-titles on
 set -g base-index 1
 set -g monitor-activity off
 set -g visual-activity off
-set -g window-status-current-format "#[bg=blue,fg=white]#I:#W"
-set -g window-status-activity-style "bg=red,bright,fg=white"
+set -g window-status-current-format "#{window_index}:#{window_name}"
+set -g window-status-current-style "fg=green bg=default"
 set -g set-clipboard on
 set -g automatic-rename
 set -g allow-rename on
@@ -20,7 +19,7 @@ setw -g pane-base-index 1
 
 set -g status-interval 1
 #set -g status-left "#S #[fg=green] #[default]"
-set -g status-left "#S #[default]"
+set -g status-left "#[default]"
 set -g status-left-length 60
 
 set -g status-right "#H - %Y-%m-%d %H:%M:%S"

@@ -112,10 +112,15 @@ else
 fi
 if which exa &>/dev/null; then
     if exa --version | grep -E '\+git' &>/dev/null; then
-        alias ls='exa --group-directories-first --header --classify --git'
+        alias ls='exa --group-directories-first --classify --git'
     else
-        alias ls='exa --group-directories-first --header --classify'
+        alias ls='exa --group-directories-first --classify'
     fi
+fi
+if lsd_loc="$(type -p "lsd")" || [[ -z $lsd_loc ]]; then
+    unset lsd_loc
+
+    alias ls='lsd --icon=never --group-directories-first --classify'
 fi
 
 # ixon: enable XON/XOFF flow control

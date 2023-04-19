@@ -99,6 +99,7 @@ dnf install \
   iptables \
   jq \
   logrotate \
+  lsd \
   ncdu \
   neovim \
   plocate \
@@ -137,6 +138,7 @@ brew install \
   gzip \
   htop \
   iftop \
+  lsd \
   ncdu \
   neovim \
   net-tools \
@@ -208,6 +210,7 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 | `exa`                | [exa](https://crates.io/crates/exa)                               | A modern replacement for ls                                                                  | rust, cli                              |
 | `gpg-tui`            | [gpg-tui](https://crates.io/crates/gpg-tui)                       | Manage your GnuPG keys with ease!                                                            | rust, cli                              |
 | `hyperfine`          | [hyperfine](https://crates.io/crates/hyperfine)                   | A command-line benchmarking tool                                                             | rust, cli                              |
+| `lsd`                | [lsd](https://crates.io/crates/lsd)                               | An ls command with a lot of pretty colors and some other stuff.                              | rust, cli                              |
 | `oha`                | [oha](https://crates.io/crates/oha)                               | Ohayou(おはよう), HTTP load generator, inspired by rakyll/hey with tui animation.                | rust, cli                              |
 | `ripgrep`            | [ripgrep](https://crates.io/crates/ripgrep)                       | Like `grep` but better                                                                       | rust, cli                              |
 | `sccache`            | [sccache](https://crates.io/crates/sccache)                       | Sccache is a ccache-like tool.                                                               | rust, cli                              |

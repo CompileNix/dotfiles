@@ -1,5 +1,9 @@
 # My Dotfiles
 
+Have a look around and feel free to copy the stuff you like 😊
+
+This dotfiles does not download anything during install, update or usage, besides `git clone` and `git fetch / pull` to the git repo.
+
 # Install
 __Keep always an existing terminal open, just in case__
 
@@ -355,17 +359,6 @@ ln -sf left_ptr xterm
 ## GTK Themes
 - [Azure](https://github.com/vinceliuice/Azure-theme)
 - [Arc-Dark-OSX](https://github.com/Dr-Noob/Arc-Dark-OSX)
-
-## Icon Themes
-- Adwaita
-- Breeze
-  - breeze-gtk
-  - breeze-cursor-theme
-  - breeze-icon-theme
-
-## Firefox Theme
-- [Nord Polar Night](https://addons.mozilla.org/en-US/firefox/addon/nord-polar-night-theme/)
-- [TreeTabs Themes](home/.config/firefox-themes)
 
 ## Troubleshooting
 ### Create links to missing cursors

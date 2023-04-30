@@ -1632,6 +1632,11 @@ if [[ $ENABLE_ZSH_SPACESHIP_PROMPT == "true" ]]; then
     SPACESHIP_PACKAGE_SHOW=false
     SPACESHIP_GIT_SHOW=false
     SPACESHIP_ASYNC_SYMBOL=""
+else
+    # Spaceship prompt disabled prompt setup
+    # prompt taken and modified from spaceship with
+    # `echo $(spaceship::prompt)`
+    export PROMPT=$'%{%B%F{yellow}%}%D{%T}%{%b%f%}%{%B%} %{%b%}%{%B%}with %{%b%}%{%B%F{yellow}%}%n%{%b%f%}%{%B%} %{%b%}%{%B%}in %{%b%}%{%B%F{cyan}%}%(4~||)%3~%{%b%f%}%{%B%} %{%b%}%{%B%}at %{%b%}%{%B%F{blue}%}%M%{%b%f%}%{%B%}%{%b%}%{%B%F{white}%} with code %?\n%{%b%f%}%{%B%F{green}%}➜%{%b%f%} '
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then

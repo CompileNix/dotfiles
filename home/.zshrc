@@ -75,13 +75,13 @@ On_Intense_Purple='\033[0;105m'
 On_Intense_Cyan='\033[0;106m'
 On_Intense_White='\033[0;107m'
 
+export ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
 export ENABLE_ZSH_AUTOSUGGEST=true
+export ENABLE_ZSH_ENV_FILE_SOURCE=true
+export ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
 export ENABLE_ZSH_SPACESHIP_PROMPT=true
 export ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
-export ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
-export ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
-export ENABLE_ZSH_ENV_FILE_SOURCE=true
-export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+export ZSH_PROMPT_EXIT_CODE_SUFFIX=
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"
@@ -1636,7 +1636,8 @@ else
     # Spaceship prompt disabled prompt setup
     # prompt taken and modified from spaceship with
     # `echo $(spaceship::prompt)`
-    export PROMPT=$'%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..with code %F{red}%?)%f\n%F{green}➜%f%b '
+    local line_sep=$'\n'
+    export PROMPT="%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..with code %F{red}%?${ZSH_PROMPT_EXIT_CODE_SUFFIX})%f${line_sep}%F{green}➜%f%b "
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then

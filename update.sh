@@ -405,16 +405,13 @@ fi
 if [ ! -f "$HOME/.zshrc.env" ]; then
 echo "create default ~/.zshrc.env"
 cat << EOF | tee $HOME/.zshrc.env >/dev/null
-ENABLE_ZSH_AUTOSUGGEST=true
-ENABLE_ZSH_SPACESHIP_PROMPT=true
-ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
-ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
-ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
-
-# automatically source .env file in cwd
-ENABLE_ZSH_ENV_FILE_SOURCE=true
-
-CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+# ENABLE_ZSH_ASYNC_UPDATE_CHECK=true
+# ENABLE_ZSH_AUTOSUGGEST=true
+# ENABLE_ZSH_ENV_FILE_SOURCE=true
+# ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
+# ENABLE_ZSH_SPACESHIP_PROMPT=false
+# ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
+# ZSH_PROMPT_EXIT_CODE_SUFFIX=' (╯°□°）╯︵ ┻━┻'
 
 EOF
 fi
@@ -496,12 +493,11 @@ export HISTFILE="$HOME/.history"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export FT2_SUBPIXEL_HINTING=1
 
-# export SPACESHIP_EXIT_CODE_SUFFIX=" (╯°□°）╯︵ ┻━┻ "
-
 if [ -z "\$SSH_AUTH_SOCK" ]; then
     eval \`ssh-agent -s\` >/dev/null
 fi
 
+export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
 
 EOF
 fi

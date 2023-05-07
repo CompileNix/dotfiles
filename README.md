@@ -326,22 +326,83 @@ Install:
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
-# GNOME Alt+Tab behavior
-The default is to have `Alt-Tab` switch you between applications in the current workspace. One can use `Alt-backtick` (or whatever key you have above Tab) to switch between windows in the current application.
-
-I prefer a Windows-like setup, where `Alt-Tab` switches between windows in the current workspace, regardless of the application to which they belong.
-
+# GNOME Settings
 ```sh
+# switch the input focus on mouse hover, without clicking, like in i3 and SwayWM
+gsettings set org.gnome.desktop.wm.preferences focus-mode 'mouse' # this also unfocuses a window when mouse moves out (i.e. to desktop bg)
+gsettings set org.gnome.desktop.wm.preferences focus-new-windows 'strict' # dont focus new windows (that aren't under the mouse)
+gsettings set org.gnome.mutter focus-change-on-pointer-rest false # dont wait for the mouse to stay still until focus
+
+# Disable "hot corner"
+gsettings set org.gnome.desktop.interface enable-hot-corners false
+
+# keyboard settings
+gsettings set org.gnome.desktop.peripherals.keyboard delay 150
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 28
+
+# mouse accel profile
+gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
+
+# my personal mouse speed
+gsettings set org.gnome.desktop.peripherals.mouse speed -0.066176470588235281
+
+# Whether to resize windows with the right button
+gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
+
+# disable bells
+gsettings set org.gnome.desktop.wm.preferences audible-bell false
+gsettings set org.gnome.desktop.wm.preferences visual-bell false
+
+# disable desktop workspaces
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
+
+# Disable Desktop Animations
+gsettings set org.gnome.desktop.interface enable-animations false
+
+# disable automatic update
+gsettings set org.gnome.software download-updates false
+gsettings set org.gnome.software download-updates-notify false
+
+# Files App
+# disable recursive search
+gsettings set org.gnome.nautilus.preferences recursive-search 'never'
+# dont count files of dirs
+gsettings set org.gnome.nautilus.preferences show-directory-item-counts 'never'
+
+# switch between windows in current workspace only
+gsettings set org.gnome.shell.window-switcher current-workspace-only true
+
+# Alt+Tab behavior
+# The default is to have `Alt-Tab` switch you between applications in the current workspace. One can use `Alt-backtick` (or whatever key you have above Tab) to switch between windows in the current application.
+# I prefer a Windows-like setup, where `Alt-Tab` switches between windows in the current workspace, regardless of the application to which they belong.
 gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
 gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab', '<Super>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward  "['<Alt><Shift>Tab', '<Super><Shift>Tab']"
-```
 
-## Changing windows across all workspaces
-If you'd like to switch between windows in all workspaces, rather than in the current workspace, find the `org.gnome.shell.window-switcher current-workspace-only` GSettings key and change it. You can do this in `dconf-editor`, or on the command line with:
-```sh
-gsettings set org.gnome.shell.window-switcher current-workspace-only true
+# custom keybinding to start new terminal with Super+Enter
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings ['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Start Terminal'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>Return'
+# gnome-terminal
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'gnome-terminal'
+# alacritty (via cargo install alacritty)
+# gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/home/kweis/.cargo/bin/alacritty'
+
+# custom keybinding start start files app in home dir with Super+E
+gsettings set org.gnome.settings-daemon.plugins.media-keys home ['<Super>e']
+
+# Font things
+gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 10'
+gsettings set org.gnome.gedit.preferences.editor editor-font 'Fira Code 11'
+gsettings set org.gnome.TextEditor custom-font 'Fira Code 11'
+gsettings set org.gnome.desktop.interface font-hinting 'full'
+gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
+
+# automatically remove old files from trash after 30 days
+gsettings set org.gnome.desktop.privacy recent-files-max-age 30
+gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 ```
 
 # UI Settings

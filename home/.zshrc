@@ -1636,7 +1636,8 @@ else
     # Spaceship prompt disabled prompt setup
     # prompt taken and modified from spaceship with
     # `echo $(spaceship::prompt)`
-    export PROMPT=$'%{%B%F{yellow}%}%D{%T}%{%b%f%}%{%B%} %{%b%}%{%B%}with %{%b%}%{%B%F{yellow}%}%n%{%b%f%}%{%B%} %{%b%}%{%B%}in %{%b%}%{%B%F{cyan}%}%(4~||)%3~%{%b%f%}%{%B%} %{%b%}%{%B%}at %{%b%}%{%B%F{blue}%}%M%{%b%f%}%{%B%}%{%b%}%{%B%F{white}%} with code %?\n%{%b%f%}%{%B%F{green}%}➜%{%b%f%} '
+    local prompt_line_sep=$'\n'
+    export PROMPT="%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..with code ❌ %F{red}%?)%f${prompt_line_sep}%F{green}➜%f%b "
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then

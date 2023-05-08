@@ -344,7 +344,7 @@ gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 28
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
 
 # my personal mouse speed
-gsettings set org.gnome.desktop.peripherals.mouse speed -0.066176470588235281
+gsettings set org.gnome.desktop.peripherals.mouse speed 0
 
 # Whether to resize windows with the right button
 gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true

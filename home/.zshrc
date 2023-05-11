@@ -81,7 +81,10 @@ export ENABLE_ZSH_ENV_FILE_SOURCE=true
 export ENABLE_ZSH_RANDOM_ALIAS_ON_START=false
 export ENABLE_ZSH_SPACESHIP_PROMPT=true
 export ENABLE_ZSH_SYNTAX_HIGHLIGHTING=true
-export ZSH_PROMPT_EXIT_CODE_SUFFIX=
+export ZSH_PROMPT_EXIT_CODE_COLOR_FAILURE='red'
+export ZSH_PROMPT_EXIT_CODE_PREFIX='with code'
+export ZSH_PROMPT_EXIT_CODE_SUFFIX=''
+export ZSH_PROMPT_SEPARATE_LINE=true
 source ~/.zshrc.env
 
 unameOut="$(uname -s)"
@@ -1235,7 +1238,7 @@ EOF
     chronyc -n sourcestats
 }
 
-function get-aliases {
+function get-aliases-dotfiles {
     if [ -n "$1" ]; then
         cat << EOF
 Get list of all zsh aliases defined by dotfiles.
@@ -1251,7 +1254,7 @@ EOF
 
     grep -E '^alias ' ~/.zshrc | sort
 }
-function get-functions {
+function get-functions-dotfiles {
     if [ -n "$1" ]; then
         cat << EOF
 Get list of all zsh functions defined by dotfiles.
@@ -1636,10 +1639,24 @@ else
     # Spaceship prompt disabled prompt setup
     # prompt taken and modified from spaceship with
     # `echo $(spaceship::prompt)`
-    local line_sep=$'\n'
 
-    # Set EXIT_CODE_SUFFIX to either: ZSH_PROMPT_EXIT_CODE_SUFFIX or SPACESHIP_EXIT_CODE_SUFFIX or ""
-    local EXIT_CODE_SUFFIX=""
+    local EXIT_CODE_COLOR_FAILURE="red"
+    if [[ ! -z "$SPACESHIP_CHAR_COLOR_FAILURE" ]]; then
+        EXIT_CODE_COLOR_FAILURE="$SPACESHIP_CHAR_COLOR_FAILURE"
+    fi
+    if [[ ! -z "$ZSH_PROMPT_EXIT_CODE_COLOR_FAILURE" ]]; then
+        EXIT_CODE_COLOR_FAILURE="$ZSH_PROMPT_EXIT_CODE_COLOR_FAILURE"
+    fi
+
+    local EXIT_CODE_PREFIX="with code"
+    if [[ ! -z "$SPACESHIP_EXIT_CODE_PREFIX" ]]; then
+        EXIT_CODE_PREFIX="$SPACESHIP_EXIT_CODE_PREFIX"
+    fi
+    if [[ ! -z "$ZSH_PROMPT_EXIT_CODE_PREFIX" ]]; then
+        EXIT_CODE_PREFIX="$ZSH_PROMPT_EXIT_CODE_PREFIX"
+    fi
+
+    local EXIT_CODE_SUFFIX=" "
     if [[ ! -z "$SPACESHIP_EXIT_CODE_SUFFIX" ]]; then
         EXIT_CODE_SUFFIX="$SPACESHIP_EXIT_CODE_SUFFIX"
     fi
@@ -1647,7 +1664,15 @@ else
         EXIT_CODE_SUFFIX="$ZSH_PROMPT_EXIT_CODE_SUFFIX"
     fi
 
-    export PROMPT="%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..with code %F{red}%?${EXIT_CODE_SUFFIX})%f${line_sep}%F{green}➜%f%b "
+    local SEPARATE_LINE=$'\n'
+    if [[ "$SPACESHIP_PROMPT_SEPARATE_LINE" == "false" ]]; then
+        SEPARATE_LINE=""
+    fi
+    if [[ "$ZSH_PROMPT_SEPARATE_LINE" == "false" ]]; then
+        SEPARATE_LINE=""
+    fi
+
+    export PROMPT="%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..${EXIT_CODE_PREFIX} %F{${EXIT_CODE_COLOR_FAILURE}}%?${EXIT_CODE_SUFFIX})%f${SEPARATE_LINE}%F{green}➜%f%b "
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then

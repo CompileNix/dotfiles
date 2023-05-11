@@ -1,4 +1,4 @@
-" vim: sw=4 et
+"vim: sw=4 et filetype=vim
 
 " Get the defaults that most users want.
 if filereadable(glob("$VIMRUNTIME/defaults.vim"))
@@ -74,11 +74,11 @@ command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 
 set pastetoggle=<F11>
 
-if filereadable(glob("~/.vimrc_include"))
-    source ~/.vimrc_include
-endif
-
 if has('persistent_undo')
     set undofile " keep an undo file (undo changes after closing)
+endif
+
+if filereadable(glob("~/.vimrc_include"))
+    source ~/.vimrc_include
 endif
 

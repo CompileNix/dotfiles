@@ -183,7 +183,19 @@ ZSH_PROMPT_SEPARATE_LINE=true
 ```
 
 Here is an example, how this looks like:
+
 ![zsh-prompt-example](./img/zsh-prompt-1.png "zsh prompt example")
+
+# Add Your Local Changes
+Some configs do support including your (local) changes and overrides, such that they less likely clash with dotfiles updates. Here are the supported tools and configs and how to add your own changes for them:
+
+| Config       | Notes                                                                                                                     |
+|--------------|---------------------------------------------------------------------------------------------------------------------------|
+| `.gitconfig` | `~/.gitconfig_include`                                                                                                    |
+| `.tmux.conf` | `~/.tmux.conf_include`. This get's included at the end of `.tmux.conf`                                                    |
+| `.vimrc`     | `~/.vimrc_include`                                                                                                        |
+| `.zlogout`   | `~/.zlogout_include`. A place for logout tasks & actions                                                                  |
+| `.zshrc`     | `~/.zshrc_include`. This get's included after all aliases and functions are defined and before the shell prompt is set-up |
 
 # Automatic Updates
 This dotfiles repo does asnyc background update checks, by default, using `git fetch` every time a new shell is started. You'll find the code for this in [home/.zshrc](./home/.zshrc), the zsh function named `test-dotfiles-updates` is called in the background during shell startup and if there is an update in the git repo it will create the temporary file `/tmp/$USER-zsh-dotfiles-async-update-exists.yep`.
@@ -205,7 +217,7 @@ Additionally, all zsh functions from this repo will always show a description of
 
 # Tools
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
-| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
 | [powerline-fonts](https://github.com/powerline/fonts)           | Patched fonts for [Powerline](https://github.com/powerline/powerline) users                                          | cli, font, statusline, vim, neovim, python, zsh, bash, fish, tmux, IPython, Awesome, i3, Qtile |
 | [httpstat](https://github.com/reorx/httpstat)                   | httpstat visualizes curl(1) statistics in a way of beauty and clarity.                                               | visualization, python, cli, http, curl                                                         |
 | [curlconverter](https://curlconverter.com/)                     | Convert cURL commands to Python, JavaScript, PHP, R, Go, Ruby, Rust, Elixir, Java, MATLAB, C#, Dart and more         | website                                                                                        |

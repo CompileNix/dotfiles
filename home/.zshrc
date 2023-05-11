@@ -1,4 +1,4 @@
-# vim: sw=4 et
+# vim: sw=4 et filetype=zsh
 
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 

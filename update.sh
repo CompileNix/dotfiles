@@ -443,7 +443,7 @@ fi
 if [ ! -f "$HOME/.vimrc_include" ]; then
 echo "create default ~/.vimrc_include"
 cat << EOF | tee $HOME/.vimrc_include >/dev/null
-" vim: sw=4 et
+" vim: sw=4 et filetype=vim
 
 "colorscheme mustang
 
@@ -476,7 +476,7 @@ fi
 if [ ! -f "$HOME/.zshrc_include" ]; then
 echo "create default ~/.zshrc_include"
 cat << EOF | tee $HOME/.zshrc_include >/dev/null
-# vim: sw=4 et
+# vim: sw=4 et filetype=zsh
 
 #alias vim='nvim'
 #export EDITOR=nvim
@@ -545,7 +545,7 @@ fi
 if [ ! -f "$HOME/.zlogout_include" ]; then
 echo "create default ~/.zlogout_include"
 cat << EOF | tee $HOME/.zlogout_include >/dev/null
-# vim: sw=4 et
+# vim: sw=4 et filetype=zsh
 
 # A place for logout tasks & actions
 

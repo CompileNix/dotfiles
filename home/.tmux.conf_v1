@@ -1,4 +1,4 @@
-# vim: sw=4 et
+# vim: sw=4 et filetype=tmux
 
 set -g default-terminal "screen-256color"
 set -g utf8 on

@@ -1,4 +1,4 @@
-"vim: sw=4 et
+"vim: sw=4 et filetype=vim
 " Maintainer:  Henrique C. Alves (hcarvalhoalves@gmail.com)
 " Version:     1.0
 " Last Change: September 25 2008

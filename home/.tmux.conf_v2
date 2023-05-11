@@ -1,4 +1,4 @@
-# vim: sw=4 et
+# vim: sw=4 et filetype=tmux
 
 set -g default-terminal "${TERM}"
 set -g history-limit 100000

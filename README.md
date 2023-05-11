@@ -114,6 +114,8 @@ dnf install \
   tmux \
   util-linux-user \
   wget
+dnf remove gdouros-symbola-fonts
+dnf install google-noto-emoji-color-fonts
 ```
 
 **Install**

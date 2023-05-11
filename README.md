@@ -169,6 +169,40 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 ```
 </details>
 
+# ZSH Prompt
+I have two options for the zsh prompt built-in: [spaceship-prompt](https://github.com/spaceship-prompt/spaceship-prompt) and my own.
+
+If you'd like to use spaceship-prompt open up `~/.zshrc.env`, set `ENABLE_ZSH_SPACESHIP_PROMPT=true` and start a new shell. From here you can use and configure spaceship-prompt as usual.
+
+My own zsh prompt is visually very similar to spaceship-prompt, with the key difference that no zsh functions or other scripts are invoked between prompt renders. This makes new propts appear instantly. Only the most basic and fast to render things are included; time, date, username, path, hostname and exit code. Here are the available options with some suggested values, which you can tweak in `~/.zshrc.env`:
+```sh
+ZSH_PROMPT_EXIT_CODE_COLOR_FAILURE='red'
+ZSH_PROMPT_EXIT_CODE_PREFIX='with code'
+ZSH_PROMPT_EXIT_CODE_SUFFIX=' (╯°□°）╯︵ ┻━┻'
+ZSH_PROMPT_SEPARATE_LINE=true
+```
+
+Here is an example, how this looks like:
+![zsh-prompt-example](./img/zsh-prompt-1.png "zsh prompt example")
+
+# Automatic Updates
+This dotfiles repo does asnyc background update checks, by default, using `git fetch` every time a new shell is started. You'll find the code for this in [home/.zshrc](./home/.zshrc), the zsh function named `test-dotfiles-updates` is called in the background during shell startup and if there is an update in the git repo it will create the temporary file `/tmp/$USER-zsh-dotfiles-async-update-exists.yep`.
+
+When the update check did find some updates in the git repo, it'll show you the git log and ask you if you'd like to pull / merge these changes.
+
+## Disable Automatic Update Checks Permanently
+If you'd like to fully disable this, set `ENABLE_ZSH_ASYNC_UPDATE_CHECK=false` in `~/.zshrc.env`.
+
+## Disable Automatic Update Checks temporarily
+Use the zsh alias `disable-dotfiles-update-prompt-temp` to disable checking for updates, until either the next reboot or removal of the file `/tmp/$USER-zsh-dotfiles-async-update-check.disabled`.
+
+# ZSH Functions And Aliases
+I've added a lot of aliases and functions over the time. To list the functions and aliases, from this repo run `get-functions-dotfiles` and `get-aliases-dotfiles`.
+
+Most of my aliases and zsh functions are named in a similar structure as Powershell recommends; `verb-noun`.
+
+Additionally, all zsh functions from this repo will always show a description of the function on missing arguments or when given `--help` and `-h`.
+
 # Tools
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
 | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -285,8 +319,10 @@ cd ~/dotfiles
 temp_dir="/tmp/$(uuidgen)"
 mkdir -pv "$temp_dir"
 cd "$temp_dir"
-git clone https://github.com/spaceship-prompt/spaceship-prompt.git --depth=1 git_repo
+git clone https://github.com/spaceship-prompt/spaceship-prompt.git git_repo
 cd git_repo
+echo "Which tag or commit to chechout? "; read chechout_target
+git checkout "$chechout_target"
 commit_id=$(git rev-parse HEAD)
 echo "commit id: $commit_id"
 rm -rf .git tests .github docs
@@ -294,6 +330,8 @@ tar --create --file "../${commit_id}.tar.zstd" --preserve-permissions --zstd .
 cp -v "../${commit_id}.tar.zstd" ~/dotfiles/zsh-plugins/spaceship-prompt/
 popd >/dev/null
 popd >/dev/null
+unset chechout_target
+unset commit_id
 rm -rf "$temp_dir"
 ```
 

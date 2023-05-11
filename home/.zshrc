@@ -1637,7 +1637,17 @@ else
     # prompt taken and modified from spaceship with
     # `echo $(spaceship::prompt)`
     local line_sep=$'\n'
-    export PROMPT="%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..with code %F{red}%?${ZSH_PROMPT_EXIT_CODE_SUFFIX})%f${line_sep}%F{green}➜%f%b "
+
+    # Set EXIT_CODE_SUFFIX to either: ZSH_PROMPT_EXIT_CODE_SUFFIX or SPACESHIP_EXIT_CODE_SUFFIX or ""
+    local EXIT_CODE_SUFFIX=""
+    if [[ ! -z "$SPACESHIP_EXIT_CODE_SUFFIX" ]]; then
+        EXIT_CODE_SUFFIX="$SPACESHIP_EXIT_CODE_SUFFIX"
+    fi
+    if [[ ! -z "$ZSH_PROMPT_EXIT_CODE_SUFFIX" ]]; then
+        EXIT_CODE_SUFFIX="$ZSH_PROMPT_EXIT_CODE_SUFFIX"
+    fi
+
+    export PROMPT="%B%F{yellow}%D{%T}%f with %(!.%F{red}.%F{green})%n%f in %F{cyan}%(4~||)%3~%f at %F{blue}%M%f %(?..with code %F{red}%?${EXIT_CODE_SUFFIX})%f${line_sep}%F{green}➜%f%b "
 fi
 
 if [[ $ENABLE_ZSH_AUTOSUGGEST == "true" ]]; then

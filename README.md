@@ -434,7 +434,7 @@ gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab', '<Su
 gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward  "['<Alt><Shift>Tab', '<Super><Shift>Tab']"
 
 # custom keybinding to start new terminal with Super+Enter
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings ['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Start Terminal'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>Return'
 # gnome-terminal
@@ -443,7 +443,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/home/kweis/.cargo/bin/alacritty'
 
 # custom keybinding start start files app in home dir with Super+E
-gsettings set org.gnome.settings-daemon.plugins.media-keys home ['<Super>e']
+gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
 
 # Font things
 gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 10'

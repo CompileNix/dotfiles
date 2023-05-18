@@ -8,7 +8,7 @@ endif
 set t_Co=256
 set invnumber
 set cc=80 " columns to highlight
-set textwidth=999999
+"set textwidth=999999
 set formatoptions=tcq
 set noswapfile " whether to use a swapfile for a buffer
 set nobackup
@@ -47,6 +47,12 @@ noh
 
 syntax on
 filetype on
+
+" Highlight extra whitespace
+" https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace ctermbg=lightred guibg=lightred
+" Show trailing whitespace and spaces before a tab:
+match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 function StripTrailingWhitespace()
     if !&binary && &filetype != 'diff'

@@ -238,7 +238,7 @@ alias grep='grep --color'
 alias less='less --RAW-CONTROL-CHARS' # only ANSI "color" escape sequences and OSC 8 hyperlink sequences are output in "raw" form.
 if which bat &>/dev/null; then
     alias bat='bat --decorations never'
-    alias cat='bat'
+    alias cat='bat --paging=never'
 fi
 alias htop='htop -d 10'
 alias iotop='iotop -d 1 -P -o'

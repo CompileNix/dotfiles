@@ -47,6 +47,7 @@ noh
 
 syntax on
 filetype on
+filetype indent on
 
 " Highlight extra whitespace
 " https://vim.fandom.com/wiki/Highlight_unwanted_spaces

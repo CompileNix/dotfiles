@@ -13,7 +13,7 @@ window:
 font:
   normal:
     family: Source Code Pro
-  size: 12
+  size: 14
 
 # debug:
 #   render_timer: true

@@ -2139,9 +2139,6 @@ fi
 if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
     if [ ! -f "/tmp/$USER-zsh-dotfiles-async-update-check.disabled" ]; then
         echo "🎉 There are dotfiles updates availabe 🎉"
-        echo "You can temporarily disable this prompt by running: ${Green}disable-dotfiles-update-prompt-temp${Color_Reset}"
-        echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ASYNC_UPDATE_CHECK${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
-        echo
         cd "$HOME/dotfiles"
         echo "Downloading updates..."
         git fetch --all
@@ -2151,6 +2148,9 @@ if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
         echo "This is the git commit log:"
         PAGER= git log --graph --decorate --all "HEAD..$remote_name/$current_branch"
         popd >/dev/null 2>&1
+        echo
+        echo "You can temporarily disable this prompt by running: ${Green}disable-dotfiles-update-prompt-temp${Color_Reset}"
+        echo "You can permanently disable this prompt by setting \"${Bold_White}ENABLE_ZSH_ASYNC_UPDATE_CHECK${Color_Reset}\" to \"${Green}false${Color_Reset}\" in ${Yellow}\"$HOME/.zshrc.env\"${Color_Reset}"
         echo
         update-dotfiles \
             && echo "running \"exec zsh\"" \

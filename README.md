@@ -223,98 +223,6 @@ Most of my aliases and zsh functions are named in a similar structure as Powersh
 
 Additionally, all zsh functions from this repo will always show a description of the function on missing arguments or when given `--help` and `-h`.
 
-# NeoVIM Setup for Rust development
-## Install vim-plug
-```sh
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-```
-
-## Install Dependencies
-NodeJS is required for [coc.nvim](https://github.com/neoclide/coc.nvim/).
-
-```sh
-dnf install nodejs
-```
-
-## Update `~/.vimrc_include`
-<details>
-<summary>contents</summary>
-
-```vim
-call plug#begin('~/.vim/plugged')
-
-Plug 'rust-lang/rust.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'dense-analysis/ale'
-
-call plug#end()
-
-
-let g:rustfmt_autosave = 1
-let g:rustfmt_fail_silently = 0
-
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config
-inoremap <silent><expr> <TAB>
-            \ coc#pum#visible() ? coc#pum#next(1) :
-            \ CheckBackspace() ? "\<Tab>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice
-"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-"                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-```
-</details>
-
-Save the config and install the plugins, using the commands inside vim
-```
-:PlugInstall
-:CocInstall coc-rust-analyzer
-```
-
 # Tools
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
 |-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
@@ -369,6 +277,258 @@ Save the config and install the plugins, using the commands inside vim
 | `toluol`             | [toluol](https://crates.io/crates/toluol)                         | A crate for making DNS queries                                                               | rust, cli, dig                         |
 | `trippy`             | [trippy](https://crates.io/crates/trippy)                         | A network diagnostic tool                                                                    | rust, cli, tcp, udp, icmp, ping, probe |
 | `zellij`             | [zellij](https://crates.io/crates/zellij)                         | A terminal workspace with batteries included                                                 | rust, cli, tmux                        |
+
+# Additional Plugins Setup for NeoVIM Setup
+## Install vim-plug
+```sh
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+
+## Install Dependencies
+NodeJS is required for [coc.nvim](https://github.com/neoclide/coc.nvim/).
+
+```sh
+dnf install nodejs
+```
+
+## Update `~/.vimrc_include`
+<details>
+<summary>contents</summary>
+
+```vim
+call plug#begin('~/.vim/plugged')
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+
+call plug#end()
+
+
+set signcolumn=yes
+
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+"inoremap <silent><expr> <TAB>
+"            \ coc#pum#visible() ? coc#pum#next(1) :
+"            \ CheckBackspace() ? "\<Tab>" :
+"            \ coc#refresh()
+"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <TAB>
+            \ coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming
+nmap <leader>rn <Plug>(coc-rename)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Remap <PageDown> and <PageUp> to scroll float windows/popups
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <PageDown> coc#float#has_scroll() ? coc#float#scroll(1) : "\<PageDown>"
+  nnoremap <silent><nowait><expr> <PageUp> coc#float#has_scroll() ? coc#float#scroll(0) : "\<PageUp>"
+  inoremap <silent><nowait><expr> <PageDown> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <PageUp> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <PageDown> coc#float#has_scroll() ? coc#float#scroll(1) : "\<PageDown>"
+  vnoremap <silent><nowait><expr> <PageUp> coc#float#has_scroll() ? coc#float#scroll(0) : "\<PageUp>"
+endif
+
+```
+</details>
+
+Save the config and install the plugins, using the commands inside vim
+```
+:PlugInstall
+```
+
+## Plugins
+## CoC JSON
+Install in Vim
+```
+:CocInstall coc-json
+```
+
+## Rust Language Server Plugin (LSP)
+```
+:CocInstall coc-rust-analyzer
+```
+
+### Update `~/.vimrc_include`
+<details>
+<summary>contents</summary>
+
+```vim
+call plug#begin('~/.vim/plugged')
+
+Plug 'rust-lang/rust.vim'
+
+call plug#end()
+
+let g:rustfmt_autosave = 1
+let g:rustfmt_fail_silently = 0
+
+```
+</details>
+
+## Bash LSP
+Install in Vim
+```
+:CocInstall coc-sh
+```
+
+## Dockerfile LSP
+Install LSP in shell
+```sh
+npm install dockerfile-language-server-nodejs
+```
+
+Configure CoC
+```
+:CocConfig
+```
+
+JSON snippet to add
+```json
+"languageserver": {
+  "dockerfile": {
+    "command": "docker-langserver",
+    "filetypes": ["dockerfile"],
+    "args": ["--stdio"]
+  }
+}
+```
+
+## JavaScript / TypeScript LSP
+Install LSP in VIM
+```
+:CocInstall coc-tsserver
+```
+
+## Markdown LSP
+Install LSP in VIM
+```
+:CocInstall coc-markdownlint
+```
+
+## Markdown Composer
+[vim-markdown-composer](https://github.com/euclio/vim-markdown-composer)
+An asynchronous markdown preview plugin for Vim and Neovim.
+
+### Update `~/.vimrc_include`
+<details>
+<summary>contents</summary>
+
+```vim
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release --locked
+    else
+      !cargo build --release --locked --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+
+call plug#end()
+
+let g:markdown_composer_autostart = 0
+```
+</details>
+
+Because the markdown composer does not autostart, here is the vim command for it:
+```
+:ComposerStart
+```
+
+## PHP LSP
+Install LSP in shell
+```sh
+npm install intelephense
+```
+
+Configure CoC
+```
+:CocConfig
+```
+
+JSON snippet to add
+```json
+"languageserver": {
+  "intelephense": {
+    "command": "intelephense",
+    "args": ["--stdio"],
+    "filetypes": ["php"],
+    "initializationOptions": {
+      "storagePath": "/tmp/intelephense"
+    }
+  }
+}
+```
+
+## Python LSP
+Configure CoC
+```
+:CocInstall coc-pyright
+```
+
+## Comment in and out
+### Update `~/.vimrc_include`
+<details>
+<summary>contents</summary>
+
+```vim
+call plug#begin('~/.vim/plugged')
+
+Plug 'gennaro-tedesco/nvim-commaround'
+
+call plug#end()
+
+vmap <leader>c <Plug>ToggleCommaround
+```
+</details>
 
 # SwayWM
 - sway

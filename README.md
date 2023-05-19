@@ -309,9 +309,10 @@ endfunction
 ```
 </details>
 
-Save the config and install the plugins
-```sh
-vim +:PlugInstall +:CocInstall coc-rust-analyzer
+Save the config and install the plugins, using the commands inside vim
+```
+:PlugInstall
+:CocInstall coc-rust-analyzer
 ```
 
 # Tools

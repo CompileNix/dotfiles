@@ -530,6 +530,34 @@ vmap <leader>c <Plug>ToggleCommaround
 ```
 </details>
 
+## Treesitter
+### Update `~/.vimrc_include`
+<details>
+<summary>contents</summary>
+
+```vim
+call plug#begin('~/.vim/plugged')
+
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
+call plug#end()
+
+highlight TreesitterContext ctermfg=White ctermbg=DarkGrey
+lua <<EOF
+require'treesitter-context'.setup{
+  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+}
+EOF
+```
+</details>
+
+Install language parsers
+```
+:TSInstall bash c cpp diff dockerfile git_config gitattributes gitcommit gitignore go gomod gosum html http ini javascript jq jsdoc json json5 jsonc latex lua make markdown markdown_inline passwd perl php python regex rust scheme sc
+ss sql toml typescript vue yaml
+```
+
 # SwayWM
 - sway
 - waybar

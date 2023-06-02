@@ -390,6 +390,15 @@ Install in Vim
 ## Rust Language Server Plugin (LSP)
 ```
 :CocInstall coc-rust-analyzer
+:CocConfig
+```
+
+JSON snippet to add
+```json
+{
+  "rust-analyzer.check.overrideCommand": ["cargo", "clippy", "--message-format=json", "--all-targets", "--all-features", "--", "-Wclippy::pedantic", "-Wclippy::cognitive_complexity", "-Wclippy::indexing_slicing", "-Wclippy::large_include_file", "-Wclippy::linkedlist", "-Wclippy::map_unwrap_or", "-Wclippy::option_option", "-Wclippy::verbose_bit_mask", "-Wclippy::unused_self", "-Wclippy::unreadable_literal", "-Wclippy::unnested_or_patterns", "-Wclippy::unnecessary_wraps", "-Wclippy::uninlined_format_args", "-Wclippy::unchecked_duration_subtraction", "-Wclippy::too_many_lines", "-Wclippy::unwrap_used"],
+  "inlayHint.enable": false
+}
 ```
 
 ### Update `~/.vimrc_include`

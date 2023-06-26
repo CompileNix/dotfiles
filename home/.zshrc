@@ -120,11 +120,6 @@ if which exa &>/dev/null; then
         alias ls='exa --group-directories-first --classify'
     fi
 fi
-if lsd_loc="$(type -p "lsd")" || [[ -z $lsd_loc ]]; then
-    unset lsd_loc
-
-    alias ls='lsd --icon=never --group-directories-first --classify'
-fi
 
 # ixon: enable XON/XOFF flow control
 # ixoff: enable sending of start/stop characters
@@ -2161,6 +2156,9 @@ fi
 # Rust
 if [ -f "$HOME/.cargo/env" ]; then
     source "$HOME/.cargo/env"
+fi
+if which lsd &>/dev/null; then
+    alias ls='lsd --icon=never --group-directories-first --classify'
 fi
 
 if [ -f "$HOME/.git-credentials" ]; then

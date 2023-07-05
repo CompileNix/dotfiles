@@ -4,6 +4,14 @@ Have a look around and feel free to copy the stuff you like 😊
 
 This dotfiles does not download anything during install, update or usage, besides `git clone` and `git fetch / pull` to the git repo.
 
+# Project Links
+
+- [Git Repo (primary)](https://git.compilenix.org/CompileNix/dotfiles)
+- [Git Repo (mirror - github.com)](https://github.com/CompileNix/dotfiles)
+- [Git Repo (mirror - gitlab.com)](https://gitlab.com/CompileNix/dotfiles)
+- [Issues](https://git.compilenix.org/CompileNix/dotfiles/-/issues)
+- [Merge Requests / Pull Requests](https://git.compilenix.org/CompileNix/dotfiles/-/merge_requests)
+
 # Install
 __Keep always an existing terminal open, just in case__
 

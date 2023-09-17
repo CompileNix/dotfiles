@@ -13,15 +13,16 @@ def print_with_prefix(string):
     print(f'{subprocess_call_echo_prefix} {string}')
 
 # check arg length, else print help
-if len(sys.argv) < 2 or (len(sys.argv) == 2 and re.match(r'^\-*h(elp)?', sys.argv[1])):
+if len(sys.argv) < 2 or (len(sys.argv) == 2 and re.match(r'^\-*h(elp)?$', sys.argv[1])):
     print(re.sub(r'^ +', '', f"""\
-    Do a git clone into `~/code/nginx/njs`.
+    Do a git clone into `~/code/<hostname>/<namespace>_<repo_name>`.
     Additional args after the url are passed to the git clone command.
 
     Requirements:
     - git
 
     Example Usage: {sys.argv[0]} https://github.com/nginx/njs.git --recursive
+    Example Target Dir: ~/code/github.com/nginx_njs
     """, flags=re.MULTILINE)[:-1], file=sys.stderr)
     sys.exit(1)
 
@@ -30,7 +31,7 @@ try:
     repo_url = sys.argv[1]
     repo_url_parsed = urllib.parse.urlparse(repo_url)
 except Exception as e:
-    print(f'Error parsing the given url "{repo_url}": {e}', file=sys.stderr)
+    print(f'Error parsing the given url "{sys.argv[1]}": {e}', file=sys.stderr)
     sys.exit(1)
 
 # validate parsed repo_url_parsed
@@ -62,7 +63,7 @@ else:
 
 # base path
 # $HOME/code/github.com
-base_path = f'{home_dir}/code/{repo_url_parsed.netloc}'
+base_path = f'{home_dir}/code/{repo_url_parsed.hostname}'
 
 # ['nginx', 'njs']
 repo_dir_parts = ' '.join(repo_dir_name.split('/')).split()

@@ -1197,6 +1197,7 @@ alias get-systemd-units-failed='systemctl list-units --state failed'
 alias get-systemd-units-timer='systemctl list-timers'
 alias reload-systemd-units='systemctl daemon-reload'
 alias get-kernel-psi='for i in /proc/pressure/*; do echo $(basename $i); cat $i; echo; done'
+alias ctop='docker run --name=ctop-$(cat /dev/random | tr -dc "0-9a-f" | head -c 8 | awk "{ print $1 }") --rm -ti --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest'
 function get-time-chrony-status {
     if [ -n "$1" ]; then
         cat << EOF

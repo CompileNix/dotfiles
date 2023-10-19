@@ -1,0 +1,11 @@
+[options]
+  columns = "status,name,cpus,mem,net,io,uptime"
+  filterStr = ""
+  sortField = "state"
+
+[toggles]
+  allContainers = true
+  enableHeader = true
+  fullRowCursor = true
+  sortReversed = false
+

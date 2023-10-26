@@ -768,6 +768,17 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 ```
 
+## Gnome Extensions
+
+- [Tiling Assistant](https://extensions.gnome.org/extension/3733/tiling-assistant/)
+  - Expand GNOME's 2 column tiling and add a Windows-snap-assist-inspired popup
+- [Animation Tweaks](https://extensions.gnome.org/extension/1680/animation-tweaks/)
+  - Additional Gnome UI effects
+- [AppIndicator and KStatusNotifierItem Support](https://extensions.gnome.org/extension/615/appindicator-support/)
+  - Tray icon support
+- [GSConnect](https://extensions.gnome.org/extension/1319/gsconnect/)
+  - A complete implementation of KDE Connect
+
 # UI Settings
 Using:
 - `lxappearance`

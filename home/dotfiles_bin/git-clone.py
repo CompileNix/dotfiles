@@ -61,9 +61,16 @@ if additional_git_command_args != None and len(additional_git_command_args) > 0:
 else:
     additional_git_command_args = None
 
+# patch hostname for special cases
+# gitlab.compilenix.net
+if repo_url_parsed.hostname == 'gitlab.compilenix.net':
+    hostname = 'git.compilenix.org'
+else:
+    hostname = repo_url_parsed.hostname
+
 # base path
 # $HOME/code/github.com
-base_path = f'{home_dir}/code/{repo_url_parsed.hostname}'
+base_path = f'{home_dir}/code/{hostname}'
 
 # ['nginx', 'njs']
 repo_dir_parts = ' '.join(repo_dir_name.split('/')).split()

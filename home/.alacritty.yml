@@ -52,3 +52,5 @@ colors:
     cyan:    '0x00ffff'
     white:   '0xffffff'
 
+import:
+  - ~/.alacritty_include.yml

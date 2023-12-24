@@ -46,7 +46,6 @@ apt install \
   acl \
   bind9utils \
   brotli \
-  exa \
   gzip \
   htop \
   iftop \
@@ -103,7 +102,6 @@ dnf install \
   acl \
   bind-utils \
   dua-cli \
-  exa \
   findutils \
   htop \
   iftop \
@@ -273,7 +271,6 @@ Additionally, all zsh functions from this repo will always show a description of
 | `cargo-update`       | [cargo-update](https://crates.io/crates/cargo-update)             | A cargo subcommand for checking and applying updates to installed executables                | rust, cli                              |
 | `cargo-watch`        | [cargo-watch](https://crates.io/crates/cargo-watch)               | Watches over your Cargo project’s source                                                     | rust, cli                              |
 | `eva`                | [eva](https://crates.io/crates/eva)                               | Calculator REPL similar to bc(1)                                                             | rust, cli                              |
-| `exa`                | [exa](https://crates.io/crates/exa)                               | A modern replacement for ls                                                                  | rust, cli                              |
 | `gpg-tui`            | [gpg-tui](https://crates.io/crates/gpg-tui)                       | Manage your GnuPG keys with ease!                                                            | rust, cli                              |
 | `hyperfine`          | [hyperfine](https://crates.io/crates/hyperfine)                   | A command-line benchmarking tool                                                             | rust, cli                              |
 | `lsd`                | [lsd](https://crates.io/crates/lsd)                               | An ls command with a lot of pretty colors and some other stuff.                              | rust, cli                              |

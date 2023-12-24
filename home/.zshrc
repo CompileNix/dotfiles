@@ -113,13 +113,6 @@ else
     alias ls='ls -h --color --group-directories-first'
     alias make="make -j\$(nproc)"
 fi
-if which exa &>/dev/null; then
-    if exa --version | grep -E '\+git' &>/dev/null; then
-        alias ls='exa --group-directories-first --classify --git'
-    else
-        alias ls='exa --group-directories-first --classify'
-    fi
-fi
 
 # ixon: enable XON/XOFF flow control
 # ixoff: enable sending of start/stop characters

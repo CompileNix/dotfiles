@@ -1,4 +1,4 @@
-FROM fedora:38
+FROM fedora:39
 ENV TZ="UTC"
 WORKDIR /root
 COPY ./docker.bash_history .bash_history

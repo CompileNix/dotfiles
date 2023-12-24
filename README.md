@@ -657,12 +657,16 @@ rm -rf "$temp_dir"
 - Comment out "git pull" in home/.zshrc
 
 ```bash
+cd test
 docker build -t local/dotfiles:ubuntu -f ubuntu.Dockerfile .
+cd ..
 docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:ubuntu
 # Run bash ./dotfiles/install.sh
 # Run zsh
 
+cd test
 docker build -t local/dotfiles:fedora -f fedora.Dockerfile .
+cd ..
 docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:fedora
 # Run bash ./dotfiles/install.sh
 # Run zsh

@@ -1175,6 +1175,7 @@ alias get-disks='lsblk -f'
 alias get-mounts='mount | column -t'
 alias start-stopwatch='echo "press Ctrl+D to stop"; time cat'
 alias install-node-fnm='curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash'
+alias install-rust="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 alias add-user='useradd'
 alias remove-user='deluser'
 alias docker-inspect-image='dive' # https://github.com/wagoodman/dive
@@ -2151,6 +2152,7 @@ fi
 if [ -f "$HOME/.cargo/env" ]; then
     source "$HOME/.cargo/env"
 fi
+
 if which lsd &>/dev/null; then
     alias ls='lsd --icon=never --group-directories-first --classify'
 fi

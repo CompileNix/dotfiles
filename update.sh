@@ -402,6 +402,11 @@ if [ ! -f "$HOME/.tmux.conf_include" ]; then
     touch "$HOME/.tmux.conf_include"
 fi
 
+if [ ! -f "$HOME/.alacritty_include.toml" ]; then
+    echo "create ~/.alacritty_include.toml"
+    touch "$HOME/.alacritty_include.toml"
+fi
+
 if [ ! -f "$HOME/.zshrc.env" ]; then
 echo "create default ~/.zshrc.env"
 cat << EOF | tee $HOME/.zshrc.env >/dev/null

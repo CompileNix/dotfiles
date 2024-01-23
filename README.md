@@ -306,6 +306,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
 Plug 'tpope/vim-surround'
+Plug 'ctrlpvim/ctrlp.vim'
 
 call plug#end()
 

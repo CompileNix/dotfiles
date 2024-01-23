@@ -39,7 +39,7 @@ set ignorecase " ignore case in search patterns
 set incsearch " highlight match while typing search pattern
 set smartcase " no ignore case when pattern has uppercase
 set nowrapscan " searches wrap around the end of the file
-set wrap " text wrapping
+set nowrap " text wrapping
 set smartindent
 set noequalalways
 set encoding=UTF-8

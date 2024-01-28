@@ -1,0 +1,22 @@
+#!/bin/bash
+# vim: sw=4 et
+
+# we are expecting NO argument, print help
+if [ -n "$1" ]; then
+    cat << EOF
+Remove all dangling docker images.
+
+Dangling images are images that are not referenced by any other tagged image
+or in use by any created (running or stopped) container.
+
+Requirements:
+- docker
+
+Usage: $(basename "$0")
+EOF
+    exit 1
+fi
+
+
+set -x
+docker image remove $(docker images -f "dangling=true" -q)

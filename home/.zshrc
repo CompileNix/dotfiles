@@ -1191,7 +1191,6 @@ alias get-systemd-units-failed='systemctl list-units --state failed'
 alias get-systemd-units-timer='systemctl list-timers'
 alias reload-systemd-units='systemctl daemon-reload'
 alias get-kernel-psi='for i in /proc/pressure/*; do echo $(basename $i); cat $i; echo; done'
-alias ctop='docker run --name=ctop-$(cat /dev/random | tr -dc "0-9a-f" | head -c 8 | awk "{ print $1 }") --rm -ti --privileged --userns host --volume "/var/run/docker.sock:/var/run/docker.sock:ro,z" --volume "$HOME/.ctop:/.ctop:rw,z" --network none quay.io/vektorlab/ctop:latest'
 function get-time-chrony-status {
     if [ -n "$1" ]; then
         cat << EOF
@@ -1283,62 +1282,6 @@ EOF
     fi
 
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
-}
-function get-docker-image-dangling {
-    if [ -n "$1" ]; then
-        cat << EOF
-Function to list all dangling docker images.
-
-Dangling images are images that are not referenced by any other tagged image
-or in use by any created (running or stopped) container.
-
-Requirements:
-- docker
-
-Usage: $(echo $funcstack[-1])
-EOF
-        return 1
-    fi
-
-    docker images -f "dangling=true"
-}
-function get-docker-image-dangling-size-total {
-    if [ -n "$1" ]; then
-        cat << EOF
-Function to calculate the size on disk of all dangling docker images, in MiB.
-
-Dangling images are images that are not referenced by any other tagged image
-or in use by any created (running or stopped) container.
-
-Requirements:
-- awk
-- docker
-- xargs
-
-Usage: $(echo $funcstack[-1])
-EOF
-        return 1
-    fi
-
-    docker images -f "dangling=true" -q | xargs docker inspect --format='{{.Id}}: {{.Size}}' | awk '{s+=$2} END {print s/1024^2 "MiB"}'
-}
-function remove-docker-image-dangling {
-    if [ -n "$1" ]; then
-        cat << EOF
-Function to remove all dangling docker images.
-
-Dangling images are images that are not referenced by any other tagged image
-or in use by any created (running or stopped) container.
-
-Requirements:
-- docker
-
-Usage: $(echo $funcstack[-1])
-EOF
-        return 1
-    fi
-
-    docker rmi $(docker images -f "dangling=true" -q)
 }
 alias virtualenv='python3 -m venv'
 function format-text-lines-tabbed-into-table {

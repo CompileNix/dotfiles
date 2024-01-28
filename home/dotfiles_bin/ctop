@@ -1,0 +1,33 @@
+#!/bin/bash
+# vim: sw=4 et
+
+# we are expecting NO argument, print help
+if [ -n "$1" ]; then
+    cat << EOF
+Top-like interface for container metrics.
+
+Project Website: https://ctop.sh/
+Git Repo: https://github.com/bcicen/ctop
+
+Requirements:
+- docker (including the permission for --privileged)
+
+Usage: $(basename "$0")
+EOF
+    exit 1
+fi
+
+
+container_name="ctop-$(cat /dev/random | tr -dc "0-9a-f" | head -c 8 | awk "{ print $1 }")"
+
+set -x
+docker run \
+    --name=$container_name \
+    --rm \
+    -ti \
+    --privileged \
+    --userns host \
+    --volume "/var/run/docker.sock:/var/run/docker.sock:ro,z" \
+    --volume "$HOME/.ctop:/.ctop:rw,z" \
+    --network none \
+    quay.io/vektorlab/ctop:latest

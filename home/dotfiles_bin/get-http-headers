@@ -1,5 +1,24 @@
-#!/bin/sh
+#!/bin/bash
 # vim: sw=4 et
 
-curl -sv --compressed "$@" 2>&1 >/dev/null | grep -v "^\*" | grep -v "^}" | cut -c3-
+# we are expecting at least one argument, else print help
+if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+    cat << EOF
+Retreive all HTTP response headers for a given HTTP HEAD request.
 
+Requirements:
+- curl
+
+Usage: $(basename "$0")
+EOF
+    exit 1
+fi
+
+
+# set -x:    print the exac command being executed to sterr
+# --head:    switches from "GET" method to "HEAD"
+# --silent:  dont print download progress to stderr
+# $@:        pass all parameters directly to curl
+
+set -x
+curl --head --silent $@

@@ -1,0 +1,33 @@
+#!/bin/bash
+# vim: sw=4 et
+
+# we are expecting NO argument, print help
+if [ -n "$1" ]; then
+    cat << EOF
+List all docker networks and the containers that are currently attached to them.
+
+Requirements:
+- docker
+- jq
+
+Usage: $(basename "$0")
+EOF
+    exit 1
+fi
+
+
+for network in $(docker network ls --format "{{.Name}}"); do
+    container_names=$(docker network inspect $network |
+        jq -r '.[] | .Containers[] | .Name'
+    )
+
+    echo "$network:"
+    if [ -z "$container_names" ]; then
+        echo -e "\tNo containers"
+    else
+        while IFS= read -r line
+        do
+            echo -e "\t$line"
+        done <<< "$container_names"
+    fi
+done

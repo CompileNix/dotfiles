@@ -18,16 +18,17 @@ fi
 
 for network in $(docker network ls --format "{{.Name}}"); do
     container_names=$(docker network inspect $network |
-        jq -r '.[] | .Containers[] | .Name'
+        jq --raw-output '.[].Containers[].Name'
     )
 
-    echo "$network:"
+    network=$(docker network inspect $network --format '{{.Name}} (driver: {{.Driver}})')
+    echo "$network"
     if [ -z "$container_names" ]; then
-        echo -e "\tNo containers"
+        echo -e "    No containers"
     else
         while IFS= read -r line
         do
-            echo -e "\t$line"
+            echo -e "    $line"
         done <<< "$container_names"
     fi
 done

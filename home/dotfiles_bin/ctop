@@ -3,7 +3,8 @@
 
 # we are expecting NO argument, print help
 if [ -n "$1" ]; then
-    cat << EOF
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
 Top-like interface for container metrics.
 
 Project Website: https://ctop.sh/
@@ -12,8 +13,9 @@ Git Repo: https://github.com/bcicen/ctop
 Requirements:
 - docker (including the permission for --privileged)
 
-Usage: $(basename "$0")
+Usage: ${Green}$(basename "$0")${Color_Reset}
 EOF
+)"
     exit 1
 fi
 

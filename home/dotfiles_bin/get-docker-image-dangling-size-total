@@ -3,7 +3,8 @@
 
 # we are expecting NO argument, print help
 if [ -n "$1" ]; then
-    cat << EOF
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
 Calculate the size on disk of all dangling docker images, in MiB.
 
 Dangling images are images that are not referenced by any other tagged image
@@ -14,8 +15,9 @@ Requirements:
 - docker
 - xargs
 
-Usage: $(basename "$0")
+Usage: ${Green}$(basename "$0")${Color_Reset}
 EOF
+)"
     exit 1
 fi
 

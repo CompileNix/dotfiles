@@ -3,7 +3,8 @@
 
 # we are expecting NO argument, print help
 if [ -n "$1" ]; then
-    cat << EOF
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
 List all dangling docker images.
 
 Dangling images are images that are not referenced by any other tagged image
@@ -12,8 +13,9 @@ or in use by any created (running or stopped) container.
 Requirements:
 - docker
 
-Usage: $(basename "$0")
+Usage: ${Green}$(basename "$0")${Color_Reset}
 EOF
+)"
     exit 1
 fi
 

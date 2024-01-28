@@ -3,14 +3,16 @@
 
 # we are expecting at least one argument, else print help
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
-    cat << EOF
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
 Retreive all HTTP response headers for a given HTTP HEAD request.
 
 Requirements:
 - curl
 
-Usage: $(basename "$0")
+Usage: ${Green}$(basename "$0")${Color_Reset}
 EOF
+)"
     exit 1
 fi
 

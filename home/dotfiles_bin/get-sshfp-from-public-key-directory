@@ -1,0 +1,78 @@
+#!/usr/bin/zsh
+# vim: sw=4 et
+
+# we are expecting at least one argument, else print help
+if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+    current_file_name="$(basename "$0")"
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
+Generate SSHFP (SSH Fingerprint) DNS RR from a directory
+which contains one or more ssh public key files named ${Yellow}"ssh_host_${Blue}*${Yellow}_key.pub"${Color_Reset}.
+
+Requirements:
+- hostname
+- openssl
+- sha1sum
+- which
+
+Usage: ${Green}${current_file_name}${Color_Reset} ${Underline_White}directory${Color_Reset} [${Bold_Blue}hostname${Color_Reset}]
+
+${Underline_White}directory${Color_Reset}   path to a directory which contains ssh public key files.
+${Bold_Blue}hostname${Color_Reset}    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is ${Yellow}"${Purple}\$${Bold_Blue}(${Green}hostname${Color_Reset} -s${Bold_Blue})${Yellow}"${Color_Reset}.
+
+Examples:
+${Green}${current_file_name}${Color_Reset} ${Underline_White}/etc/ssh${Color_Reset}
+${Green}${current_file_name}${Color_Reset} ${Underline_White}/etc/ssh${Color_Reset} ${Bold_Blue}hostname${Color_Reset}
+EOF
+)"
+    exit 1
+fi
+
+
+local directory="$1"
+local hostname="$2"
+
+for file in $directory/ssh_host_*_key.pub; do
+    get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"
+done
+
+
+
+
+
+
+
+
+
+
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        cat << EOF
+Function to generate SSHFP (SSH Fingerprint) DNS RR from a directory
+which contains one or more ssh public key fget-sshfp-from-public-key-directory /etc/ssh hostnameiles named "ssh_host_*_key.pub".
+
+Requirements:
+- hostname
+- openssl
+- sha1sum
+- which
+
+Usage: $(echo $funcstack[-1]) directory [hostname]
+
+directory   path to a directory which contains ssh public key files.
+hostname    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is "\$(hostname -s)".
+
+Examples:
+$(echo $funcstack[-1]) /etc/ssh
+$(echo $funcstack[-1]) /etc/ssh hostname
+EOF
+        return 1
+    fi
+
+local directory="$1"
+local hostname="$2"
+
+for file in $directory/ssh_host_*_key.pub; do
+    get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"
+done

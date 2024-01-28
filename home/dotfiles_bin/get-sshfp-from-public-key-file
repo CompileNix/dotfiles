@@ -1,0 +1,35 @@
+#!/usr/bin/zsh
+# vim: sw=4 et
+
+# we are expecting at least one argument, else print help
+if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+    current_file_name="$(basename "$0")"
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
+Generate SSHFP (SSH Fingerprint) DNS RR from a ssh public key file.
+
+Requirements:
+- hostname
+- openssl
+- sha1sum
+- which
+
+Usage: ${Green}${current_file_name}${Color_Reset} ${Underline_White}file${Color_Reset} [${Purple}hostname${Color_Reset}]
+
+${Underline_White}file${Color_Reset}        path to a ssh public key file.
+${Purple}hostname${Color_Reset}    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is ${Yellow}"${Purple}\$${Bold_Blue}(${Green}hostname${Color_Reset} -s${Bold_Blue})${Yellow}"${Color_Reset}.
+
+Examples:
+${Green}${current_file_name}${Color_Reset} ${Underline_White}/etc/ssh/ssh_host_ed25519_key.pub${Color_Reset}
+${Green}${current_file_name}${Color_Reset} ${Underline_White}/etc/ssh/ssh_host_ed25519_key.pub${Color_Reset} ${Purple}hostname${Color_Reset}
+EOF
+)"
+    exit 1
+fi
+
+
+file="$1"
+hostname="$2"
+
+get-sshfp-from-public-key "$(cut -d ' ' -f1 "$file")" "$(cut -f2 -d ' ' "$file")" "$hostname"

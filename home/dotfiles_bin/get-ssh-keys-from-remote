@@ -1,0 +1,36 @@
+#!/usr/bin/zsh
+# vim: sw=4 et
+
+# we are expecting at least one argument, else print help
+if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+    current_file_name="$(basename "$0")"
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
+Fetch ssh public keys from a remote system.
+
+Requirements:
+- ssh-keyscan
+
+Usage: ${Green}${current_file_name}${Color_Reset} [${Bold_Blue}hostname${Color_Reset}] [${Purple}port${Color_Reset}]
+
+${Bold_Blue}hostname${Color_Reset}    hostname to generate the DNS RR for, usually not a fqdn. Default
+            value is ${Yellow}"${Purple}\$${Bold_Blue}(${Green}hostname${Color_Reset} -s${Bold_Blue})${Yellow}"${Color_Reset}.
+${Purple}port${Color_Reset}        the port number, default is "22".
+
+Examples:
+${Green}${current_file_name}${Color_Reset} ${Bold_Blue}hostname.domain.tld${Color_Reset}
+${Green}${current_file_name}${Color_Reset} ${Bold_Blue}hostname.domain.tld${Color_Reset} ${Purple}2222${Color_Reset}
+EOF
+)"
+    exit 1
+fi
+
+
+hostname="$1"
+port="$2"
+
+if [ ! -n "$2" ]; then
+    port="22"
+fi
+
+ssh-keyscan -p $port "$hostname"

@@ -213,7 +213,7 @@ ZSH_PROMPT_SEPARATE_LINE=true
 
 Here is an example, how this looks like:
 
-![zsh-prompt-example](./img/zsh-prompt-1.png "zsh prompt example")
+![zsh prompt example screenshot](./img/zsh-prompt-1.png)
 
 # Add Your Local Changes
 
@@ -919,7 +919,8 @@ ln -s left_ptr ur_angle
 
 # Windows
 
-![windows meme](https://compilenix.org/windows%20meme.jpg "windows meme")
+![A meme with three panels, each showing the "blinking white guy meme" (also known as Drew Scanlon Reaction) next to different versions of the Windows logo. Top panel: "Windows 10" logo and Drew Scanlon looking to the same side (left) as the Windows logo. Middle panel: "Windows 11" with Drew Scanlon looking straight at the viewer. Bottom panel: "Windows 12" with Drew Scanlon looking to the rightlooking to the.](https://compilenix.org/windows%2012%20meme.jpg)
+
 ## Tools / Software
 
 - [VeraCrypt](https://veracrypt.fr/): Free open source disk encryption software for Windows, Mac OSX and Linux

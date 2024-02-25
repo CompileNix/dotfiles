@@ -188,7 +188,7 @@ I have two options for the zsh prompt built-in: [spaceship-prompt](https://githu
 
 If you'd like to use spaceship-prompt open up `~/.zshrc.env`, set `ENABLE_ZSH_SPACESHIP_PROMPT=true` and start a new shell. From here you can use and configure spaceship-prompt as usual.
 
-My own zsh prompt is visually very similar to spaceship-prompt, with the key difference that no zsh functions or other scripts are invoked between prompt renders. This makes new propts appear instantly. Only the most basic and fast to render things are included; time, date, username, path, hostname and exit code. Here are the available options with some suggested values, which you can tweak in `~/.zshrc.env`:
+My own zsh prompt is visually very similar to spaceship-prompt, with the key difference that no zsh functions or other scripts are invoked between prompt renders. This makes new prompts appear instantly. Only the most basic and fast to render things are included; time, date, username, path, hostname and exit code. Here are the available options with some suggested values, which you can tweak in `~/.zshrc.env`:
 ```sh
 ZSH_PROMPT_EXIT_CODE_COLOR_FAILURE='red'
 ZSH_PROMPT_EXIT_CODE_PREFIX='with code'
@@ -212,7 +212,7 @@ Some configs do support including your (local) changes and overrides, such that 
 | `.zshrc`     | `~/.zshrc_include`. This get's included after all aliases and functions are defined and before the shell prompt is set-up |
 
 # Automatic Updates
-This dotfiles repo does asnyc background update checks, by default, using `git fetch` every time a new shell is started. You'll find the code for this in [home/.zshrc](./home/.zshrc), the zsh function named `test-dotfiles-updates` is called in the background during shell startup and if there is an update in the git repo it will create the temporary file `/tmp/$USER-zsh-dotfiles-async-update-exists.yep`.
+This dotfiles repo does async background update checks, by default, using `git fetch` every time a new shell is started. You'll find the code for this in [home/.zshrc](./home/.zshrc), the zsh function named `test-dotfiles-updates` is called in the background during shell startup and if there is an update in the git repo it will create the temporary file `/tmp/$USER-zsh-dotfiles-async-update-exists.yep`.
 
 When the update check did find some updates in the git repo, it'll show you the git log and ask you if you'd like to pull / merge these changes.
 
@@ -616,7 +616,7 @@ Use the zsh function `update-dotfiles`.
 If you have a really old version, you may need to update it manually.
 
 ## Manual Update
-Copy and paste into terminal, after that start a new (separat) terminal / session to verify everthing worked out fine.
+Copy and paste into terminal, after that start a new (separat) terminal / session to verify everything worked out fine.
 
 __Keep always a additional terminal open, in case of any issues!__
 
@@ -638,8 +638,8 @@ mkdir -pv "$temp_dir"
 cd "$temp_dir"
 git clone https://github.com/spaceship-prompt/spaceship-prompt.git git_repo
 cd git_repo
-echo "Which tag or commit to chechout? "; read chechout_target
-git checkout "$chechout_target"
+echo "Which tag or commit to checkout? "; read checkout_target
+git checkout "$checkout_target"
 commit_id=$(git rev-parse HEAD)
 echo "commit id: $commit_id"
 rm -rf .git tests .github docs
@@ -647,7 +647,7 @@ tar --create --file "../${commit_id}.tar.zstd" --preserve-permissions --zstd .
 cp -v "../${commit_id}.tar.zstd" ~/dotfiles/zsh-plugins/spaceship-prompt/
 popd >/dev/null
 popd >/dev/null
-unset chechout_target
+unset checkout_target
 unset commit_id
 rm -rf "$temp_dir"
 ```
@@ -689,8 +689,8 @@ Install:
 ```sh
 # switch the input focus on mouse hover, without clicking, like in i3 and SwayWM
 gsettings set org.gnome.desktop.wm.preferences focus-mode 'mouse' # this also unfocuses a window when mouse moves out (i.e. to desktop bg)
-gsettings set org.gnome.desktop.wm.preferences focus-new-windows 'strict' # dont focus new windows (that aren't under the mouse)
-gsettings set org.gnome.mutter focus-change-on-pointer-rest false # dont wait for the mouse to stay still until focus
+gsettings set org.gnome.desktop.wm.preferences focus-new-windows 'strict' # don't focus new windows (that aren't under the mouse)
+gsettings set org.gnome.mutter focus-change-on-pointer-rest false # don't wait for the mouse to stay still until focus
 
 # Disable "hot corner"
 gsettings set org.gnome.desktop.interface enable-hot-corners false
@@ -725,7 +725,7 @@ gsettings set org.gnome.software download-updates-notify false
 # Files App
 # disable recursive search
 gsettings set org.gnome.nautilus.preferences recursive-search 'never'
-# dont count files of dirs
+# don't count files of dirs
 gsettings set org.gnome.nautilus.preferences show-directory-item-counts 'never'
 
 # switch between windows in current workspace only
@@ -780,6 +780,8 @@ gsettings set org.gnome.desktop.privacy remove-old-temp-files true
   - Tray icon support
 - [GSConnect](https://extensions.gnome.org/extension/1319/gsconnect/)
   - A complete implementation of KDE Connect
+- [Grand Theft Focus](https://extensions.gnome.org/extension/5410/grand-theft-focus/)
+  - Removes the 'Window is ready' notification and brings the window into focus instead.
 
 # UI Settings
 Using:

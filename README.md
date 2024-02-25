@@ -13,19 +13,22 @@ This dotfiles does not download anything during install, update or usage, beside
 - [Merge Requests / Pull Requests](https://git.compilenix.org/CompileNix/dotfiles/-/merge_requests)
 
 # Install
-__Keep always an existing terminal open, just in case__
+
+**Keep always an existing terminal open, just in case**
 
 <details>
 <summary>Debian / Ubuntu</summary>
 
 ## Debian / Ubuntu
-```sh
+
+```bash
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
 ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
 ```
 
 ### Required Packages
-```sh
+
+```bash
 apt install \
   bash \
   coreutils \
@@ -41,7 +44,8 @@ apt install \
 ```
 
 ### Optional Packages
-```sh
+
+```bash
 apt install \
   acl \
   bind9utils \
@@ -66,21 +70,24 @@ apt install \
   zip
 ```
 
-
 **Install**
-```sh
+
+```bash
 curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
   && /bin/bash /tmp/install.sh \
   && rm -f /tmp/install.sh
 ```
+
 </details>
 
 <details>
 <summary>Fedora</summary>
 
 ## Fedora
+
 ### Required Packages
-```sh
+
+```bash
 dnf install \
   coreutils \
   curl \
@@ -96,7 +103,8 @@ dnf install \
 ```
 
 ### Optional Packages
-```sh
+
+```bash
 dnf install \
   NetworkManager-tui \
   acl \
@@ -125,24 +133,28 @@ dnf install \
 ### Fonts
 
 Replace default emoji with colored ones via Google Noto font.
-```sh
+
+```bash
 dnf remove gdouros-symbola-fonts
 dnf install google-noto-emoji-color-fonts
 ```
 
 **Install**
-```sh
+
+```bash
 curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
   && /bin/bash /tmp/install.sh \
   && rm -f /tmp/install.sh
 ```
+
 </details>
 
 <details>
 <summary>MacOS</summary>
 
 ## MacOS
-```sh
+
+```bash
 # Install Brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -181,15 +193,18 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
   && ./install.sh \
   && rm -f install.sh
 ```
+
 </details>
 
 # ZSH Prompt
+
 I have two options for the zsh prompt built-in: [spaceship-prompt](https://github.com/spaceship-prompt/spaceship-prompt) and my own.
 
 If you'd like to use spaceship-prompt open up `~/.zshrc.env`, set `ENABLE_ZSH_SPACESHIP_PROMPT=true` and start a new shell. From here you can use and configure spaceship-prompt as usual.
 
 My own zsh prompt is visually very similar to spaceship-prompt, with the key difference that no zsh functions or other scripts are invoked between prompt renders. This makes new prompts appear instantly. Only the most basic and fast to render things are included; time, date, username, path, hostname and exit code. Here are the available options with some suggested values, which you can tweak in `~/.zshrc.env`:
-```sh
+
+```bash
 ZSH_PROMPT_EXIT_CODE_COLOR_FAILURE='red'
 ZSH_PROMPT_EXIT_CODE_PREFIX='with code'
 ZSH_PROMPT_EXIT_CODE_SUFFIX=' (╯°□°）╯︵ ┻━┻'
@@ -201,10 +216,11 @@ Here is an example, how this looks like:
 ![zsh-prompt-example](./img/zsh-prompt-1.png "zsh prompt example")
 
 # Add Your Local Changes
+
 Some configs do support including your (local) changes and overrides, such that they less likely clash with dotfiles updates. Here are the supported tools and configs and how to add your own changes for them:
 
 | Config       | Notes                                                                                                                     |
-|--------------|---------------------------------------------------------------------------------------------------------------------------|
+| :----------- | :------------------------------------------------------------------------------------------------------------------------ |
 | `.gitconfig` | `~/.gitconfig_include`                                                                                                    |
 | `.tmux.conf` | `~/.tmux.conf_include`. This get's included at the end of `.tmux.conf`                                                    |
 | `.vimrc`     | `~/.vimrc_include`                                                                                                        |
@@ -212,17 +228,21 @@ Some configs do support including your (local) changes and overrides, such that 
 | `.zshrc`     | `~/.zshrc_include`. This get's included after all aliases and functions are defined and before the shell prompt is set-up |
 
 # Automatic Updates
+
 This dotfiles repo does async background update checks, by default, using `git fetch` every time a new shell is started. You'll find the code for this in [home/.zshrc](./home/.zshrc), the zsh function named `test-dotfiles-updates` is called in the background during shell startup and if there is an update in the git repo it will create the temporary file `/tmp/$USER-zsh-dotfiles-async-update-exists.yep`.
 
 When the update check did find some updates in the git repo, it'll show you the git log and ask you if you'd like to pull / merge these changes.
 
 ## Disable Automatic Update Checks Permanently
+
 If you'd like to fully disable this, set `ENABLE_ZSH_ASYNC_UPDATE_CHECK=false` in `~/.zshrc.env`.
 
 ## Disable Automatic Update Checks temporarily
+
 Use the zsh alias `disable-dotfiles-update-prompt-temp` to disable checking for updates, until either the next reboot or removal of the file `/tmp/$USER-zsh-dotfiles-async-update-check.disabled`.
 
 # ZSH Functions And Aliases
+
 I've added a lot of aliases and functions over the time. To list the functions and aliases, from this repo run `get-functions-dotfiles` and `get-aliases-dotfiles`.
 
 Most of my aliases and zsh functions are named in a similar structure as Powershell recommends; `verb-noun`.
@@ -230,8 +250,9 @@ Most of my aliases and zsh functions are named in a similar structure as Powersh
 Additionally, all zsh functions from this repo will always show a description of the function on missing arguments or when given `--help` and `-h`.
 
 # Tools
+
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
-|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
 | [powerline-fonts](https://github.com/powerline/fonts)           | Patched fonts for [Powerline](https://github.com/powerline/powerline) users                                          | cli, font, statusline, vim, neovim, python, zsh, bash, fish, tmux, IPython, Awesome, i3, Qtile |
 | [httpstat](https://github.com/reorx/httpstat)                   | httpstat visualizes curl(1) statistics in a way of beauty and clarity.                                               | visualization, python, cli, http, curl                                                         |
 | [curlconverter](https://curlconverter.com/)                     | Convert cURL commands to Python, JavaScript, PHP, R, Go, Ruby, Rust, Elixir, Java, MATLAB, C#, Dart and more         | website                                                                                        |
@@ -252,51 +273,56 @@ Additionally, all zsh functions from this repo will always show a description of
 | [Photopea](https://www.photopea.com)                            | web-based photo and graphics editor supporting Photoshop's PSD as well as JPEG, PNG, DNG, GIF, SVG, PDF and others   | website                                                                                        |
 
 ## Rust Tools
-| Command              | Crates.io Link                                                    | Description                                                                                  | Additional Tags                        |
-|----------------------|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------|----------------------------------------|
-| `alacritty`          | [alacritty](https://crates.io/crates/alacritty)                   | A fast, cross-platform, OpenGL terminal emulator                                             | rust, gui                              |
-| `atuin`              | [atuin](https://crates.io/crates/atuin)                           | magical shell history. A replacement for Arrow+Up and Ctrl+R                                 | rust, cli                              |
-| `bat`                | [bat](https://crates.io/crates/bat)                               | Go implement CLI, cURL-like tool for humans                                                  | rust, cli, http                        |
-| `cargo-asm`          | [cargo-asm](https://crates.io/crates/cargo-asm)                   | A cargo subcommand that displays the generated assembly of Rust source code.                 | rust, cli                              |
-| `cargo-audit`        | [cargo-audit](https://crates.io/crates/cargo-audit)               | Audit Cargo.lock for crates with security vulnerabilities                                    | rust, cli                              |
-| `cargo-auditable`    | [cargo-auditable](https://crates.io/crates/cargo-auditable)       | Make production Rust binaries auditable                                                      | rust, cli                              |
-| `cargo-bloat`        | [cargo-bloat](https://crates.io/crates/cargo-bloat)               | Find out what takes most of the space in your executable.                                    | rust, cli                              |
-| `cargo-cache`        | [cargo-cache](https://crates.io/crates/cargo-cache)               | Manage cargo cache ($CARGO_HOME or ~/.cargo/), show sizes and remove directories selectively | rust, cli                              |
-| `cargo-deb`          | [cargo-deb](https://crates.io/crates/cargo-deb)                   | Make Debian packages (.deb) easily with a Cargo subcommand                                   | rust, cli                              |
-| `cargo-feature`      | [cargo-feature](https://crates.io/crates/cargo-feature)           | Cargo plugin to manage dependency features                                                   | rust, cli                              |
-| `cargo-generate-rpm` | [cargo-generate-rpm](https://crates.io/crates/cargo-generate-rpm) | Generate a binary RPM package (.rpm) from Cargo projects                                     | rust, cli                              |
-| `cargo-info`         | [cargo-info](https://crates.io/crates/cargo-info)                 | Extends cargo to query crates.io registry for crates details                                 | rust, cli                              |
-| `cargo-nextest`      | [cargo-nextest](https://crates.io/crates/cargo-nextest)           | A next-generation test runner for Rust.                                                      | rust, cli                              |
-| `cargo-sort`         | [cargo-sort](https://crates.io/crates/cargo-sort)                 | Check if tables and items in a .toml file are lexically sorted                               | rust, cli                              |
-| `cargo-update`       | [cargo-update](https://crates.io/crates/cargo-update)             | A cargo subcommand for checking and applying updates to installed executables                | rust, cli                              |
-| `cargo-watch`        | [cargo-watch](https://crates.io/crates/cargo-watch)               | Watches over your Cargo project’s source                                                     | rust, cli                              |
-| `eva`                | [eva](https://crates.io/crates/eva)                               | Calculator REPL similar to bc(1)                                                             | rust, cli                              |
-| `gpg-tui`            | [gpg-tui](https://crates.io/crates/gpg-tui)                       | Manage your GnuPG keys with ease!                                                            | rust, cli                              |
-| `hyperfine`          | [hyperfine](https://crates.io/crates/hyperfine)                   | A command-line benchmarking tool                                                             | rust, cli                              |
-| `lsd`                | [lsd](https://crates.io/crates/lsd)                               | An ls command with a lot of pretty colors and some other stuff.                              | rust, cli                              |
-| `oha`                | [oha](https://crates.io/crates/oha)                               | Ohayou(おはよう), HTTP load generator, inspired by rakyll/hey with tui animation.                | rust, cli                              |
-| `ripgrep`            | [ripgrep](https://crates.io/crates/ripgrep)                       | Like `grep` but better                                                                       | rust, cli                              |
-| `sccache`            | [sccache](https://crates.io/crates/sccache)                       | Sccache is a ccache-like tool.                                                               | rust, cli                              |
-| `starship`           | [starship](https://crates.io/crates/starship)                     | The minimal, blazing-fast, and infinitely customizable prompt for any shell! ☄🌌️            | rust, cli, shell                       |
-| `tokei`              | [tokei](https://crates.io/crates/tokei)                           | Count your code, quickly.                                                                    | rust, cli                              |
-| `toluol`             | [toluol](https://crates.io/crates/toluol)                         | A crate for making DNS queries                                                               | rust, cli, dig                         |
-| `trippy`             | [trippy](https://crates.io/crates/trippy)                         | A network diagnostic tool                                                                    | rust, cli, tcp, udp, icmp, ping, probe |
-| `zellij`             | [zellij](https://crates.io/crates/zellij)                         | A terminal workspace with batteries included                                                 | rust, cli, tmux                        |
+
+| Command              | Crates.io Link                                                    | Description                                                                                   | Additional Tags                        |
+| :------------------- | :---------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------- |
+| `alacritty`          | [alacritty](https://crates.io/crates/alacritty)                   | A fast, cross-platform, OpenGL terminal emulator                                              | rust, gui                              |
+| `atuin`              | [atuin](https://crates.io/crates/atuin)                           | magical shell history. A replacement for Arrow+Up and Ctrl+R                                  | rust, cli                              |
+| `bat`                | [bat](https://crates.io/crates/bat)                               | Go implement CLI, cURL-like tool for humans                                                   | rust, cli, http                        |
+| `cargo-asm`          | [cargo-asm](https://crates.io/crates/cargo-asm)                   | A cargo subcommand that displays the generated assembly of Rust source code.                  | rust, cli                              |
+| `cargo-audit`        | [cargo-audit](https://crates.io/crates/cargo-audit)               | Audit Cargo.lock for crates with security vulnerabilities                                     | rust, cli                              |
+| `cargo-auditable`    | [cargo-auditable](https://crates.io/crates/cargo-auditable)       | Make production Rust binaries auditable                                                       | rust, cli                              |
+| `cargo-bloat`        | [cargo-bloat](https://crates.io/crates/cargo-bloat)               | Find out what takes most of the space in your executable.                                     | rust, cli                              |
+| `cargo-cache`        | [cargo-cache](https://crates.io/crates/cargo-cache)               | Manage cargo cache ($CARGO_HOME or \~/.cargo/), show sizes and remove directories selectively | rust, cli                              |
+| `cargo-deb`          | [cargo-deb](https://crates.io/crates/cargo-deb)                   | Make Debian packages (.deb) easily with a Cargo subcommand                                    | rust, cli                              |
+| `cargo-feature`      | [cargo-feature](https://crates.io/crates/cargo-feature)           | Cargo plugin to manage dependency features                                                    | rust, cli                              |
+| `cargo-generate-rpm` | [cargo-generate-rpm](https://crates.io/crates/cargo-generate-rpm) | Generate a binary RPM package (.rpm) from Cargo projects                                      | rust, cli                              |
+| `cargo-info`         | [cargo-info](https://crates.io/crates/cargo-info)                 | Extends cargo to query crates.io registry for crates details                                  | rust, cli                              |
+| `cargo-nextest`      | [cargo-nextest](https://crates.io/crates/cargo-nextest)           | A next-generation test runner for Rust.                                                       | rust, cli                              |
+| `cargo-sort`         | [cargo-sort](https://crates.io/crates/cargo-sort)                 | Check if tables and items in a .toml file are lexically sorted                                | rust, cli                              |
+| `cargo-update`       | [cargo-update](https://crates.io/crates/cargo-update)             | A cargo subcommand for checking and applying updates to installed executables                 | rust, cli                              |
+| `cargo-watch`        | [cargo-watch](https://crates.io/crates/cargo-watch)               | Watches over your Cargo project's source                                                      | rust, cli                              |
+| `eva`                | [eva](https://crates.io/crates/eva)                               | Calculator REPL similar to bc(1)                                                              | rust, cli                              |
+| `gpg-tui`            | [gpg-tui](https://crates.io/crates/gpg-tui)                       | Manage your GnuPG keys with ease!                                                             | rust, cli                              |
+| `hyperfine`          | [hyperfine](https://crates.io/crates/hyperfine)                   | A command-line benchmarking tool                                                              | rust, cli                              |
+| `lsd`                | [lsd](https://crates.io/crates/lsd)                               | An ls command with a lot of pretty colors and some other stuff.                               | rust, cli                              |
+| `oha`                | [oha](https://crates.io/crates/oha)                               | Ohayou(おはよう), HTTP load generator, inspired by rakyll/hey with tui animation.             | rust, cli                              |
+| `ripgrep`            | [ripgrep](https://crates.io/crates/ripgrep)                       | Like `grep` but better                                                                        | rust, cli                              |
+| `sccache`            | [sccache](https://crates.io/crates/sccache)                       | Sccache is a ccache-like tool.                                                                | rust, cli                              |
+| `starship`           | [starship](https://crates.io/crates/starship)                     | The minimal, blazing-fast, and infinitely customizable prompt for any shell! ☄🌌️             | rust, cli, shell                       |
+| `tokei`              | [tokei](https://crates.io/crates/tokei)                           | Count your code, quickly.                                                                     | rust, cli                              |
+| `toluol`             | [toluol](https://crates.io/crates/toluol)                         | A crate for making DNS queries                                                                | rust, cli, dig                         |
+| `trippy`             | [trippy](https://crates.io/crates/trippy)                         | A network diagnostic tool                                                                     | rust, cli, tcp, udp, icmp, ping, probe |
+| `zellij`             | [zellij](https://crates.io/crates/zellij)                         | A terminal workspace with batteries included                                                  | rust, cli, tmux                        |
 
 # Additional Plugins Setup for NeoVIM Setup
+
 ## Install vim-plug
-```sh
+
+```bash
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 ```
 
 ## Install Dependencies
+
 NodeJS is required for [coc.nvim](https://github.com/neoclide/coc.nvim/).
 
-```sh
+```bash
 dnf install nodejs
 ```
 
 ## Update `~/.vimrc_include`
+
 <details>
 <summary>contents</summary>
 
@@ -378,37 +404,67 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <PageDown> coc#float#has_scroll() ? coc#float#scroll(1) : "\<PageDown>"
   vnoremap <silent><nowait><expr> <PageUp> coc#float#has_scroll() ? coc#float#scroll(0) : "\<PageUp>"
 endif
-
 ```
+
 </details>
 
 Save the config and install the plugins, using the commands inside vim
+
 ```
 :PlugInstall
 ```
 
 ## Plugins
+
 ## CoC JSON
+
 Install in Vim
+
 ```
 :CocInstall coc-json
 ```
 
 ## Rust Language Server Plugin (LSP)
+
 ```
 :CocInstall coc-rust-analyzer
 :CocConfig
 ```
 
 JSON snippet to add
+
 ```json
 {
-  "rust-analyzer.check.overrideCommand": ["cargo", "clippy", "--message-format=json", "--all-targets", "--all-features", "--", "-Wclippy::pedantic", "-Wclippy::cognitive_complexity", "-Wclippy::indexing_slicing", "-Wclippy::large_include_file", "-Wclippy::linkedlist", "-Wclippy::map_unwrap_or", "-Wclippy::option_option", "-Wclippy::verbose_bit_mask", "-Wclippy::unused_self", "-Wclippy::unreadable_literal", "-Wclippy::unnested_or_patterns", "-Wclippy::unnecessary_wraps", "-Wclippy::uninlined_format_args", "-Wclippy::unchecked_duration_subtraction", "-Wclippy::too_many_lines", "-Wclippy::unwrap_used"],
+  "rust-analyzer.check.overrideCommand": [
+    "cargo",
+    "clippy",
+    "--message-format=json",
+    "--all-targets",
+    "--all-features",
+    "--",
+    "-Wclippy::pedantic",
+    "-Wclippy::cognitive_complexity",
+    "-Wclippy::indexing_slicing",
+    "-Wclippy::large_include_file",
+    "-Wclippy::linkedlist",
+    "-Wclippy::map_unwrap_or",
+    "-Wclippy::option_option",
+    "-Wclippy::verbose_bit_mask",
+    "-Wclippy::unused_self",
+    "-Wclippy::unreadable_literal",
+    "-Wclippy::unnested_or_patterns",
+    "-Wclippy::unnecessary_wraps",
+    "-Wclippy::uninlined_format_args",
+    "-Wclippy::unchecked_duration_subtraction",
+    "-Wclippy::too_many_lines",
+    "-Wclippy::unwrap_used"
+  ],
   "inlayHint.enable": false
 }
 ```
 
 ### Update `~/.vimrc_include`
+
 <details>
 <summary>contents</summary>
 
@@ -421,28 +477,34 @@ call plug#end()
 
 let g:rustfmt_autosave = 1
 let g:rustfmt_fail_silently = 0
-
 ```
+
 </details>
 
 ## Bash LSP
+
 Install in Vim
+
 ```
 :CocInstall coc-sh
 ```
 
 ## Dockerfile LSP
+
 Install LSP in shell
-```sh
+
+```bash
 npm install dockerfile-language-server-nodejs
 ```
 
 Configure CoC
+
 ```
 :CocConfig
 ```
 
 JSON snippet to add
+
 ```json
 "languageserver": {
   "dockerfile": {
@@ -454,22 +516,28 @@ JSON snippet to add
 ```
 
 ## JavaScript / TypeScript LSP
+
 Install LSP in VIM
+
 ```
 :CocInstall coc-tsserver
 ```
 
 ## Markdown LSP
+
 Install LSP in VIM
+
 ```
 :CocInstall coc-markdownlint
 ```
 
 ## Markdown Composer
+
 [vim-markdown-composer](https://github.com/euclio/vim-markdown-composer)
 An asynchronous markdown preview plugin for Vim and Neovim.
 
 ### Update `~/.vimrc_include`
+
 <details>
 <summary>contents</summary>
 
@@ -492,25 +560,31 @@ call plug#end()
 
 let g:markdown_composer_autostart = 0
 ```
+
 </details>
 
 Because the markdown composer does not autostart, here is the vim command for it:
+
 ```
 :ComposerStart
 ```
 
 ## PHP LSP
+
 Install LSP in shell
-```sh
+
+```bash
 npm install intelephense
 ```
 
 Configure CoC
+
 ```
 :CocConfig
 ```
 
 JSON snippet to add
+
 ```json
 "languageserver": {
   "intelephense": {
@@ -525,13 +599,17 @@ JSON snippet to add
 ```
 
 ## Python LSP
+
 Configure CoC
+
 ```
 :CocInstall coc-pyright
 ```
 
 ## Comment in and out
+
 ### Update `~/.vimrc_include`
+
 <details>
 <summary>contents</summary>
 
@@ -544,10 +622,13 @@ call plug#end()
 
 vmap <leader>c <Plug>ToggleCommaround
 ```
+
 </details>
 
 ## Treesitter
+
 ### Update `~/.vimrc_include`
+
 <details>
 <summary>contents</summary>
 
@@ -566,15 +647,18 @@ require'treesitter-context'.setup{
 }
 EOF
 ```
+
 </details>
 
 Install language parsers
+
 ```
 :TSInstall bash c cpp diff dockerfile git_config gitattributes gitcommit gitignore go gomod gosum html http ini javascript jq jsdoc json json5 jsonc latex lua make markdown markdown_inline passwd perl php python regex rust scheme sc
 ss sql toml typescript vue yaml
 ```
 
 # SwayWM
+
 - sway
 - waybar
 - wl-clipboard
@@ -592,6 +676,7 @@ ss sql toml typescript vue yaml
 - thunar (filemanager)
 
 # X11 .xinitrc
+
 - i3
 - xrdb
 - xinput
@@ -600,8 +685,8 @@ ss sql toml typescript vue yaml
 - xsetroot
 - numlockx
 - autocutsel
-    - https://github.com/sigmike/autocutsel
-    - `dnf install libX11-devel libXaw-devel`
+  - https://github.com/sigmike/autocutsel
+  - `dnf install libX11-devel libXaw-devel`
 - dbus-launch
 - ImageMagick (for screen lock image processing)
 - dmenu
@@ -611,16 +696,18 @@ ss sql toml typescript vue yaml
 - thunar (filemanager)
 
 # Update
+
 Use the zsh function `update-dotfiles`.
 
 If you have a really old version, you may need to update it manually.
 
 ## Manual Update
+
 Copy and paste into terminal, after that start a new (separat) terminal / session to verify everything worked out fine.
 
-__Keep always a additional terminal open, in case of any issues!__
+**Keep always a additional terminal open, in case of any issues!**
 
-```sh
+```bash
 rm -rf ~/dotfiles 2>/dev/null
 wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
   && chmod +x install.sh \
@@ -631,6 +718,7 @@ zsh
 ```
 
 ## Update Spaceship Prompt Plugin
+
 ```bash
 cd ~/dotfiles
 temp_dir="/tmp/$(uuidgen)"
@@ -653,6 +741,7 @@ rm -rf "$temp_dir"
 ```
 
 # Test / Build / Dev
+
 - Comment out "git clone" in install.sh
 - Comment out "git reset --hard" in home/.zshrc
 - Comment out "git pull" in home/.zshrc
@@ -674,19 +763,24 @@ docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:fedora
 ```
 
 # Sway Desktop Notifications (Wayland)
+
 Install:
+
 - mako
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
 # i3 Desktop Notifications (X11)
+
 Install:
+
 - [deadd-notification-center](https://github.com/phuhl/linux_notification_center)
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
 # GNOME Settings
-```sh
+
+```bash
 # switch the input focus on mouse hover, without clicking, like in i3 and SwayWM
 gsettings set org.gnome.desktop.wm.preferences focus-mode 'mouse' # this also unfocuses a window when mouse moves out (i.e. to desktop bg)
 gsettings set org.gnome.desktop.wm.preferences focus-new-windows 'strict' # don't focus new windows (that aren't under the mouse)
@@ -784,24 +878,30 @@ gsettings set org.gnome.desktop.privacy remove-old-temp-files true
   - Removes the 'Window is ready' notification and brings the window into focus instead.
 
 # UI Settings
+
 Using:
+
 - `lxappearance`
 - Default Font: Helvetica LT Pro 11
 
 ## Replace text cursor with regular mouse pointer
-```sh
+
+```bash
 cd /usr/share/icons/Adwaita/cursors/
 ln -sf left_ptr text
 ln -sf left_ptr xterm
 ```
 
 ## GTK Themes
+
 - [Azure](https://github.com/vinceliuice/Azure-theme)
 - [Arc-Dark-OSX](https://github.com/Dr-Noob/Arc-Dark-OSX)
 
 ## Troubleshooting
+
 ### Create links to missing cursors
-```sh
+
+```bash
 cd ~/.icons/theme/cursors/
 ln -s right_ptr arrow
 ln -s cross crosshair
@@ -821,6 +921,7 @@ ln -s left_ptr ur_angle
 
 ![windows meme](https://compilenix.org/windows%20meme.jpg "windows meme")
 ## Tools / Software
+
 - [VeraCrypt](https://veracrypt.fr/): Free open source disk encryption software for Windows, Mac OSX and Linux
 - [7-ZIP](https://www.7-zip.org/): archive file management
 - [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer): more advanced Task Manager

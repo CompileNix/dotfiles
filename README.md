@@ -305,6 +305,33 @@ Additionally, all zsh functions from this repo will always show a description of
 | `trippy`             | [trippy](https://crates.io/crates/trippy)                         | A network diagnostic tool                                                                     | rust, cli, tcp, udp, icmp, ping, probe |
 | `zellij`             | [zellij](https://crates.io/crates/zellij)                         | A terminal workspace with batteries included                                                  | rust, cli, tmux                        |
 
+# VIM / NeoVIM
+
+## Keybinds
+
+Most of them are just the default binds and this just serves as a reminder for the ones I find useful to know and want to remember better.
+
+| Mode: Keybind              | Description                               | Notes                                                                                                                                                                                                                                                       |
+| :------------------------- | ----------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N: ciw                     | Replace word                              | Delete word under cursor and change to insert mode                                                                                                                                                                                                          |
+| N: ci"                     | Replace text inside "                     | Delete text under cursor within the nearest occurrences of "                                                                                                                                                                                                |
+| N: Vap                     | Select current block of text              |                                                                                                                                                                                                                                                             |
+| N: ctrl+v 2j shift+I # ESC | Block comment                             | `ctrl+v` : change to "Visual Block" mode<br>`2j` : move cursor two lines down<br>`shift+I` : change to "Insert" mode<br>`# ` : line comment text, you want to insert<br>`ESC` : exit "Insert" / "Visual Block" mode and apply changes to all selected lines |
+| V: gq                      | Wrap text according to `textwidth`        | [Format lines with 'gq' in Vim](https://www.programmerhat.com/vim-gq/)                                                                                                                                                                                      |
+| V: =                       | Apply text format according to `filetype` | Correct alignment of code                                                                                                                                                                                                                                   |
+
+## File Options
+
+Some options I often use in modelines.
+
+| Option                 | Description                                     |
+| :--------------------- | :---------------------------------------------- |
+| `:set tabstop=4`       | Indent using 4 tabstops                         |
+| `:set expandtab`       | Use spaces for indentation, instead of tabstops |
+| `:set [no]autoindent`  | Disable / Enable autoindenting                  |
+| `:set [no]smartindent` | Disable / Enable smartindenting                 |
+| `:set filetype=python` | Override default filetype detection             |
+
 # Additional Plugins Setup for NeoVIM Setup
 
 ## Install vim-plug

@@ -132,7 +132,7 @@ dnf install \
 
 ### Fonts
 
-Replace default emoji with colored ones via Google Noto font.
+Replace the default emoji font with one that offers some more colors: Google Noto
 
 ```bash
 dnf remove gdouros-symbola-fonts

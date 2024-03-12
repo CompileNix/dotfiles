@@ -196,6 +196,10 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 
 </details>
 
+# Table Of Contents
+
+[TOC]
+
 # ZSH Prompt
 
 I have two options for the zsh prompt built-in: [spaceship-prompt](https://github.com/spaceship-prompt/spaceship-prompt) and my own.

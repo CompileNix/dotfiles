@@ -1,0 +1,17 @@
+#!/bin/bash
+# vim: sw=4 et
+
+if [ -n "$1" ]; then
+    cat << EOF
+List IPv4 routes.
+
+Requirements:
+- column
+- ip
+
+Usage: ${Green}$(basename "$0")${Color_Reset}
+EOF
+    return 1
+fi
+
+ip -4 route $* | column -t

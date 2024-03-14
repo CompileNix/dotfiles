@@ -1,0 +1,26 @@
+#!/bin/bash
+# vim: sw=4 et
+
+if [ -n "$1" ]; then
+    cat << EOF
+Function to generate DH Parameters file (pem encoded) and save it to
+./dhparam.pem.
+
+Requirements:
+- openssl
+
+Usage: ${Green}$(basename "$0")${Color_Reset}
+EOF
+    return 1
+fi
+
+local dhparam_size
+echo -n "dhparam size [2048]: "; read dhparam_size
+if [[ "$dhparam_size" = "" ]]; then
+    dhparam_size=2048
+fi
+
+openssl dhparam -out dhparam.pem "$dhparam_size"
+
+echo
+ls -l dhparam.pem

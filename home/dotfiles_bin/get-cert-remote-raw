@@ -1,0 +1,20 @@
+#!/bin/bash
+# vim: sw=4 et
+
+if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
+    cat << EOF
+Function to receive X509 pem encoded certificate from a remote system.
+
+Requirements:
+- openssl
+
+Usage: ${Green}$(basename "$0")${Color_Reset} server.domain.tld port_number
+
+Example: ${Green}$(basename "$0")${Color_Reset} google.com 443
+EOF
+    return 1
+fi
+
+hostName=$1
+portNumber=$2
+echo | openssl s_client -connect ${hostName}:${portNumber} -servername ${hostName} 2>/dev/null | openssl x509 -text

@@ -8,7 +8,6 @@
 [alias]
     s = status
     ch = checkout
-    switch = checkout
     c = config
     cl = config -l
     ce = config -e
@@ -20,7 +19,7 @@
     a = add
     aa = add -A
     b = branch
-    d = diff --word-diff=color -U5
+    d = diff --word-diff=color --minimal --ignore-space-change --unified=5
     m = merge
     l = log --oneline --graph --decorate --all
     la = log --graph --decorate --all --show-signature

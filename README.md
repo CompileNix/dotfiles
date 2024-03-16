@@ -692,21 +692,27 @@ ss sql toml typescript vue yaml
 
 # SwayWM
 
-- sway
-- waybar
-- wl-clipboard
-- slurp (for screenshots)
-- wf-recorder (cli screen recorder, obs doesn't work)
-- mako (notifications)
-- swaylock
 - ImageMagick (for screen lock image processing)
-- swayidle (turn off & on displays)
 - dmenu
-- rofi
-- gnome-terminal
-- mako
+- dunst
 - gimp
+- gnome-terminal
+- grimshot
+- imv
+- jtc
+- kanshi
+- light
+- mako
+- mako (notifications)
+- rofi
+- slurp (for screenshots)
+- sway
+- swayidle (turn off & on displays)
+- swaylock
 - thunar (filemanager)
+- waybar
+- wf-recorder (cli screen recorder, obs doesn't work)
+- wl-clipboard
 
 # X11 .xinitrc
 

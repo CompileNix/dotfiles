@@ -1,4 +1,8 @@
 # vim: sw=4 et
+
+exec --no-startup-id mako
+exec --no-startup-id udiskie --appindicator --automount --notify --file-manager thunar
+
 exec --no-startup-id jetbrains-toolbox --minimize
 exec --no-startup-id seafile-applet
 exec --no-startup-id nextcloud

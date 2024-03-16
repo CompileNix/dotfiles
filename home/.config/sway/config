@@ -269,8 +269,8 @@ for_window [title="File Operation Progress" app_id="thunar"] floating enable
 for_window [title="File Operation Progress" app_id="Thunar"] floating enable
 for_window [app_id="file-roller" title="Compress"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable
-for_window [title="Firefox - Choose User Profile"] floating enable
-## Browser
+
+# Browser
 for_window [title="noVNC"] floating enable
 for_window [title="Sign in - Google Accounts *"] floating enable
 for_window [class="Firefox" window_role="page-info"] floating enable
@@ -278,7 +278,9 @@ for_window [title="About Mozilla Firefox"] floating enable
 for_window [title="Close Firefox"] floating enable
 for_window [title="Firefox — Sharing Indicator"] floating enable
 for_window [app_id="firefox" title="Page Info — *"] floating enable
-### Exchange
+for_window [title="Firefox - Choose User Profile"] floating enable
+
+# Exchange
 for_window [title="Edit Security Group *"] floating enable
 for_window [title="Edit User Mailbox *"] floating enable
 for_window [title="Select Full Access *"] floating enable

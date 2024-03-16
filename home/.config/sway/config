@@ -85,7 +85,7 @@ bar {
 }
 
 set $mod Mod4
-set $term gnome-terminal
+set $term alacritty
 
 hide_edge_borders both
 workspace_layout tabbed
@@ -106,7 +106,7 @@ bindsym button3 floating toggle
 bindsym $mod+space focus mode_toggle
 
 # Start your launcher
-bindsym $mod+d exec "rofi -i -modi window,run -show run -scroll-method 1 -m $(wl-xwayland-get-active-output.sh)"
+bindsym $mod+d exec "rofi -i -combi-modes window,drun,run -show combi -modes combi -scroll-method 1 -m $(~/dotfiles_bin/wl-xwayland-get-active-output.sh)"
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -270,6 +270,7 @@ for_window [title="File Operation Progress" app_id="thunar"] floating enable
 for_window [title="File Operation Progress" app_id="Thunar"] floating enable
 for_window [app_id="file-roller" title="Compress"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable
+for_window [title="Firefox - Choose User Profile"] floating enable
 ## Browser
 for_window [title="noVNC"] floating enable
 for_window [title="Sign in - Google Accounts *"] floating enable

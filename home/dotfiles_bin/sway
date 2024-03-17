@@ -31,5 +31,16 @@ export BEMENU_BACKEND=wayland
 # https://github.com/Alexays/Waybar/issues/21
 #export XDG_CURRENT_DESKTOP=Unity
 
+export PATH="$PATH:/home/kweis/bin:/home/kweis/.local/share/JetBrains/Toolbox/scripts"
+
+export RUSTFLAGS="-C target-cpu=native"
+export CARGO_BUILD_JOBS=10
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+export CARGO_PROFILE_RELEASE_LTO=true
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export RUSTC_WRAPPER="/home/kweis/.cargo/bin/sccache"
+
+export SSH_AUTH_SOCK="/run/user/1000/ssh-agent.socket"
+
 /usr/bin/sway $*
 

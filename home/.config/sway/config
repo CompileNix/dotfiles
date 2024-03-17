@@ -97,6 +97,7 @@ bindsym $mod+Shift+q kill
 bindsym alt+f4 kill
 bindsym --release button2 kill
 bindsym --whole-window $mod+button2 kill
+bindsym $mod+e exec xdg-open $HOME
 
 bindsym $mod+Shift+space floating toggle
 # The right button toggles floating
@@ -118,7 +119,7 @@ floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 
 # Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Ctrl+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 bindsym $mod+bracketleft exec --no-startup-id volume.sh dec
 bindsym $mod+bracketright exec --no-startup-id volume.sh inc
@@ -207,8 +208,8 @@ bindsym $mod+Control+Shift+8 move container to workspace number 18
 bindsym $mod+Control+Shift+9 move container to workspace number 19
 bindsym $mod+Control+Shift+0 move container to workspace number 20
 
-bindsym $mod+Ctrl+bracketleft move container to output left
-bindsym $mod+Ctrl+bracketright move container to output right
+bindsym $mod+Ctrl+bracketleft move workspace to left
+bindsym $mod+Ctrl+bracketright move workspace to right
 
 bindsym $mod+Shift+bracketleft move to output left
 bindsym $mod+Shift+bracketright move to output right
@@ -216,8 +217,8 @@ bindsym $mod+Shift+bracketright move to output right
 bindsym $mod+v splith
 bindsym $mod+h splitv
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+t layout tabbed
+bindsym $mod+Shift+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+a focus parent
 
@@ -235,7 +236,6 @@ bindsym $mod+minus scratchpad show
 # swaymsg -t get_tree
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 for_window [class="Volumeicon" instance="volumeicon"] floating enable
-for_window [class="Seafile Client"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="utility"] floating enable
 for_window [window_type="splash"] floating enable
@@ -246,51 +246,6 @@ for_window [window_type="tooltip"] floating enable
 for_window [window_type="notification"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="Preferences"] floating enable
-for_window [title="chromeIPass"] floating enable
-for_window [title="Steam - News"] floating enable
-for_window [title="Steam Library Folders"] floating enable
-for_window [title="Create or select new Steam library folder"] floating enable
-for_window [title="SpeedCrunch"] floating enable
-for_window [title="Create or select new Steam library folder"] floating enable
-for_window [title="RDP: *"] floating disable
-for_window [title="JetBrains Toolbox"] floating enable
-for_window [title="Attach To Entry"] floating enable
-for_window [class="Nautilus" instance="file_progress"] floating enable
-for_window [app_id="com.seafile.seafile-applet"] floating enable
-for_window [title="win0" class="jetbrains-*"] floating enable
-for_window [title="Quit GIMP" class="Gimp"] floating enable
-for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
-for_window [class="Toplevel" title="Git Gui *"] floating enable
-for_window [title="Close" instance="jetbrains*"] floating enable
-for_window [title=" " instance="jetbrains*"] floating enable
-for_window [title="Settings" instance="jetbrains*"] floating enable
-for_window [title="Progress" app_id="zenity"] floating enable
-for_window [title="File Operation Progress" app_id="thunar"] floating enable
-for_window [title="File Operation Progress" app_id="Thunar"] floating enable
-for_window [app_id="file-roller" title="Compress"] floating enable
-for_window [app_id="nm-connection-editor"] floating enable
-
-# Browser
-for_window [title="noVNC"] floating enable
-for_window [title="Sign in - Google Accounts *"] floating enable
-for_window [class="Firefox" window_role="page-info"] floating enable
-for_window [title="About Mozilla Firefox"] floating enable
-for_window [title="Close Firefox"] floating enable
-for_window [title="Firefox — Sharing Indicator"] floating enable
-for_window [app_id="firefox" title="Page Info — *"] floating enable
-for_window [title="Firefox - Choose User Profile"] floating enable
-
-# Exchange
-for_window [title="Edit Security Group *"] floating enable
-for_window [title="Edit User Mailbox *"] floating enable
-for_window [title="Select Full Access *"] floating enable
-for_window [title="Edit Distribution Group *"] floating enable
-for_window [title="Select Members *"] floating enable
-for_window [title="Select Send As *"] floating enable
-for_window [title="Select Send On Behalf *"] floating enable
-for_window [title="Edit Room Mailbox *"] floating enable
-for_window [title="Select User - Entire Forest *"] floating enable
-for_window [title="User Mailbox *"] floating enable
 
 mouse_warping none
 

@@ -6,8 +6,8 @@ input "1133:49977:Logitech_Pro_Gaming_Keyboard" {
     xkb_layout us,de
     xkb_variant ,nodeadkeys
     xkb_options grp:alt_shift_toggle
-    repeat_delay 125
-    repeat_rate 37
+    repeat_delay 150
+    repeat_rate 28
 }
 
 input "1133:16477:Logitech_G403" {

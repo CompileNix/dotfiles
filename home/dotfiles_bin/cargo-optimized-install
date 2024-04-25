@@ -1,8 +1,10 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
-    cat << EOF
+    echo -e "$(cat << EOF
 Function to run an auditable optimized cargo install command.
 
 Requirements:
@@ -26,7 +28,8 @@ cargo install cargo-auditable cargo-audit
 
 Usage: ${Green}$(basename "$0")${Color_Reset} opt_level crate [additional_argo_args]
 EOF
-    return 1
+)"
+    exit 1
 fi
 
 opt_level="$1"

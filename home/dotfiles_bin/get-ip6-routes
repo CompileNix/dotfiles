@@ -1,8 +1,10 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 if [ -n "$1" ]; then
-    cat << EOF
+    echo -e "$(cat << EOF
 List IPv4 routes.
 
 Requirements:
@@ -11,7 +13,8 @@ Requirements:
 
 Usage: ${Green}$(basename "$0")${Color_Reset}
 EOF
-    return 1
+)"
+    exit 1
 fi
 
 ip -6 route $* | column -t

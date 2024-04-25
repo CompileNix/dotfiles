@@ -1,6 +1,8 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 # we are expecting at least one argument, else print help
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
     # the following line (esp. `echo -e`) is required to make color codes work

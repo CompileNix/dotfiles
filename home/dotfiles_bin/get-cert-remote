@@ -1,8 +1,10 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
-    cat << EOF
+    echo -e "$(cat << EOF
 Function to make a full tls connect, printing various useful info, including
 all X509 certificates (pem encoded) the remote systems has sent.
 
@@ -13,7 +15,8 @@ Usage: ${Green}$(basename "$0")${Color_Reset} server.domain.tld port_number
 
 Example: ${Green}$(basename "$0")${Color_Reset} google.com 443
 EOF
-    return 1
+)"
+    exit 1
 fi
 hostName=$1
 portNumber=$2

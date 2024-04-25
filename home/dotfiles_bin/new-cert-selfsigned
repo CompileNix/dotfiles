@@ -1,8 +1,10 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 if [ -n "$1" ]; then
-    cat << EOF
+    echo -e "$(cat << EOF
 Function to generate a new self-signed certificate and private key.
 
 Requirements:
@@ -10,7 +12,8 @@ Requirements:
 
 Usage: ${Green}$(basename "$0")${Color_Reset}
 EOF
-    return 1
+)"
+    exit 1
 fi
 
 local cert_type
@@ -30,7 +33,7 @@ if [[ "$cert_type" = "rsa:4096" ]]; then
 fi
 if [ ! -f privkey.pem ]; then
     echo "no valid certificate type choosen or error during generation" >/dev/stderr
-    return 1
+    exit 1
 fi
 
 local valid_for

@@ -1,8 +1,10 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
-    cat << EOF
+    echo -e "$(cat << EOF
 Function to receive X509 pem encoded certificate from a local file.
 
 Requirements:
@@ -10,6 +12,7 @@ Requirements:
 
 Usage: ${Green}$(basename "$0")${Color_Reset} /some/path/to/file.pem
 EOF
-    return 1
+)"
+    exit 1
 fi
 openssl x509 -noout -text -in $1

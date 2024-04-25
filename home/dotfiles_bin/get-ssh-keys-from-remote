@@ -1,6 +1,8 @@
 #!/usr/bin/zsh
 # vim: sw=4 et
 
+set -e
+
 # we are expecting at least one argument, else print help
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
     current_file_name="$(basename "$0")"

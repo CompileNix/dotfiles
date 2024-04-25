@@ -1,8 +1,10 @@
 #!/bin/bash
 # vim: sw=4 et
 
+set -e
+
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
-    cat << EOF
+    echo -e "$(cat << EOF
 Function to receive X509 pem encoded certificate from a remote system.
 
 Requirements:
@@ -12,7 +14,8 @@ Usage: ${Green}$(basename "$0")${Color_Reset} server.domain.tld port_number
 
 Example: ${Green}$(basename "$0")${Color_Reset} google.com 443
 EOF
-    return 1
+)"
+    exit 1
 fi
 
 hostName=$1

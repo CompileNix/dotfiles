@@ -1,0 +1,20 @@
+#!/bin/bash
+# vim: sw=4 et
+
+set -e
+
+if [ -n "$1" ]; then
+    echo -e "$(cat << EOF
+Function to show a text version of a X509 pem encoded CSR via stdin.
+
+Requirements:
+- openssl
+
+Usage: ${Green}$(basename "$0")${Color_Reset}
+EOF
+)"
+    exit 1
+fi
+
+echo "paste pem CSR and hit Control+D: "; csr="$(cat)"
+echo "$csr" | openssl req -text -noout

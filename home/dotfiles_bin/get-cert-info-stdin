@@ -1,0 +1,20 @@
+#!/bin/bash
+# vim: sw=4 et
+
+set -e
+
+if [ -n "$1" ]; then
+    echo -e "$(cat << EOF
+Function to show a text version of a X509 pem encoded certificate via stdin.
+
+Requirements:
+- openssl
+
+Usage: ${Green}$(basename "$0")${Color_Reset}
+EOF
+)"
+    exit 1
+fi
+
+echo "paste pem cert and hit Control+D: "; cert="$(cat)"
+echo "$cert" | openssl x509 -text -noout

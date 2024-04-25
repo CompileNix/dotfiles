@@ -270,7 +270,6 @@ alias get-date-iso-8601-hour='date --iso-8601=hours'
 alias get-date-iso-8601-second='date --iso-8601=seconds'
 alias get-date-iso-8601-ns='date --iso-8601=ns'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
-alias get-cert-info-stdin='echo "paste pem cert and hit Control+D: ";cert=$(cat); echo $cert | openssl x509 -text -noout'
 function set-dns-query-stats-enable {
     if [ -n "$1" ]; then
         cat << EOF

@@ -269,6 +269,8 @@ alias get-date-iso-8601-day='date --iso-8601=date'
 alias get-date-iso-8601-hour='date --iso-8601=hours'
 alias get-date-iso-8601-second='date --iso-8601=seconds'
 alias get-date-iso-8601-ns='date --iso-8601=ns'
+alias get-calendar='cal --monday --week'
+alias get-calendar-year='cal --year'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
 function set-dns-query-stats-enable {
     if [ -n "$1" ]; then

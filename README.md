@@ -967,4 +967,5 @@ ln -s left_ptr ur_angle
 - [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer): more advanced Task Manager
 - [TeraCopy](https://www.codesector.com/teracopy): better file copy & move
 - [NetLimiter](https://www.netlimiter.com/): alternative firewall (not based on Windows Firewall)
+- [DiskUsage](https://github.com/menees/DiskUsage): A Windows utility to show disk usage in a treemap
 

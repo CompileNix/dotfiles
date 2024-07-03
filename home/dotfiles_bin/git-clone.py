@@ -76,7 +76,7 @@ base_path = f'{home_dir}/code/{hostname}'
 repo_dir_parts = ' '.join(repo_dir_name.split('/')).split()
 
 # nginx_njs
-repo_dir_target_name = '_'.join(repo_dir_parts)
+repo_dir_target_name = urllib.parse.unquote_plus('_'.join(repo_dir_parts))
 
 # $HOME/code/github.com/nginx_njs
 repo_dir_path = f'{base_path}/{repo_dir_target_name}'
@@ -93,11 +93,12 @@ if not os.path.isdir(base_path):
 
 # create git `command` string
 if additional_git_command_args != None:
-    command = f'git clone {additional_git_command_args} {repo_url} {repo_dir_path}'
+    command = f'git clone {additional_git_command_args} {repo_url}'
 else:
-    command = f'git clone {repo_url} {repo_dir_path}'
+    command = f'git clone {repo_url}'
+command = command.split(' ') + [repo_dir_path]
 
 # run git command
-print_with_prefix(command)
-subprocess.call(command.split(' '))
+print_with_prefix(str.join(' ', command))
+subprocess.call(command)
 

@@ -18,6 +18,7 @@ EOF
 )"
     exit 1
 fi
-hostName=$1
-portNumber=$2
-echo | openssl s_client -showcerts -x509_strict -connect ${hostName}:${portNumber} -servername ${hostName}
+hostName="$1"
+portNumber="$2"
+shift 2 # remove first two args
+echo | openssl s_client -showcerts -x509_strict -connect "${hostName}:${portNumber}" -servername "$hostName"  $*

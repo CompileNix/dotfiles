@@ -15,4 +15,5 @@ EOF
 )"
     exit 1
 fi
-openssl x509 -noout -text -in $1
+
+openssl x509 -noout -text -in $*

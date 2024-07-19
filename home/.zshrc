@@ -507,7 +507,7 @@ EOF
     }
     ask_yn
     set -x
-    apt autoremove
+    sudo apt autoremove
     apt list --upgradable
     sudo apt upgrade
     sudo apt autoremove

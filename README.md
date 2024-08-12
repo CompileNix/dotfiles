@@ -336,6 +336,7 @@ Some options I often use in modelines.
 | `:set expandtab`       | Use spaces for indentation, instead of tabstops |
 | `:set [no]autoindent`  | Disable / Enable autoindenting                  |
 | `:set [no]smartindent` | Disable / Enable smartindenting                 |
+| `:set filetype?`       | show current filetype                           |
 | `:set filetype=python` | Override default filetype detection             |
 
 # Additional Plugins Setup for NeoVIM Setup

@@ -17,7 +17,7 @@ EOF
     exit 1
 fi
 
-local dhparam_size
+dhparam_size=""
 echo -n "dhparam size [2048]: "; read dhparam_size
 if [[ "$dhparam_size" = "" ]]; then
     dhparam_size=2048

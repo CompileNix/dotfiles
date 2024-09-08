@@ -16,7 +16,7 @@ EOF
     exit 1
 fi
 
-local cert_type
+cert_type=""
 echo "Certificate Type, valid options are:"
 echo "- rsa:2048"
 echo "- rsa:4096"
@@ -36,21 +36,21 @@ if [ ! -f privkey.pem ]; then
     exit 1
 fi
 
-local valid_for
+valid_for=""
 echo -n "Valid for days [3650]: "; read valid_for
 if [[ "$valid_for" = "" ]]; then
     valid_for=3650
 fi
 
 if [[ "$cert_type" != "ed25519" ]]; then
-    local hash_alg
+    hash_alg=""
     echo -n "Hash Alg [-sha256 -sha384 -sha512]: "; read hash_alg
 fi
 
-local cert_subject
+cert_subject=""
 echo -n "Subject [/C=/ST=/L=/O=/OU=/CN=localhost]: "; read cert_subject
 
-local cert_subject_alt_name
+cert_subject_alt_name=""
 echo -n "Subject Alt Names [DNS:localhost, DNS:localhost.localdomain]: "; read cert_subject_alt_name
 
 if [[ "$cert_type" = "ed25519" ]]; then

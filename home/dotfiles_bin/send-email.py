@@ -36,7 +36,7 @@ def main():
             recv = s.recv(1024).decode()
             print(f"R: {recv.strip()}")
 
-            msg="HELO example.com"
+            msg="EHLO example.com"
             print(f"S: {msg}")
             s.sendall(f"{msg}\r\n".encode())
             recv = s.recv(1024).decode()

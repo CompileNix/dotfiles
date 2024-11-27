@@ -8,6 +8,8 @@ export QT_WAYLAND_FORCE_DPI=physical
 #export QT_QPA_PLATFORM=wayland # currently fucks up KeePassXC
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
+export XDG_CURRENT_DESKTOP=sway
+
 # Elementary/EFL
 export ECORE_EVAS_ENGINE=wayland_egl
 export ELM_ENGINE=wayland_egl

@@ -3,6 +3,9 @@
 
 set -e
 
+export Color_Reset='\033[0m'
+export Green='\033[0;32m'
+
 if [ -n "$1" ]; then
     echo -e "$(cat << EOF
 Function to show a text version of a X509 pem encoded CSR via stdin.

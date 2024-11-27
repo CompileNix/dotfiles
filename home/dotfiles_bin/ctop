@@ -3,6 +3,9 @@
 
 set -e
 
+export Color_Reset='\033[0m'
+export Green='\033[0;32m'
+
 # we are expecting NO argument, print help
 if [ -n "$1" ]; then
     # the following line (esp. `echo -e`) is required to make color codes work

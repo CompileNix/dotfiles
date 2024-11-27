@@ -3,6 +3,12 @@
 
 set -e
 
+export Color_Reset='\033[0m'
+export Green='\033[0;32m'
+export Yellow='\033[0;33m'
+export Purple='\033[0;35m'
+export Bold_Blue='\033[1;34m'
+
 # we are expecting at least two arguments, else print help
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ] || [ ! -n "$2" ]; then
     current_file_name="$(basename "$0")"

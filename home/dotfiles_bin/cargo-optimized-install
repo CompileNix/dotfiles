@@ -3,6 +3,9 @@
 
 set -e
 
+export Color_Reset='\033[0m'
+export Green='\033[0;32m'
+
 if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
     echo -e "$(cat << EOF
 Function to run an auditable optimized cargo install command.

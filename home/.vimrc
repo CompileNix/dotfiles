@@ -91,6 +91,10 @@ if has('persistent_undo')
     set undofile " keep an undo file (undo changes after closing)
 endif
 
+if filereadable(glob("$VIMRUNTIME/colors/vim.lua"))
+    source $VIMRUNTIME/colors/vim.lua
+endif
+
 if filereadable(glob("~/.vimrc_include"))
     source ~/.vimrc_include
 endif

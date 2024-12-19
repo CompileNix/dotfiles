@@ -275,6 +275,7 @@ Additionally, all zsh functions from this repo will always show a description of
 | [ctop](https://github.com/bcicen/ctop)                          | Top-like interface for container metrics                                                                             | cli, go, docker, htop                                                                          |
 | [tldr++](https://github.com/isacikgoz/tldr)                     | fast and interactive tldr client written with go                                                                     | cli, man-page, help                                                                            |
 | [Photopea](https://www.photopea.com)                            | web-based photo and graphics editor supporting Photoshop's PSD as well as JPEG, PNG, DNG, GIF, SVG, PDF and others   | website                                                                                        |
+| [Bruno](https://www.usebruno.com)                               | Re-Inventing the API Client. Bruno is a Git-integrated, fully offline, and open-source API client                    | gui, cli, http, test, postman                                                                  |
 
 ## Rust Tools
 

@@ -41,10 +41,10 @@
     spellingdictionary = none
     tabsize = 4
 [push]
-    default = matching
+    default = current
     followTags = true
+    autoSetupRemote = true
 [pull]
     ff = only
 [init]
     defaultBranch = main
-

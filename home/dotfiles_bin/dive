@@ -1,0 +1,35 @@
+#!/bin/bash
+# vim: sw=4 et
+
+set -e
+
+export Color_Reset='\033[0m'
+export Green='\033[0;32m'
+
+# we are expecting NO argument, print help
+if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+    # the following line (esp. `echo -e`) is required to make color codes work
+    echo -e "$(cat << EOF
+A tool for exploring each layer in a docker image .
+
+Project Website: https://github.com/wagoodman/dive
+
+Requirements:
+- docker
+
+Usage: ${Green}$(basename "$0")${Color_Reset}
+EOF
+)"
+    exit 1
+fi
+
+
+container_name="dive-$(cat /dev/random | tr -dc "0-9a-f" | head -c 8 | awk '{ print $1 }')"
+
+set -x
+docker run \
+    --name=$container_name \
+    --rm \
+    -ti \
+    --volume "/var/run/docker.sock:/var/run/docker.sock:ro,z" \
+    wagoodman/dive "$@"

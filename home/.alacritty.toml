@@ -1,3 +1,4 @@
+[general]
 import = ["/home/kweis/.alacritty_include.toml"]
 
 [colors]

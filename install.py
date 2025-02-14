@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # vim: sw=4 et
 
-from pathlib import Path
 import os
-from pathlib import Path
-from re import split
 import yaml
+
+from re import split
+from pathlib import Path
 
 try:
     from rich import print
@@ -155,4 +155,3 @@ for folder in folders:
             link_file.symlink_to(f'{os.getcwd()}/home/{filename}')
         else:
             link_file.symlink_to(f'{os.getcwd()}/home/{folder}/{filename}')
-

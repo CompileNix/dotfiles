@@ -1678,6 +1678,11 @@ fi
 
 if which lsd &>/dev/null; then
     alias ls='lsd --icon=never --group-directories-first --classify'
+    alias ll='ls -l'
+    alias la='ll -a'
+    alias l='la'
+    alias l-reverse='l --reverse'
+    alias l-reverse-time='l-reverse --timesort'
 fi
 
 if [ -f "$HOME/.git-credentials" ]; then

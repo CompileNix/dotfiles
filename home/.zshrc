@@ -891,7 +891,10 @@ EOF
         return 1
     fi
 
-    grep -E '^alias ' ~/.zshrc | sort
+    # filter for aliases defined in ~/.zshrc
+    # sort the output
+    # remove leading whitespace
+    grep -P '^\S*alias .+=.+$' ~/.zshrc | sort | awk '{$1=$1};1'
 }
 function get-functions-dotfiles {
     if [ -n "$1" ]; then

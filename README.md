@@ -130,6 +130,14 @@ dnf install \
   wget
 ```
 
+**Install**
+
+```bash
+curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
+  && /bin/bash /tmp/install.sh \
+  && rm -f /tmp/install.sh
+```
+
 ### Fonts
 
 Replace the default emoji font with one that offers some more colors: Google Noto
@@ -139,12 +147,14 @@ dnf remove gdouros-symbola-fonts
 dnf install google-noto-emoji-color-fonts
 ```
 
-**Install**
+### Remove boot splash screen
+
+So you can see more bootup details.
 
 ```bash
-curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --output /tmp/install.sh \
-  && /bin/bash /tmp/install.sh \
-  && rm -f /tmp/install.sh
+plymouth-set-default-theme details -R
+grubby --update-kernel=ALL --remove-args="quiet"
+grubby --update-kernel=ALL --remove-args="rhgb"
 ```
 
 </details>
@@ -312,6 +322,20 @@ Additionally, all zsh functions from this repo will always show a description of
 | `toluol`             | [toluol](https://crates.io/crates/toluol)                         | A crate for making DNS queries                                                                                                                                 | rust, cli, dig                         |
 | `trippy`             | [trippy](https://crates.io/crates/trippy)                         | A network diagnostic tool                                                                                                                                      | rust, cli, tcp, udp, icmp, ping, probe |
 | `zellij`             | [zellij](https://crates.io/crates/zellij)                         | A terminal workspace with batteries included                                                                                                                   | rust, cli, tmux                        |
+
+### Rust Tools Install Requirements
+
+#### sccache
+
+```bash
+dnf install openssl openssl-devel
+```
+
+#### alacritty
+
+```bash
+dnf install cmake freetype-devel fontconfig-devel libxcb-devel libxkbcommon-devel g++
+```
 
 # VIM / NeoVIM
 
@@ -906,7 +930,7 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 ```
 
-## Gnome Extensions
+## GNOME Extensions
 
 - [Tiling Assistant](https://extensions.gnome.org/extension/3733/tiling-assistant/)
   - Expand GNOME's 2 column tiling and add a Windows-snap-assist-inspired popup
@@ -961,7 +985,7 @@ ln -s left_ptr ur_angle
 
 # Windows
 
-![A meme with three panels, each showing the "blinking white guy meme" (also known as Drew Scanlon Reaction) next to different versions of the Windows logo. Top panel: "Windows 10" logo and Drew Scanlon looking to the same side (left) as the Windows logo. Middle panel: "Windows 11" with Drew Scanlon looking straight at the viewer. Bottom panel: "Windows 12" with Drew Scanlon looking to the rightlooking to the.](https://compilenix.org/windows%2012%20meme.jpg)
+![A meme with three panels, each showing the "blinking white guy meme" (also known as Drew Scanlon Reaction) next to different versions of the Windows logo. Top panel: "Windows 10" logo and Drew Scanlon looking to the same side (left) as the Windows logo. Middle panel: "Windows 11" with Drew Scanlon looking straight at the viewer. Bottom panel: "Windows 12" with Drew Scanlon looking to the right side.](https://compilenix.org/windows%2012%20meme.jpg)
 
 ## Tools / Software
 
@@ -970,5 +994,5 @@ ln -s left_ptr ur_angle
 - [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer): more advanced Task Manager
 - [TeraCopy](https://www.codesector.com/teracopy): better file copy & move
 - [NetLimiter](https://www.netlimiter.com/): alternative firewall (not based on Windows Firewall)
-- [DiskUsage](https://github.com/menees/DiskUsage): A Windows utility to show disk usage in a treemap
+- [DiskUsage](https://github.com/menees/DiskUsage): A Windows utility to show disk usage in a tree map
 

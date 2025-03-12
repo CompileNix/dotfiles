@@ -848,9 +848,11 @@ Install:
 
 ```bash
 # switch the input focus on mouse hover, without clicking, like in i3 and SwayWM
-gsettings set org.gnome.desktop.wm.preferences focus-mode 'mouse' # this also unfocuses a window when mouse moves out (i.e. to desktop bg)
-gsettings set org.gnome.desktop.wm.preferences focus-new-windows 'strict' # don't focus new windows (that aren't under the mouse)
+gsettings set org.gnome.desktop.wm.preferences focus-mode 'sloppy' # this also unfocuses a window when mouse moves out (i.e. to desktop bg)
+gsettings set org.gnome.desktop.wm.preferences focus-new-windows 'smart' # don't focus new windows (that aren't under the mouse)
 gsettings set org.gnome.mutter focus-change-on-pointer-rest false # don't wait for the mouse to stay still until focus
+
+gsettings set org.gnome.mutter center-new-windows true
 
 # Disable "hot corner"
 gsettings set org.gnome.desktop.interface enable-hot-corners false

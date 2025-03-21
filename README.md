@@ -985,6 +985,44 @@ ln -s left_ptr ul_angle
 ln -s left_ptr ur_angle
 ```
 
+# How to keep using ad blockers on chrome and chromium
+
+1. google's manifest v3 has no analogue to the `webRequestBlocking` API, which is necessary for (effective) ad blockers to work
+2. starting in chrome version 127, the transition to mv3 will start cutting off the use of mv2 extensions altogether
+3. this will inevitably piss of enterprises when their extensions don't work, so the `ExtensionManifestV2Availability` key was added and will presumably stay forever after enterprises complain enough
+
+You can use this as a regular user, which will let you keep your mv2 extensions even after they're supposed to stop working
+
+## Linux
+
+In a terminal, run:
+
+```bash
+sudo mkdir -p /etc/opt/chrome/policies/managed /etc/opt/chromium/policies/managed
+echo '{ "ExtensionManifestV2Availability": 2 }' | sudo tee /etc/opt/chrome/policies/managed/policy.json /etc/opt/chromium/policies/managed/policy.json
+```
+
+## ChromeOS
+
+- enable developer mode
+- upon rebooting, go into vt2 (shift+ctrl+right arrow function key)
+- log in as root
+- type in `/usr/libexec/debugd/helpers/dev_features_rootfs_verification && reboot`
+- upon rebooting, go into vt2 again and log in as root
+- run the commands from the linux section
+
+## Windows
+
+Open `regedit`, and create `Software\Policies\Google\Chrome\ExtensionManifestV2Availability` in `HKEY_LOCAL_MACHINE` as a dword set to `0x00000002`
+
+## MacOS
+
+In a terminal, run:
+- `defaults write com.google.Chrome ExtensionManifestV2Availability -int 2`
+- `defaults write com.google.Chromium ExtensionManifestV2Availability -int 2`
+
+(note that i haven't tested this for mac. please let me know if it doesn't work)
+
 # Windows
 
 ![A meme with three panels, each showing the "blinking white guy meme" (also known as Drew Scanlon Reaction) next to different versions of the Windows logo. Top panel: "Windows 10" logo and Drew Scanlon looking to the same side (left) as the Windows logo. Middle panel: "Windows 11" with Drew Scanlon looking straight at the viewer. Bottom panel: "Windows 12" with Drew Scanlon looking to the right side.](https://compilenix.org/windows%2012%20meme.jpg)

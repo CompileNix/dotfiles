@@ -951,6 +951,34 @@ gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 - [Grand Theft Focus](https://extensions.gnome.org/extension/5410/grand-theft-focus/)
   - Removes the 'Window is ready' notification and brings the window into focus instead.
 
+## Gnome Environment
+
+The configuration of systemd user environment variables, which get inherited by all processes in the gnome session.
+
+```bash
+mkdir -pv ~/.config/systemd/user-environment.d
+
+cat <<'EOF' > ~/.config/systemd/user-environment.d/rust.conf
+CARGO_BUILD_JOBS=16
+RUSTFLAGS="-C target-cpu=native"
+
+# requires `cargo install sccache`
+# adjust path to your needs
+RUSTC_WRAPPER="/home/kweis/.cargo/bin/sccache"
+
+#CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+#CARGO_PROFILE_RELEASE_LTO=true
+#CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+#CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+
+EOF
+
+cat <<'EOF' > ~/.config/systemd/user-environment.d/dotnet.conf
+DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+EOF
+```
+
 # UI Settings
 
 Using:

@@ -940,6 +940,8 @@ gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 
 ## GNOME Extensions
 
+- [Tactile](https://extensions.gnome.org/extension/4548/tactile/)
+  - Tile windows on a custom grid using your keyboard. Type Super-T to show the grid, then type two tiles (or the same tile twice) to move the active window. The grid can be up to 4x3 (corresponding to one hand on the keyboard) and each row/column can be weighted to take up more or less space.
 - [Tiling Assistant](https://extensions.gnome.org/extension/3733/tiling-assistant/)
   - Expand GNOME's 2 column tiling and add a Windows-snap-assist-inspired popup
 - [Animation Tweaks](https://extensions.gnome.org/extension/1680/animation-tweaks/)
@@ -950,6 +952,13 @@ gsettings set org.gnome.desktop.privacy remove-old-temp-files true
   - A complete implementation of KDE Connect
 - [Grand Theft Focus](https://extensions.gnome.org/extension/5410/grand-theft-focus/)
   - Removes the 'Window is ready' notification and brings the window into focus instead.
+
+### Load Extensions Config
+
+```bash
+dconf load /org/gnome/shell/extensions/ < ~/dotfiles/dconf/extensions.dconf
+dconf load /org/gnome/desktop/wm/keybindings/ < ~/dotfiles/dconf/keybindings.dconf
+```
 
 ## Gnome Environment
 

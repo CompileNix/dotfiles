@@ -228,6 +228,11 @@ if which bat &>/dev/null; then
     alias bat='bat --decorations never'
     alias cat='bat --paging=never'
 fi
+# Debian renamed the executable because it conflicts with another package
+if which batcat &>/dev/null; then
+    alias bat='batcat --decorations never'
+    alias cat='bat --paging=never'
+fi
 alias htop='htop -d 10'
 alias iotop='iotop -d 1 -P -o'
 alias rsync="rsync --progress --numeric-ids --human-readable --copy-links --hard-links"

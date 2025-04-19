@@ -432,8 +432,8 @@ cat << EOF | tee $HOME/.gitconfig_include >/dev/null
 
 #[user]
 #    name = CompileNix
-#    email = compilenix@gmail.com
-#    signingkey = C94DD853DD6493CCC47C8C853C713073CAC92AE0
+#    email = git-cf33ztsi@compilenix.org
+#    signingkey = 0x6E5C5C563E4A49FF
 
 # https://help.github.com/articles/signing-commits-using-gpg/
 [commit]

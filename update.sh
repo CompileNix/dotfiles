@@ -403,8 +403,62 @@ if [ ! -f "$HOME/.tmux.conf_include" ]; then
 fi
 
 if [ ! -f "$HOME/.alacritty_include.toml" ]; then
-    echo "create ~/.alacritty_include.toml"
-    touch "$HOME/.alacritty_include.toml"
+echo "create ~/.alacritty_include.toml"
+cat << 'EOF' | tee $HOME/.alacritty_include.toml >/dev/null
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "0x7f7f7f"
+blue = "0x82baff"
+cyan = "0x00ffff"
+green = "0x00ff00"
+magenta = "0xff00ff"
+red = "0xff0000"
+white = "0xffffff"
+yellow = "0xffff00"
+
+[colors.normal]
+black = "0x000000"
+blue = "0x2a7bde"
+cyan = "0x00cdcd"
+green = "0x00cd00"
+magenta = "0xcd00cd"
+red = "0xcd0000"
+white = "0xe5e5e5"
+yellow = "0xcdcd00"
+
+[colors.primary]
+background = "0x000000"
+foreground = "0xffffff"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 14
+
+[font.normal]
+family = "Source Code Pro"
+
+[selection]
+semantic_escape_chars = ",│`|:;\"'‘’ ()[]{}<>\t*@"
+
+[window]
+decorations = "none"
+dynamic_title = true
+opacity = 1.0
+startup_mode = "Windowed"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
+[window.dimensions]
+columns = 255
+lines = 60
+
+EOF
 fi
 
 if [ ! -f "$HOME/.zshrc.env" ]; then

@@ -1348,6 +1348,8 @@ EOF
 }
 chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
 
+export COMPOSE_BAKE=true
+
 source "$HOME/.zshrc_include"
 
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then

@@ -99,7 +99,7 @@ unset unameOut
 
 if [[ $operatingSystem == "Linux" ]]; then
     n=$(nice)
-    # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
+    # increase process priority if user is root, this is useful if you're login in while the system is under high load
     if [[ $EUID -eq 0 ]]; then
         renice -n -20 $$ >/dev/null 2>&1
         ionice -c 2 -n 0 -p $$ >/dev/null 2>&1
@@ -170,7 +170,7 @@ alias get-distro-name="echo $distro"
 function ask_yn {
     if [ -n "$1" ]; then
         cat << EOF
-Function to interactivly ask a simple "YES / NO" question with.
+Function to interactively ask a simple "YES / NO" question with.
 
 Usage:
  - Define "Yes" branch function like:
@@ -292,7 +292,7 @@ EOF
 function set-dns-query-stats-disable {
     if [ -n "$1" ]; then
         cat << EOF
-Remove "+stats" for "get-dns" function invcations.
+Remove "+stats" for "get-dns" function invocations.
 
 Usage: $(echo $funcstack[-1])
 EOF
@@ -336,7 +336,7 @@ alias invoke-dns-reload='rndc reload'
 function compare-dns-soa-rr {
     if [ -n "$1" ]; then
         cat << EOF
-Function to fetch and compare DNS SOA RR from differend dns servers.
+Function to fetch and compare DNS SOA RR from different dns servers.
 
 Requirements:
 - dig
@@ -425,7 +425,7 @@ EOF
 function get-debian-package-updates {
     if [ -n "$1" ]; then
         cat << EOF
-List all avaliable debian package updates.
+List all available debian package updates.
 
 Requirements:
 - apt
@@ -637,7 +637,7 @@ EOF
         update-dotfiles-non-interactive
     }
     function ask_yn_n_callback {
-        # remove avaliable update indcator
+        # remove available update indicator
         if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
             rm "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" 2>/dev/null
         fi
@@ -945,7 +945,7 @@ alias virtualenv='python3 -m venv'
 function format-text-lines-tabbed-into-table {
     if [ -n "$1" ]; then
         cat << EOF
-Function to format multilined text into a table, separated by tabs.
+Function to format multiline text into a table, separated by tabs.
 
 Can be used in a pipe.
 
@@ -978,7 +978,7 @@ EOF
 function format-text-lines-spaced-into-table {
     if [ -n "$1" ]; then
         cat << EOF
-Function to format multilined text into a table, separated by spaces.
+Function to format multiline text into a table, separated by spaces.
 
 Can be used in a pipe.
 
@@ -1455,10 +1455,10 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
-# file rename magick
+# file rename magic
 bindkey "^[m" copy-prev-shell-word
 
-bindkey '^H' backward-kill-word # Ctrl+Backspacce
+bindkey '^H' backward-kill-word # Ctrl+Backspace
 
 bindkey '^n' expand-or-complete
 bindkey '^p' reverse-menu-complete
@@ -1556,7 +1556,7 @@ _update_zcomp() {
     setopt extendedglob
     local zcompf="$1/zcompdump"
     # use a separate file to determine when to regenerate, as compinit doesn't
-    # always need to modify the compdump
+    # always need to modify the zcompdump
     local zcompf_a="${zcompf}.augur"
 
     if [[ -e "$zcompf_a" && -f "$zcompf_a"(#qN.md-1) ]]; then
@@ -1625,7 +1625,7 @@ unset n
 if [[ "$ENABLE_ZSH_ASYNC_UPDATE_CHECK" = "true" ]]; then
     test-dotfiles-updates() {
         if [ -f "/tmp/$USER-zsh-dotfiles-async-update-check.lock" ]; then
-            # another process execting this function is already present
+            # another process expecting this function is already present
             return
         fi
         if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
@@ -1656,7 +1656,7 @@ fi
 # check if an indicator for dotfiles updates exists and if so, prompt the user
 if [ -f "/tmp/$USER-zsh-dotfiles-async-update-exists.yep" ]; then
     if [ ! -f "/tmp/$USER-zsh-dotfiles-async-update-check.disabled" ]; then
-        echo "🎉 There are dotfiles updates availabe 🎉"
+        echo "🎉 There are dotfiles updates available 🎉"
         cd "$HOME/dotfiles"
         echo "Downloading updates..."
         git fetch --all
@@ -1713,4 +1713,3 @@ if atuin_loc="$(type -p "atuin")" || [[ -z $atuin_loc ]]; then
 fi
 
 [ -z "$ZPROF" ] || zprof
-

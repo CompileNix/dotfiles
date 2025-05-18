@@ -94,7 +94,7 @@ dnf install \
   git \
   python3 \
   python3-pyyaml \
-  redhat-lsb-core \
+  redhat-lsb \
   which \
   zsh \
   zsh-autosuggestions \

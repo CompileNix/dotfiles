@@ -282,7 +282,7 @@ if [ -f "$HOME/bin_dotfiles/xinitrc_reset" ]; then
         rm -v "$HOME/bin_dotfiles/xinitrc_reset"
     fi
 fi
-# Remove old dotfiles and homeshick
+# Remove old dotfiles and homesick
 if [ -d "$HOME/.homesick" ]; then
     rm -rf "$HOME/.homesick"
     echo "removed directory '$HOME/.homesick'"

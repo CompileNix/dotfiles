@@ -1,4 +1,4 @@
-FROM fedora:39
+FROM fedora:42
 ENV TZ="UTC"
 WORKDIR /root
 COPY ./docker.bash_history .bash_history
@@ -10,7 +10,7 @@ RUN dnf install -y \
   git \
   python3 \
   python3-pyyaml \
-  redhat-lsb-core \
+  redhat-lsb \
   which \
   zsh \
   zsh-autosuggestions \

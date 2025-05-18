@@ -85,8 +85,6 @@ function SaveAsRoot()
 endfunction
 command -bar -nargs=0 SaveAsRoot call SaveAsRoot()
 
-set pastetoggle=<F11>
-
 if has('persistent_undo')
     set undofile " keep an undo file (undo changes after closing)
 endif

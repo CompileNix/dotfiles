@@ -537,7 +537,8 @@ EOF
     fi
 
     set -x
-    sudo dnf update --refresh
+    sudo dnf makecache
+    sudo dnf update
     sudo dnf autoremove
     set +x
 }

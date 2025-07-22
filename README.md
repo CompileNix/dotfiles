@@ -61,7 +61,7 @@ apt install \
   neovim \
   net-tools \
   rsync \
-  sqlite \
+  sqlite3 \
   sudo \
   systemd-coredump \
   tmux \

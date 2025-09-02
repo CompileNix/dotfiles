@@ -849,6 +849,8 @@ alias reload-systemd-units='systemctl daemon-reload'
 alias get-kernel-psi='for i in /proc/pressure/*; do echo $(basename $i); cat $i; echo; done'
 alias sctl='systemctl'
 alias jctl='journalctl'
+alias virtualenv='python3 -m venv'
+alias ip6='ip -6'
 function get-time-chrony-status {
     if [ -n "$1" ]; then
         cat << EOF
@@ -944,7 +946,6 @@ EOF
 
     awk '{ print strftime("[%F %X %Z]:"), $0; fflush(); }'
 }
-alias virtualenv='python3 -m venv'
 function format-text-lines-tabbed-into-table {
     if [ -n "$1" ]; then
         cat << EOF

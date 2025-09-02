@@ -329,8 +329,26 @@ EOF
 set-dns-query-stats-enable
 set-dns-query-additional-enable
 alias get-dns="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer"
-alias get-dns-dnssec="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer +dnssec"
-alias get-dns-dnssec-verify="dig +noall \$(echo \$dns_query_stats) \$(echo \$dns_query_additional) +answer +dnssec +sigchase"
+function get-dns-host {
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        echo -e "$(cat << EOF
+Function to fetch A and AAAA DNS RR's.
+
+Requirements:
+- dig
+
+Example usage: ${Green}$(echo $funcstack[-1])${Color_Reset} example.com
+EOF
+)"
+        return 1
+    fi
+
+    local dns_host="$1"
+    dig +noall $(echo $dns_query_additional) +answer AAAA "$dns_host"
+    dig +noall $(echo $dns_query_additional) +answer A "$dns_host"
+}
+alias get-dns-dnssec="get-dns +answer +dnssec"
+alias get-dns-dnssec-verify="get-dns +answer +dnssec +sigchase"
 alias invoke-dns-retransfer='rndc retransfer'
 alias invoke-dns-reload='rndc reload'
 function compare-dns-soa-rr {

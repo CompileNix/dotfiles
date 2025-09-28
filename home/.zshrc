@@ -235,7 +235,7 @@ if which batcat &>/dev/null; then
 fi
 alias htop='htop -d 10'
 alias iotop='iotop -d 1 -P -o'
-alias iotopd='bash -c "sudo sysctl kernel.task_delayacct=1 && sudo iotop ; sudo sysctl kernel.task_delayacct=0"'
+alias iotopd='bash -c "sudo sysctl kernel.task_delayacct=1 && sudo iotop -d 1 -P -o; sudo sysctl kernel.task_delayacct=0"'
 alias rsync="rsync --progress --numeric-ids --human-readable --copy-links --hard-links --stats"
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read()));"'

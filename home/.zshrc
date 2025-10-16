@@ -345,8 +345,9 @@ EOF
     fi
 
     local dns_host="$1"
-    dig +noall $(echo $dns_query_additional) +answer AAAA "$dns_host"
-    dig +noall $(echo $dns_query_additional) +answer A "$dns_host"
+    shift 1
+    dig +noall $(echo $dns_query_additional) +answer AAAA "$dns_host" "$@"
+    dig +noall $(echo $dns_query_additional) +answer A "$dns_host" "$@"
 }
 alias get-dns-dnssec="get-dns +answer +dnssec"
 alias get-dns-dnssec-verify="get-dns +answer +dnssec +sigchase"

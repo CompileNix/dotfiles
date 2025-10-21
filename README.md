@@ -4,7 +4,7 @@ Have a look around and feel free to copy the stuff you like 😊
 
 This dotfiles does not download anything during install, update or usage, besides `git clone` and `git fetch / pull` to the git repo.
 
-# Project Links
+## Project Links
 
 - [Git Repo (primary)](https://git.compilenix.org/CompileNix/dotfiles)
 - [Git Repo (mirror - github.com)](https://github.com/CompileNix/dotfiles)
@@ -12,21 +12,21 @@ This dotfiles does not download anything during install, update or usage, beside
 - [Issues](https://git.compilenix.org/CompileNix/dotfiles/-/issues)
 - [Merge Requests / Pull Requests](https://git.compilenix.org/CompileNix/dotfiles/-/merge_requests)
 
-# Install
+## Install
 
 **Keep always an existing terminal open, just in case**
 
 <details>
 <summary>Debian / Ubuntu</summary>
 
-## Debian / Ubuntu
+### Debian / Ubuntu
 
 ```bash
 # How to get rid of purple background color in newt apps? -> https://askubuntu.com/q/750237
 ln -sf /etc/newt/palette.original /etc/alternatives/newt-palette
 ```
 
-### Required Packages
+#### Required Packages
 
 ```bash
 apt install \
@@ -43,7 +43,7 @@ apt install \
   zstd
 ```
 
-### Optional Packages
+#### Optional Packages
 
 ```bash
 apt install \
@@ -83,9 +83,9 @@ curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --outp
 <details>
 <summary>Fedora</summary>
 
-## Fedora
+### Fedora
 
-### Required Packages
+#### Required Packages
 
 ```bash
 dnf install \
@@ -102,7 +102,7 @@ dnf install \
   zstd
 ```
 
-### Optional Packages
+#### Optional Packages
 
 ```bash
 dnf install \
@@ -138,7 +138,7 @@ curl https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh --outp
   && rm -f /tmp/install.sh
 ```
 
-### Fonts
+#### Fonts
 
 Replace the default emoji font with one that offers some more colors: Google Noto
 
@@ -147,7 +147,7 @@ dnf remove gdouros-symbola-fonts
 dnf install google-noto-emoji-color-fonts
 ```
 
-### Remove boot splash screen
+#### Remove boot splash screen
 
 So you can see more bootup details.
 
@@ -162,7 +162,7 @@ grubby --update-kernel=ALL --remove-args="rhgb"
 <details>
 <summary>MacOS</summary>
 
-## MacOS
+### MacOS
 
 ```bash
 # Install Brew
@@ -206,11 +206,11 @@ wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh \
 
 </details>
 
-# Table Of Contents
+## Table Of Contents
 
 [TOC]
 
-# ZSH Prompt
+## ZSH Prompt
 
 I have two options for the zsh prompt built-in: [spaceship-prompt](https://github.com/spaceship-prompt/spaceship-prompt) and my own.
 
@@ -229,7 +229,7 @@ Here is an example, how this looks like:
 
 ![zsh prompt example screenshot](./img/zsh-prompt-1.png)
 
-# Add Your Local Changes
+## Add Your Local Changes
 
 Some configs do support including your (local) changes and overrides, such that they less likely clash with dotfiles updates. Here are the supported tools and configs and how to add your own changes for them:
 
@@ -241,21 +241,21 @@ Some configs do support including your (local) changes and overrides, such that 
 | `.zlogout`   | `~/.zlogout_include`. A place for logout tasks & actions                                                                  |
 | `.zshrc`     | `~/.zshrc_include`. This get's included after all aliases and functions are defined and before the shell prompt is set-up |
 
-# Automatic Updates
+## Automatic Updates
 
 This dotfiles repo does async background update checks, by default, using `git fetch` every time a new shell is started. You'll find the code for this in [home/.zshrc](./home/.zshrc), the zsh function named `test-dotfiles-updates` is called in the background during shell startup and if there is an update in the git repo it will create the temporary file `/tmp/$USER-zsh-dotfiles-async-update-exists.yep`.
 
 When the update check did find some updates in the git repo, it'll show you the git log and ask you if you'd like to pull / merge these changes.
 
-## Disable Automatic Update Checks Permanently
+### Disable Automatic Update Checks Permanently
 
 If you'd like to fully disable this, set `ENABLE_ZSH_ASYNC_UPDATE_CHECK=false` in `~/.zshrc.env`.
 
-## Disable Automatic Update Checks temporarily
+### Disable Automatic Update Checks temporarily
 
 Use the zsh alias `disable-dotfiles-update-prompt-temp` to disable checking for updates, until either the next reboot or removal of the file `/tmp/$USER-zsh-dotfiles-async-update-check.disabled`.
 
-# ZSH Functions And Aliases
+## ZSH Functions And Aliases
 
 I've added a lot of aliases and functions over the time. To list the functions and aliases, from this repo run `get-functions-dotfiles` and `get-aliases-dotfiles`.
 
@@ -263,7 +263,7 @@ Most of my aliases and zsh functions are named in a similar structure as Powersh
 
 Additionally, all zsh functions from this repo will always show a description of the function on missing arguments or when given `--help` and `-h`.
 
-# Tools
+## Tools
 
 | Name                                                            | Description                                                                                                          | Additional Tags                                                                                |
 | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
@@ -287,7 +287,7 @@ Additionally, all zsh functions from this repo will always show a description of
 | [Photopea](https://www.photopea.com)                            | web-based photo and graphics editor supporting Photoshop's PSD as well as JPEG, PNG, DNG, GIF, SVG, PDF and others   | website                                                                                        |
 | [Bruno](https://www.usebruno.com)                               | Re-Inventing the API Client. Bruno is a Git-integrated, fully offline, and open-source API client                    | gui, cli, http, test, postman                                                                  |
 
-## Rust Tools
+### Rust Tools
 
 | Command              | Crates.io Link                                                    | Description                                                                                                                                                    | Additional Tags                        |
 | :------------------- | :---------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------- |
@@ -325,23 +325,23 @@ Additionally, all zsh functions from this repo will always show a description of
 | `trippy`             | [trippy](https://crates.io/crates/trippy)                         | A network diagnostic tool                                                                                                                                      | rust, cli, tcp, udp, icmp, ping, probe |
 | `zellij`             | [zellij](https://crates.io/crates/zellij)                         | A terminal workspace with batteries included                                                                                                                   | rust, cli, tmux                        |
 
-### Rust Tools Install Requirements
+#### Rust Tools Install Requirements
 
-#### sccache
+##### sccache
 
 ```bash
 dnf install openssl openssl-devel
 ```
 
-#### alacritty
+##### alacritty
 
 ```bash
 dnf install cmake freetype-devel fontconfig-devel libxcb-devel libxkbcommon-devel g++
 ```
 
-# VIM / NeoVIM
+## VIM / NeoVIM
 
-## Keybinds
+### Keybinds
 
 Most of them are just the default binds and this just serves as a reminder for the ones I find useful to know and want to remember better.
 
@@ -354,7 +354,7 @@ Most of them are just the default binds and this just serves as a reminder for t
 | V: gq                      | Wrap text according to `textwidth`        | [Format lines with &#39;gq&#39; in Vim](https://www.programmerhat.com/vim-gq/)                                                                                                                                                                                   |
 | V: =                       | Apply text format according to `filetype` | Correct alignment of code                                                                                                                                                                                                                                        |
 
-## File Options
+### File Options
 
 Some options I often use in modelines.
 
@@ -367,15 +367,15 @@ Some options I often use in modelines.
 | `:set filetype?`       | show current filetype                           |
 | `:set filetype=python` | Override default filetype detection             |
 
-# Additional Plugins Setup for NeoVIM Setup
+## Additional Plugins Setup for NeoVIM Setup
 
-## Install vim-plug
+### Install vim-plug
 
 ```bash
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 ```
 
-## Install Dependencies
+### Install Dependencies
 
 NodeJS is required for [coc.nvim](https://github.com/neoclide/coc.nvim/).
 
@@ -383,7 +383,7 @@ NodeJS is required for [coc.nvim](https://github.com/neoclide/coc.nvim/).
 dnf install nodejs
 ```
 
-## Update `~/.vimrc_include`
+### Update `~/.vimrc_include`
 
 <details>
 <summary>contents</summary>
@@ -476,9 +476,9 @@ Save the config and install the plugins, using the commands inside vim
 :PlugInstall
 ```
 
-## Plugins
+### Plugins
 
-## CoC JSON
+### CoC JSON
 
 Install in Vim
 
@@ -486,7 +486,7 @@ Install in Vim
 :CocInstall coc-json
 ```
 
-## Rust Language Server Plugin (LSP)
+### Rust Language Server Plugin (LSP)
 
 ```
 :CocInstall coc-rust-analyzer
@@ -525,7 +525,7 @@ JSON snippet to add
 }
 ```
 
-### Update `~/.vimrc_include`
+#### Update `~/.vimrc_include`
 
 <details>
 <summary>contents</summary>
@@ -543,7 +543,7 @@ let g:rustfmt_fail_silently = 0
 
 </details>
 
-## Bash LSP
+### Bash LSP
 
 Install in Vim
 
@@ -551,7 +551,7 @@ Install in Vim
 :CocInstall coc-sh
 ```
 
-## Dockerfile LSP
+### Dockerfile LSP
 
 Install LSP in shell
 
@@ -577,7 +577,7 @@ JSON snippet to add
 }
 ```
 
-## JavaScript / TypeScript LSP
+### JavaScript / TypeScript LSP
 
 Install LSP in VIM
 
@@ -585,7 +585,7 @@ Install LSP in VIM
 :CocInstall coc-tsserver
 ```
 
-## Markdown LSP
+### Markdown LSP
 
 Install LSP in VIM
 
@@ -593,12 +593,12 @@ Install LSP in VIM
 :CocInstall coc-markdownlint
 ```
 
-## Markdown Composer
+### Markdown Composer
 
 [vim-markdown-composer](https://github.com/euclio/vim-markdown-composer)
 An asynchronous markdown preview plugin for Vim and Neovim.
 
-### Update `~/.vimrc_include`
+#### Update `~/.vimrc_include`
 
 <details>
 <summary>contents</summary>
@@ -631,7 +631,7 @@ Because the markdown composer does not autostart, here is the vim command for it
 :ComposerStart
 ```
 
-## PHP LSP
+### PHP LSP
 
 Install LSP in shell
 
@@ -660,7 +660,7 @@ JSON snippet to add
 }
 ```
 
-## Python LSP
+### Python LSP
 
 Configure CoC
 
@@ -668,9 +668,9 @@ Configure CoC
 :CocInstall coc-pyright
 ```
 
-## Comment in and out
+### Comment in and out
 
-### Update `~/.vimrc_include`
+#### Update `~/.vimrc_include`
 
 <details>
 <summary>contents</summary>
@@ -687,9 +687,9 @@ vmap <leader>c <Plug>ToggleCommaround
 
 </details>
 
-## Treesitter
+### Treesitter
 
-### Update `~/.vimrc_include`
+#### Update `~/.vimrc_include`
 
 <details>
 <summary>contents</summary>
@@ -719,7 +719,15 @@ Install language parsers
 ss sql toml typescript vue yaml
 ```
 
-# SwayWM
+## KDE
+
+### Alt+Tab window switcher only show windows of the current monitor
+
+Settings -> Window Manager Settings -> Window Behavior -> Task Switcher -> Main -> Screens checkbox
+
+Source: [reddit.com/r/kde](https://www.reddit.com/r/kde/comments/ktykjm/can_i_make_the_alttab_window_switcher_only_show/)
+
+## SwayWM
 
 - ImageMagick (for screen lock image processing)
 - dmenu
@@ -743,7 +751,7 @@ ss sql toml typescript vue yaml
 - wf-recorder (cli screen recorder, obs doesn't work)
 - wl-clipboard
 
-# X11 .xinitrc
+## X11 .xinitrc
 
 - i3
 - xrdb
@@ -763,13 +771,13 @@ ss sql toml typescript vue yaml
 - gimp
 - thunar (filemanager)
 
-# Update
+## Update
 
 Use the zsh function `update-dotfiles`.
 
 If you have a really old version, you may need to update it manually.
 
-## Manual Update
+### Manual Update
 
 Copy and paste into terminal, after that start a new (separat) terminal / session to verify everything worked out fine.
 
@@ -785,7 +793,7 @@ exit
 zsh
 ```
 
-## Update Spaceship Prompt Plugin
+### Update Spaceship Prompt Plugin
 
 ```bash
 cd ~/dotfiles
@@ -808,7 +816,7 @@ unset commit_id
 rm -rf "$temp_dir"
 ```
 
-# Test / Build / Dev
+## Test / Build / Dev
 
 - Comment out "git clone" in install.sh
 - Comment out "git reset --hard" in home/.zshrc
@@ -830,7 +838,7 @@ docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:fedora
 # Run zsh
 ```
 
-# Sway Desktop Notifications (Wayland)
+## Sway Desktop Notifications (Wayland)
 
 Install:
 
@@ -838,7 +846,7 @@ Install:
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
-# i3 Desktop Notifications (X11)
+## i3 Desktop Notifications (X11)
 
 Install:
 
@@ -846,7 +854,7 @@ Install:
 - [notify-send.py](https://github.com/phuhl/notify-send.py) via `pip install notify-send.py --user`
 - amixer
 
-# GNOME Settings
+## GNOME Settings
 
 ```bash
 # switch the input focus on mouse hover, without clicking, like in i3 and SwayWM
@@ -940,7 +948,7 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 ```
 
-## GNOME Extensions
+### GNOME Extensions
 
 - [Tactile](https://extensions.gnome.org/extension/4548/tactile/)
   - Tile windows on a custom grid using your keyboard. Type Super-T to show the grid, then type two tiles (or the same tile twice) to move the active window. The grid can be up to 4x3 (corresponding to one hand on the keyboard) and each row/column can be weighted to take up more or less space.
@@ -955,14 +963,14 @@ gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 - [Grand Theft Focus](https://extensions.gnome.org/extension/5410/grand-theft-focus/)
   - Removes the 'Window is ready' notification and brings the window into focus instead.
 
-### Load Extensions Config
+#### Load Extensions Config
 
 ```bash
 dconf load /org/gnome/shell/extensions/ < ~/dotfiles/dconf/extensions.dconf
 dconf load /org/gnome/desktop/wm/keybindings/ < ~/dotfiles/dconf/keybindings.dconf
 ```
 
-## Gnome Environment
+### Gnome Environment
 
 The configuration of systemd user environment variables, which get inherited by all processes in the gnome session.
 
@@ -990,14 +998,14 @@ DOTNET_CLI_TELEMETRY_OPTOUT=1
 EOF
 ```
 
-# UI Settings
+## UI Settings
 
 Using:
 
 - `lxappearance`
 - Default Font: Helvetica LT Pro 11
 
-## Replace text cursor with regular mouse pointer
+### Replace text cursor with regular mouse pointer
 
 ```bash
 cd /usr/share/icons/Adwaita/cursors/
@@ -1005,14 +1013,14 @@ ln -sf left_ptr text
 ln -sf left_ptr xterm
 ```
 
-## GTK Themes
+### GTK Themes
 
 - [Azure](https://github.com/vinceliuice/Azure-theme)
 - [Arc-Dark-OSX](https://github.com/Dr-Noob/Arc-Dark-OSX)
 
-## Troubleshooting
+### Troubleshooting
 
-### Create links to missing cursors
+#### Create links to missing cursors
 
 ```bash
 cd ~/.icons/theme/cursors/
@@ -1030,7 +1038,7 @@ ln -s left_ptr ul_angle
 ln -s left_ptr ur_angle
 ```
 
-# How to keep using ad blockers on chrome and chromium
+## How to keep using ad blockers on chrome and chromium
 
 1. google's manifest v3 has no analogue to the `webRequestBlocking` API, which is necessary for (effective) ad blockers to work
 2. starting in chrome version 127, the transition to mv3 will start cutting off the use of mv2 extensions altogether
@@ -1038,7 +1046,7 @@ ln -s left_ptr ur_angle
 
 You can use this as a regular user, which will let you keep your mv2 extensions even after they're supposed to stop working
 
-## Linux
+### Linux
 
 In a terminal, run:
 
@@ -1047,7 +1055,7 @@ sudo mkdir -p /etc/opt/chrome/policies/managed /etc/opt/chromium/policies/manage
 echo '{ "ExtensionManifestV2Availability": 2 }' | sudo tee /etc/opt/chrome/policies/managed/policy.json /etc/opt/chromium/policies/managed/policy.json
 ```
 
-## ChromeOS
+### ChromeOS
 
 - enable developer mode
 - upon rebooting, go into vt2 (shift+ctrl+right arrow function key)
@@ -1056,11 +1064,11 @@ echo '{ "ExtensionManifestV2Availability": 2 }' | sudo tee /etc/opt/chrome/polic
 - upon rebooting, go into vt2 again and log in as root
 - run the commands from the linux section
 
-## Windows
+### Windows
 
 Open `regedit`, and create `Software\Policies\Google\Chrome\ExtensionManifestV2Availability` in `HKEY_LOCAL_MACHINE` as a dword set to `0x00000002`
 
-## MacOS
+### MacOS
 
 In a terminal, run:
 - `defaults write com.google.Chrome ExtensionManifestV2Availability -int 2`
@@ -1068,11 +1076,11 @@ In a terminal, run:
 
 (note that i haven't tested this for mac. please let me know if it doesn't work)
 
-# Windows
+## Windows
 
 ![A meme with three panels, each showing the "blinking white guy meme" (also known as Drew Scanlon Reaction) next to different versions of the Windows logo. Top panel: "Windows 10" logo and Drew Scanlon looking to the same side (left) as the Windows logo. Middle panel: "Windows 11" with Drew Scanlon looking straight at the viewer. Bottom panel: "Windows 12" with Drew Scanlon looking to the right side.](https://compilenix.org/windows%2012%20meme.jpg)
 
-## Tools / Software
+### Tools / Software
 
 - [VeraCrypt](https://veracrypt.fr/): Free open source disk encryption software for Windows, Mac OSX and Linux
 - [7-ZIP](https://www.7-zip.org/): archive file management
@@ -1080,4 +1088,3 @@ In a terminal, run:
 - [TeraCopy](https://www.codesector.com/teracopy): better file copy & move
 - [NetLimiter](https://www.netlimiter.com/): alternative firewall (not based on Windows Firewall)
 - [DiskUsage](https://github.com/menees/DiskUsage): A Windows utility to show disk usage in a tree map
-

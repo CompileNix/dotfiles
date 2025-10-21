@@ -1112,7 +1112,7 @@ EOF
     exec zsh
 }
 
-export PATH="./node_modules/.bin:$HOME/node_modules/.bin:$HOME/bin:$HOME/dotfiles_bin:$HOME/.cargo/bin:$HOME/.dotnet/tools:$HOME/.local/bin:/usr/lib/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="./node_modules/.bin:$HOME/node_modules/.bin:$HOME/bin:$HOME/dotfiles_bin:$HOME/.cargo/bin:$HOME/.dotnet/tools:$HOME/.local/bin:/usr/lib/node_modules/.bin:/usr/local/sbin:/usr/local/bin:$PATH"
 unalias vim 2>/dev/null
 alias vim='nvim'
 export EDITOR='nvim'

@@ -108,7 +108,7 @@ dnf install \
 dnf install \
   NetworkManager-tui \
   acl \
-  bind-utils \
+  bind9-next-utils \
   dua-cli \
   findutils \
   htop \

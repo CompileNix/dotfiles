@@ -261,7 +261,7 @@ alias watch-mem-dirty='watch -n 1 "cat /proc/meminfo | grep Dirty"'
 alias get-date='date +"%Y-%m-%d.%H%M"'
 alias get-date-unixtime='date +%s'
 alias get-date-from-unixtime='read a; date -d @$a'
-alias get-date-hex='get-date | xargs printf "%x\n"'
+# alias get-date-hex='get-date | xargs printf "%x\n"' # printf value not completely converted
 alias get-date-from-hex-unixtime='read a; echo $a | echo $((16#$_))'
 alias get-date-from-hex='get-date-from-hex-unixtime | date -d @$_'
 alias get-date-rfc-5322='date --rfc-email'
@@ -275,6 +275,33 @@ alias get-date-iso-8601-day='date --iso-8601=date'
 alias get-date-iso-8601-hour='date --iso-8601=hours'
 alias get-date-iso-8601-second='date --iso-8601=seconds'
 alias get-date-iso-8601-ns='date --iso-8601=ns'
+function get-date-all-formats {
+    if [ -n "$1" ]; then
+        cat << EOF
+Print the current date and time in all formats for which there is an zsh alias.
+
+Usage: $(echo $funcstack[-1])
+EOF
+        return 1
+    fi
+    echo -n "get-date:\t\t  "; get-date
+    echo -n "get-date-unixtime:\t  "; get-date-unixtime
+    # echo -n "get-date-from-unixtime: "; get-date-from-unixtime
+    # echo -n "get-date-hex: "; get-date-hex # broken
+    # echo -n "get-date-from-hex-unixtime: "; get-date-from-hex-unixtime
+    # echo -n "get-date-from-hex: "; get-date-from-hex
+    echo -n "get-date-rfc-5322:\t  "; get-date-rfc-5322
+    echo -n "get-date-rfc-email:\t  "; get-date-rfc-email
+    echo -n "get-date-rfc-2616:\t  "; get-date-rfc-2616
+    echo -n "get-date-rfc-http:\t  "; get-date-rfc-http
+    echo -n "get-date-rfc-3339-day:\t  "; get-date-rfc-3339-day
+    echo -n "get-date-rfc-3339-second: "; get-date-rfc-3339-second
+    echo -n "get-date-rfc-3339-ns:\t  "; get-date-rfc-3339-ns
+    echo -n "get-date-iso-8601-day:\t  "; get-date-iso-8601-day
+    echo -n "get-date-iso-8601-hour:\t  "; get-date-iso-8601-hour
+    echo -n "get-date-iso-8601-second: "; get-date-iso-8601-second
+    echo -n "get-date-iso-8601-ns:\t  "; get-date-iso-8601-ns
+}
 alias get-calendar='cal --monday --week'
 alias get-calendar-year='get-calendar --year'
 alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'

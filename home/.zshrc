@@ -284,23 +284,7 @@ Usage: $(echo $funcstack[-1])
 EOF
         return 1
     fi
-    echo -n "get-date:\t\t  "; get-date
-    echo -n "get-date-unixtime:\t  "; get-date-unixtime
-    # echo -n "get-date-from-unixtime: "; get-date-from-unixtime
-    # echo -n "get-date-hex: "; get-date-hex # broken
-    # echo -n "get-date-from-hex-unixtime: "; get-date-from-hex-unixtime
-    # echo -n "get-date-from-hex: "; get-date-from-hex
-    echo -n "get-date-rfc-5322:\t  "; get-date-rfc-5322
-    echo -n "get-date-rfc-email:\t  "; get-date-rfc-email
-    echo -n "get-date-rfc-2616:\t  "; get-date-rfc-2616
-    echo -n "get-date-rfc-http:\t  "; get-date-rfc-http
-    echo -n "get-date-rfc-3339-day:\t  "; get-date-rfc-3339-day
-    echo -n "get-date-rfc-3339-second: "; get-date-rfc-3339-second
-    echo -n "get-date-rfc-3339-ns:\t  "; get-date-rfc-3339-ns
-    echo -n "get-date-iso-8601-day:\t  "; get-date-iso-8601-day
-    echo -n "get-date-iso-8601-hour:\t  "; get-date-iso-8601-hour
-    echo -n "get-date-iso-8601-second: "; get-date-iso-8601-second
-    echo -n "get-date-iso-8601-ns:\t  "; get-date-iso-8601-ns
+    echo -e "get-date: $(get-date)\nget-date-unixtime: $(get-date-unixtime)\nget-date-rfc-5322: $(get-date-rfc-5322)\nget-date-rfc-email: $(get-date-rfc-email)\nget-date-rfc-2616: $(get-date-rfc-2616)\nget-date-rfc-http: $(get-date-rfc-http)\nget-date-rfc-3339-day: $(get-date-rfc-3339-day)\nget-date-rfc-3339-second: $(get-date-rfc-3339-second)\nget-date-rfc-3339-ns: $(get-date-rfc-3339-ns)\nget-date-iso-8601-day: $(get-date-iso-8601-day)\nget-date-iso-8601-hour: $(get-date-iso-8601-hour)\nget-date-iso-8601-second: $(get-date-iso-8601-second)\nget-date-iso-8601-ns: $(get-date-iso-8601-ns)\n" | column -t --table-columns-limit 2
 }
 alias get-calendar='cal --monday --week'
 alias get-calendar-year='get-calendar --year'

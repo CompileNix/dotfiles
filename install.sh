@@ -5,9 +5,9 @@ set -e
 
 condition_for_install=1
 if [[ \
-    -f $(which git 2>/dev/null) && \
-    -f $(which zsh 2>/dev/null) && \
-    -f $(which python3 2>/dev/null)
+    -f "$(which git 2>/dev/null)" && \
+    -f "$(which zsh 2>/dev/null)" && \
+    -f "$(which python3 2>/dev/null)"
     ]]; then
 
     condition_for_install=0
@@ -22,10 +22,10 @@ if [[ ${condition_for_install} -eq 0 ]]; then
             ./update.sh
         popd >/dev/null
         if [[ $EUID -eq 0 ]]; then
-            chsh -s /bin/zsh
+            chsh -s "$(which zsh)"
         else
             echo "you are not root, so you are not allowed to change your own shell to zsh"
-            echo 'retry with: sudo chsh -s /bin/zsh "$USER"'
+            echo "retry with: sudo chsh -s \"\$(which zsh)\" "\$USER""
         fi
     popd >/dev/null
 else

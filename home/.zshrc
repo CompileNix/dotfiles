@@ -1386,6 +1386,13 @@ chpwd_functions=(${chpwd_functions[@]} "my-chpwd")
 export COMPOSE_BAKE=true
 
 source "$HOME/.zshrc_include"
+if [ ! -d "$HOME/.zshrc.d" ]; then
+    mkdir "$HOME/.zshrc.d"
+    touch "$HOME/.zshrc.d/00-defaults.sh"
+fi
+for incl in $HOME/.zshrc.d/*.sh; do
+    source "$incl"
+done
 
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     function zle-line-init() {

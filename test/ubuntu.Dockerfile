@@ -18,6 +18,27 @@ RUN apt install -y \
   zsh \
   zsh-autosuggestions \
   zsh-syntax-highlighting \
-  zstd
+  zstd acl \
+  bind9-utils \
+  brotli \
+  gzip \
+  htop \
+  iftop \
+  iotop \
+  jq \
+  logrotate \
+  lsd \
+  ncdu \
+  neovim \
+  net-tools \
+  plocate \
+  rsync \
+  sqlite3 \
+  sudo \
+  systemd-coredump \
+  tmux \
+  unzip \
+  wget \
+  zip
 CMD [ "/bin/bash" ]
 

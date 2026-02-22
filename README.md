@@ -12,6 +12,10 @@ This dotfiles does not download anything during install, update or usage, beside
 - [Issues](https://git.compilenix.org/CompileNix/dotfiles/-/issues)
 - [Merge Requests / Pull Requests](https://git.compilenix.org/CompileNix/dotfiles/-/merge_requests)
 
+## TODO
+
+- Add`mpv` configs
+
 ## Install
 
 **Keep always an existing terminal open, just in case**
@@ -48,7 +52,7 @@ apt install \
 ```bash
 apt install \
   acl \
-  bind9utils \
+  bind9-utils \
   brotli \
   gzip \
   htop \
@@ -56,10 +60,11 @@ apt install \
   iotop \
   jq \
   logrotate \
-  mlocate \
+  lsd \
   ncdu \
   neovim \
   net-tools \
+  plocate \
   rsync \
   sqlite3 \
   sudo \
@@ -824,14 +829,14 @@ rm -rf "$temp_dir"
 
 ```bash
 cd test
-docker build -t local/dotfiles:ubuntu -f ubuntu.Dockerfile .
+docker build -t local/dotfiles:ubuntu -f ./ubuntu.Dockerfile .
 cd ..
 docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:ubuntu
 # Run bash ./dotfiles/install.sh
 # Run zsh
 
 cd test
-docker build -t local/dotfiles:fedora -f fedora.Dockerfile .
+docker build -t local/dotfiles:fedora -f ./fedora.Dockerfile .
 cd ..
 docker run -it --rm -v $(pwd)/:/root/dotfiles:z local/dotfiles:fedora
 # Run bash ./dotfiles/install.sh

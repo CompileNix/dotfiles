@@ -1,4 +1,4 @@
-FROM fedora:42
+FROM fedora:43
 ENV TZ="UTC"
 WORKDIR /root
 COPY ./docker.bash_history .bash_history
@@ -15,6 +15,27 @@ RUN dnf install -y \
   zsh \
   zsh-autosuggestions \
   zsh-syntax-highlighting \
-  zstd
+  zstd NetworkManager-tui \
+  acl \
+  bind9-next-utils \
+  dua-cli \
+  findutils \
+  htop \
+  iftop \
+  iotop \
+  iptables \
+  jq \
+  logrotate \
+  lsd \
+  ncdu \
+  neovim \
+  plocate \
+  python3-rich \
+  rsync \
+  sqlite \
+  sudo \
+  tmux \
+  util-linux-user \
+  wget
 CMD [ "/bin/bash" ]
 

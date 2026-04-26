@@ -1356,6 +1356,24 @@ EOF
     fnm use 2>/dev/null || { fnm install && fnm use }
 }
 
+function set-shell-title {
+    if [[ "$1" =~ ^(--help|-h)$ ]] || [ ! -n "$1" ]; then
+        cat << EOF
+Send the title to your terminal emulator, using ANSI escape sequences.
+
+Usage: $(echo $funcstack[-1]) title
+
+title        The new title you want to be displayed
+
+Example:
+$(echo $funcstack[-1]) "Work Project"
+EOF
+        return 1
+    fi
+
+    echo -ne "\033]0;$1\007"
+}
+
 function my-chpwd {
     if [ -n "$1" ]; then
         cat << EOF
